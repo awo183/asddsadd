@@ -1,0 +1,161 @@
+1
+00:00:00,506 --> 00:00:05,923
+13. dubna 1970 vybuchla na
+Apollu 13 kyslíková nádrž,
+
+2
+00:00:05,963 --> 00:00:09,697
+víc než 320 000 km od Země.
+
+3
+00:00:09,737 --> 00:00:11,644
+Větu, která pak zazněla, znáte.
+
+4
+00:00:11,684 --> 00:00:13,413
+„Houstone, máme problém.“
+
+5
+00:00:13,453 --> 00:00:16,131
+Jenže ten problém nezačal ve vesmíru.
+
+6
+00:00:16,171 --> 00:00:21,854
+Začal na zemi, dva týdny před startem,
+u drobného spínače stavěného na 28 voltů.
+
+7
+00:00:21,894 --> 00:00:26,091
+Jak je možné, že jedna malá součástka
+málem zabila tři astronauty?
+
+8
+00:00:29,612 --> 00:00:33,455
+Spínač seděl na topném tělese
+uvnitř kyslíkové nádrže číslo dvě.
+
+9
+00:00:33,495 --> 00:00:37,646
+Při 27 °C se měl rozpojit a vypnout proud.
+
+10
+00:00:37,967 --> 00:00:41,433
+Nádrž byla navržená na palubních 28 voltů.
+
+11
+00:00:41,473 --> 00:00:46,818
+Pak se ale změnily požadavky a na
+startovní rampě dostávalo topení 65 voltů.
+
+12
+00:00:46,858 --> 00:00:50,730
+Spínače nikdo nevyměnil a celé
+roky si toho nikdo nevšiml.
+
+13
+00:00:51,195 --> 00:00:56,693
+Druhá chyba přišla v roce
+1968 v továrně v Kalifornii,
+
+14
+00:00:56,733 --> 00:01:00,764
+kde dělníkům spadla police
+s nádrží asi o 5 cm.
+
+15
+00:01:00,804 --> 00:01:04,894
+Otřes nejspíš posunul uvolněnou
+trubičku uvnitř nádrže.
+
+16
+00:01:04,934 --> 00:01:10,420
+V březnu 1970 proto na Kennedyho
+vesmírném středisku nešla nádrž číslo dvě
+
+17
+00:01:10,460 --> 00:01:11,653
+vyprázdnit.
+
+18
+00:01:11,693 --> 00:01:16,915
+Technici improvizovali a nechali topení
+běžet na 65 voltů zhruba osm hodin.
+
+19
+00:01:16,955 --> 00:01:20,641
+Když se spínače konečně pokusily
+rozpojit, napětí je svařilo.
+
+20
+00:01:20,681 --> 00:01:26,980
+Části topné trubky se nejspíš rozpálily
+asi na 540 °C a horko spálilo izolaci na
+
+21
+00:01:27,020 --> 00:01:28,414
+drátech ventilátoru.
+
+22
+00:01:28,454 --> 00:01:31,212
+Nikdo si ničeho nevšiml a nádrž letěla.
+
+23
+00:01:31,621 --> 00:01:35,308
+Skoro 56 hodin po startu požádalo
+řídicí středisko posádku,
+
+24
+00:01:35,348 --> 00:01:37,542
+aby nádrže promíchala.
+
+25
+00:01:37,582 --> 00:01:41,803
+Zhruba 2,7 sekundy po zapnutí
+ventilátorů dráty zkratovaly,
+
+26
+00:01:41,843 --> 00:01:47,259
+izolace v čistém kyslíku vzplanula
+a výbuch utrhl z lodi celý panel.
+
+27
+00:01:47,559 --> 00:01:49,795
+Posádka se vrátila domů v lunárním modulu,
+
+28
+00:01:49,835 --> 00:01:52,790
+který byl stavěný pro dva muže na dva dny,
+
+29
+00:01:52,830 --> 00:01:56,586
+a nakonec musel udržet
+naživu tři muže po čtyři dny.
+
+30
+00:01:59,192 --> 00:02:03,314
+Vyšetřovací komise to shrnula
+jako „neobvyklou kombinaci chyb“.
+
+31
+00:02:03,354 --> 00:02:05,382
+A ta poslední mrzí nejvíc.
+
+32
+00:02:05,422 --> 00:02:08,741
+Ovládání topení na Kennedyho
+středisku mělo ampérmetry.
+
+33
+00:02:08,781 --> 00:02:11,017
+Kdo by se během těch osmi
+hodin díval, viděl by,
+
+34
+00:02:11,057 --> 00:02:13,639
+že se spínače nikdy nerozpojily.
+
+35
+00:02:13,679 --> 00:02:17,319
+Varování bylo celou dobu
+na očích, přímo na měřáku.
+

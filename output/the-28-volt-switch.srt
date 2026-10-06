@@ -1,0 +1,163 @@
+1
+00:00:00,549 --> 00:00:05,118
+On April 13th, 1970, an oxygen
+tank on Apollo 13 blew apart,
+
+2
+00:00:05,158 --> 00:00:07,633
+200,000 miles from Earth.
+
+3
+00:00:07,673 --> 00:00:09,410
+You know the line that came next.
+
+4
+00:00:09,450 --> 00:00:11,623
+"Houston, we've had a problem."
+
+5
+00:00:11,663 --> 00:00:13,714
+But the problem didn't start in space.
+
+6
+00:00:13,754 --> 00:00:16,698
+It started on the ground,
+two weeks before launch,
+
+7
+00:00:16,738 --> 00:00:19,367
+with a tiny switch built for 28 volts.
+
+8
+00:00:19,407 --> 00:00:23,558
+So how does one small switch
+nearly kill three astronauts?
+
+9
+00:00:27,138 --> 00:00:30,329
+The switch sat on a heater
+inside oxygen tank number two.
+
+10
+00:00:30,369 --> 00:00:34,195
+At 80 degrees Fahrenheit, it was
+supposed to click open and cut the power.
+
+11
+00:00:34,610 --> 00:00:37,377
+The tank was designed for
+the spacecraft's 28 volts.
+
+12
+00:00:37,417 --> 00:00:42,367
+Then the specs changed, and on the
+launch pad its heaters got 65 volts.
+
+13
+00:00:42,407 --> 00:00:46,956
+Nobody upgraded the switches,
+and for years, nobody caught it.
+
+14
+00:00:46,996 --> 00:00:50,996
+The second mistake came in 1968,
+at a factory in California,
+
+15
+00:00:51,036 --> 00:00:53,952
+when workers dropped the
+tank's shelf about two inches.
+
+16
+00:00:53,992 --> 00:00:57,615
+The jolt probably knocked a
+loose tube out of place inside.
+
+17
+00:00:57,655 --> 00:01:02,397
+So in March 1970, at Kennedy Space
+Center, tank two wouldn't empty.
+
+18
+00:01:02,437 --> 00:01:06,275
+The engineers improvised, and left the
+heaters running at 65 volts for about
+
+19
+00:01:06,315 --> 00:01:07,853
+eight hours.
+
+20
+00:01:07,893 --> 00:01:11,277
+When the switches finally tried to
+open, the voltage welded them shut.
+
+21
+00:01:11,317 --> 00:01:13,866
+Parts of the heater tube
+probably hit about 1,000 degrees,
+
+22
+00:01:13,906 --> 00:01:17,078
+and the heat cooked the
+insulation on the fan's wires.
+
+23
+00:01:17,118 --> 00:01:19,597
+Nobody noticed, and the tank flew.
+
+24
+00:01:20,171 --> 00:01:24,003
+Nearly 56 hours in, Mission Control
+asked the crew to stir the tanks.
+
+25
+00:01:24,043 --> 00:01:27,950
+About 2.7 seconds after the
+fans came on, the wires shorted,
+
+26
+00:01:27,990 --> 00:01:30,388
+the insulation caught fire in pure oxygen,
+
+27
+00:01:30,428 --> 00:01:33,442
+and the blast tore a
+panel off the spacecraft.
+
+28
+00:01:33,751 --> 00:01:37,055
+The crew made it home in the lunar
+module, built for two men for two days,
+
+29
+00:01:37,095 --> 00:01:39,063
+stretched to three men for four.
+
+30
+00:01:41,810 --> 00:01:45,497
+The review board blamed "an
+unusual combination of mistakes."
+
+31
+00:01:45,537 --> 00:01:47,254
+And the last one hurts the most.
+
+32
+00:01:47,294 --> 00:01:49,951
+The heater controls at Kennedy
+had current meters on them.
+
+33
+00:01:49,991 --> 00:01:53,202
+Anyone watching during those eight
+hours would've seen the switches never
+
+34
+00:01:53,242 --> 00:01:53,897
+opened.
+
+35
+00:01:53,937 --> 00:01:56,323
+The warning was right there, on a meter.
+
