@@ -29,6 +29,8 @@ PAPER = (229, 222, 203)
 FONT_FILES = {
     "display": "/usr/share/fonts/opentype/inter/InterDisplay-Bold.otf",
     "display_light": "/usr/share/fonts/opentype/inter/InterDisplay-Light.otf",
+    "black": "/usr/share/fonts/opentype/inter/InterDisplay-Black.otf",
+    "xbold": "/usr/share/fonts/opentype/inter/InterDisplay-ExtraBold.otf",
     "sans": "/usr/share/fonts/opentype/inter/Inter-Medium.otf",
     "mono": os.path.join(ROOT, "assets/fonts/IBMPlexMono-Medium.ttf"),
     "mono_bold": os.path.join(ROOT, "assets/fonts/IBMPlexMono-SemiBold.ttf"),

@@ -12,7 +12,14 @@ import soundfile as sf
 from kokoro_onnx import Kokoro
 
 sys.path.insert(0, os.path.dirname(__file__))
-from narration import SEGMENTS  # noqa: E402
+if os.environ.get("NARRATION"):          # another film's script, e.g. cooper/narration.py
+    import importlib.util
+    _spec = importlib.util.spec_from_file_location("narration", os.environ["NARRATION"])
+    _mod = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(_mod)
+    SEGMENTS = _mod.SEGMENTS
+else:
+    from narration import SEGMENTS  # noqa: E402
 
 MODELS, OUT = sys.argv[1], sys.argv[2]
 VOICE = os.environ.get("VOICE", "af_heart")
@@ -23,6 +30,9 @@ SHORT_PAUSE = 0.12    # between one-word beats ("Person. Car. Bicycle.")
 os.makedirs(OUT, exist_ok=True)
 kokoro = Kokoro(os.path.join(MODELS, "kokoro-v1.0.onnx"),
                 os.path.join(MODELS, "voices-v1.0.bin"))
+if ":" in VOICE:                          # blend, e.g. "am_michael:0.7,am_onyx:0.3"
+    VOICE = sum(kokoro.get_voice_style(name) * float(w)
+                for name, w in (part.split(":") for part in VOICE.split(",")))
 timings = {}
 for key, sentences in SEGMENTS:
     parts, starts, t, sr = [], [], 0.0, 24000
