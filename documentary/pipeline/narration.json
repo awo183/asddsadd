@@ -1,0 +1,221 @@
+{
+ "voice": "am_michael",
+ "speed": 1.04,
+ "segments": [
+  {
+   "id": "c01",
+   "chapter": "cold_open",
+   "text": "The twenty-ninth of August, 1949. Dawn, on the empty steppe of north-eastern Kazakhstan."
+  },
+  {
+   "id": "c02",
+   "chapter": "cold_open",
+   "text": "At seven o'clock in the morning, a device built around a core of plutonium sits on top of a steel tower. Then the sky turns white."
+  },
+  {
+   "id": "c03",
+   "chapter": "cold_open",
+   "text": "The Soviet Union has the atomic bomb. Four years after Hiroshima, America's nuclear monopoly is over."
+  },
+  {
+   "id": "c04",
+   "chapter": "cold_open",
+   "text": "But the road to this explosion did not begin in Moscow. Part of it began more than four thousand kilometres to the west, in a quiet valley in Czechoslovakia. A valley whose uranium would soon be dug out of the earth by prisoners."
+  },
+  {
+   "id": "s101",
+   "chapter": "ch1",
+   "text": "Jáchymov. In German, Sankt Joachimsthal. A small town in the Ore Mountains, on the border between Bohemia and Saxony."
+  },
+  {
+   "id": "s102",
+   "chapter": "ch1",
+   "text": "Five hundred years ago, it was one of the richest silver towns in Europe. Its silver coins, the Joachimsthalers, gave the world a new word. Thaler. And, in time, dollar."
+  },
+  {
+   "id": "s103",
+   "chapter": "ch1",
+   "text": "But the miners kept striking a heavy, black, useless mineral that spoiled their silver veins. They called it pitchblende. Pech, in German, means bad luck."
+  },
+  {
+   "id": "s104",
+   "chapter": "ch1",
+   "text": "In 1898, Marie and Pierre Curie used waste pitchblende from Joachimsthal to discover two new elements: polonium, and radium. The town became famous. In 1906, it opened the world's first radon spa."
+  },
+  {
+   "id": "s105",
+   "chapter": "ch1",
+   "text": "Yet for centuries, the miners of these mountains had been dying young, of a mysterious disease of the lungs. Today we know the cause. Radon. A radioactive gas that seeps out of uranium ore."
+  },
+  {
+   "id": "s106",
+   "chapter": "ch1",
+   "text": "For a long time, uranium itself was little more than a by-product, used to colour glass yellow and green. Then came 1945."
+  },
+  {
+   "id": "s201",
+   "chapter": "ch2",
+   "text": "On the sixth of August, 1945, a single American bomb destroyed the city of Hiroshima. In Moscow, Joseph Stalin understood that the balance of power had changed overnight."
+  },
+  {
+   "id": "s202",
+   "chapter": "ch2",
+   "text": "Within two weeks, he put his secret police chief, Lavrentiy Beria, in charge of a crash programme to build a Soviet bomb. Its scientific director was the physicist Igor Kurchatov."
+  },
+  {
+   "id": "s203",
+   "chapter": "ch2",
+   "text": "Kurchatov had brilliant scientists. Thanks to spies inside the Manhattan Project, he had many of the American secrets. What he did not have, was uranium."
+  },
+  {
+   "id": "s204",
+   "chapter": "ch2",
+   "text": "The Soviet Union's own deposits were small and poor. The richest mines, in the Belgian Congo and in Canada, were in Western hands. In the summer of 1945, the best-known uranium mine within Stalin's reach was Jáchymov."
+  },
+  {
+   "id": "s205",
+   "chapter": "ch2",
+   "text": "Soviet specialists arrived within months. And on the twenty-third of November, 1945, Czechoslovakia signed a secret agreement with the Soviet Union. Uranium ore mined in Czechoslovakia would be delivered to the USSR, at prices below the world market."
+  },
+  {
+   "id": "s206",
+   "chapter": "ch2",
+   "text": "Czechoslovakia was still a democracy. But its uranium already belonged to Stalin."
+  },
+  {
+   "id": "s301",
+   "chapter": "ch3",
+   "text": "The mines became a national enterprise, Jáchymov Mines. But real power sat with Soviet officers and engineers. Uranium became a state secret, and the whole area became a closed zone."
+  },
+  {
+   "id": "s302",
+   "chapter": "ch3",
+   "text": "The first workforce was made up of German prisoners of war, alongside Czech miners lured by high wages and extra rations. The ore was loaded into sealed railway wagons and sent east. Dozens of wagons, every month."
+  },
+  {
+   "id": "s303",
+   "chapter": "ch3",
+   "text": "In 1946, Czechoslovakia delivered eighteen tonnes of uranium. In 1947, forty-nine. In 1948, more than one hundred. In 1949, nearly one hundred and fifty."
+  },
+  {
+   "id": "s304",
+   "chapter": "ch3",
+   "text": "It was not the only source. In defeated Germany, Soviet teams seized around a hundred tonnes of uranium compounds. Soon, the mines of Saxony, just across the mountains, would far out-produce Jáchymov. Bulgaria and Poland added more."
+  },
+  {
+   "id": "s305",
+   "chapter": "ch3",
+   "text": "But in the critical early years, when the Soviet Union had almost nothing, Jáchymov was one of the very first foreign sources it could tap. Historians still debate how much Czechoslovak uranium ended up inside the first bomb. What is certain is that Czechoslovakia supplied the Soviet programme from its very first year."
+  },
+  {
+   "id": "s306",
+   "chapter": "ch3",
+   "text": "On the twenty-ninth of August, 1949, the programme succeeded. RDS-1 exploded with the force of about twenty-two thousand tonnes of TNT. The West called it Joe-1. In September, President Truman told the world. The arms race had begun."
+  },
+  {
+   "id": "s401",
+   "chapter": "ch4",
+   "text": "By then, Czechoslovakia itself had changed. In February 1948, the Communist Party, led by Klement Gottwald, seized full power."
+  },
+  {
+   "id": "s402",
+   "chapter": "ch4",
+   "text": "That autumn, a new law allowed people to be sent to forced labour camps by an administrative commission, without any trial. Mass arrests, purges and show trials followed."
+  },
+  {
+   "id": "s403",
+   "chapter": "ch4",
+   "text": "Priests and monks. Farmers who refused to join collective farms. Students, scouts, and former soldiers who had fought against Hitler in the West. Anyone accused of anti-state activity."
+  },
+  {
+   "id": "s404",
+   "chapter": "ch4",
+   "text": "The first Soviet bomb had already been built. Now Moscow wanted uranium for the arsenal that would follow. And the Czechoslovak regime found its workforce in the prisons."
+  },
+  {
+   "id": "s501",
+   "chapter": "ch5",
+   "text": "Eighteen labour camps were built around the uranium mines of Jáchymov, Horní Slavkov and Příbram. Several bore the names of their mines, which now sounded like cruel jokes. Equality. Concord. Brotherhood."
+  },
+  {
+   "id": "s502",
+   "chapter": "ch5",
+   "text": "Between 1949 and 1961, historians estimate that some sixty-five thousand prisoners passed through these camps. A large share of them were political prisoners."
+  },
+  {
+   "id": "s503",
+   "chapter": "ch5",
+   "text": "They called themselves mukl. A word often explained as an acronym: muž určený k likvidaci. A man destined for liquidation."
+  },
+  {
+   "id": "s504",
+   "chapter": "ch5",
+   "text": "Prisoners worked in shifts, day and night, in tunnels hundreds of metres below ground. Every shift had a quota. Fail to meet it, and your food ration was cut."
+  },
+  {
+   "id": "s505",
+   "chapter": "ch5",
+   "text": "Drilling threw up clouds of rock dust. The air underground was full of radon. There were no respirators, no dosimeters, and no warnings. The danger was known. But production came first."
+  },
+  {
+   "id": "s506",
+   "chapter": "ch5",
+   "text": "At the Svornost camp, prisoners climbed a steep stairway to the mine every single day. They named it after the Nazi concentration camp: the Mauthausen stairs."
+  },
+  {
+   "id": "s507",
+   "chapter": "ch5",
+   "text": "Punishment meant the correction cell: cold concrete, and half rations. Escape attempts ended under fire from the watchtowers. Men died in accidents, from beatings and from bullets. Many more died years later, of cancers caused by the radiation they had breathed."
+  },
+  {
+   "id": "s601",
+   "chapter": "ch6",
+   "text": "The most feared place of all stood near the town of Ostrov. In a brick building that prisoners called the Tower of Death, uranium ore was crushed and sorted before being shipped to the Soviet Union."
+  },
+  {
+   "id": "s602",
+   "chapter": "ch6",
+   "text": "Around three hundred prisoners, men the regime considered especially dangerous, worked here without any protective clothing. They hauled the ore to the top floor, and tipped it onto huge sieves, breathing radioactive dust with every load."
+  },
+  {
+   "id": "s603",
+   "chapter": "ch6",
+   "text": "Today, the Red Tower of Death is a national cultural monument. One of the few surviving buildings of the Czechoslovak uranium gulag."
+  },
+  {
+   "id": "s701",
+   "chapter": "ch7",
+   "text": "In central Bohemia, near the town of Příbram, the camp of Vojna still stands. Barracks, watchtowers and barbed wire, preserved as a memorial. Its prisoners worked in the Příbram uranium mines, one of the richest uranium fields in Europe."
+  },
+  {
+   "id": "s801",
+   "chapter": "ch8",
+   "text": "In 1960, an amnesty released many of the political prisoners. By 1961, the uranium camps were closed. The mining went on, now with paid workers."
+  },
+  {
+   "id": "s802",
+   "chapter": "ch8",
+   "text": "Between 1946 and 1990, Czechoslovakia mined close to one hundred thousand tonnes of uranium, much of it for the Soviet Union. It became one of the largest uranium producers in the Eastern Bloc."
+  },
+  {
+   "id": "s803",
+   "chapter": "ch8",
+   "text": "For decades, the camps were a taboo subject. Only after the fall of communism in 1989 were the political prisoners rehabilitated, and free to tell their stories."
+  },
+  {
+   "id": "s804",
+   "chapter": "ch8",
+   "text": "Today, a memorial trail called Jáchymov Hell leads past the ruins of the camps. Every May, former prisoners and their families gather there to remember."
+  },
+  {
+   "id": "s805",
+   "chapter": "ch8",
+   "text": "The Soviet bomb was born from physics, espionage, and the will of a dictator. But the Soviet arsenal was also built on stone. Stone hauled out of the earth by people who never chose to take part in the arms race."
+  },
+  {
+   "id": "s806",
+   "chapter": "ch8",
+   "text": "In the valley that gave the world the dollar, the true price of uranium was paid in human lives."
+  }
+ ]
+}
