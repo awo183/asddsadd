@@ -17,11 +17,14 @@ English subtitles and chapter markers.
 
 | File | What |
 |---|---|
-| `video/ramanujan_documentary_1080p.mp4` | 1920×1080, 25 fps, H.264 + AAC, English soft subtitles, chapters (if under GitHub's size limit) |
-| `video/parts/*.mp4` | The same film split into chapter files (each < 100 MB) |
-| `video/ramanujan_documentary.en.srt` | English subtitles |
-| `documentary/` | The full production pipeline (script, TTS, animations, score, compositor) |
-| `CREDITS.md` | Every archival image/clip used, with author and license |
+| `video/parts/ramanujan_documentary_1080p_part01..16.mp4` | The film (1920×1080, 25 fps, H.264 + AAC 48 kHz), split losslessly at keyframes into 16 playable parts of < 27 MB. Re-join with `cd video/parts && ffmpeg -f concat -safe 0 -i list.txt -c copy ramanujan_documentary_1080p.mp4`, and add subtitles from the .srt |
+| `video/ramanujan_documentary.en.srt` | English subtitles (also embedded in the MP4) |
+| `SCRIPT.md` | The full narration script with the visual cue for every paragraph |
+| `CREDITS.md` | Every archival image/clip used, with author, license and source page |
+| `media/manifest.json` | Provenance of all 114 Wikimedia Commons files collected (author, license, description) |
+| `documentary/` | The production pipeline (script, TTS, animations, score, compositor) |
+
+Runtime **21 min 16 s**, nine chapters with embedded chapter markers, loudness normalised to −16 LUFS.
 
 ## Chapters
 
@@ -49,9 +52,11 @@ python3 build.py --vo VO_DIR --media MEDIA_DIR --out OUT_DIR --encoder auto
 ### GPU rendering
 
 `--encoder auto` (default) uses **NVIDIA NVENC (`h264_nvenc`)** whenever a usable GPU is present and falls
-back to `libx264` on the CPU otherwise. `--encoder nvenc` forces the GPU path (it warns and falls back if no
-GPU is found). The cloud container this was built in has no GPU, so the published render used `libx264`;
-re-running the same command on an NVIDIA machine renders on the GPU with identical output layout.
+back to `libx264` on the CPU otherwise; `--encoder nvenc` forces the GPU path (it warns and falls back if no
+GPU is found). Frame compositing (Ken Burns moves, skia animations, archival-film decoding) is CPU work that
+scales with `--jobs`; the GPU takes over the H.264 encode. The published render was made in a 4-vCPU cloud
+container without a GPU (libx264): about 31 minutes for the 21-minute film. On a desktop with 8–16 cores and an
+NVIDIA card, expect roughly 10–15 minutes.
 
 ## Network access used / needed
 

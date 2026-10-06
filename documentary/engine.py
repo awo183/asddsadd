@@ -205,7 +205,8 @@ GRADES = {
                    [0.114 * 0.96, 0.587 * 0.96, 0.299 * 0.96],
                    [0.114 * 1.08, 0.587 * 1.08, 0.299 * 1.08]]),
     "bw": _mat([[0.114, 0.587, 0.299]] * 3),
-    "warm": _mat([[0.88, 0.02, 0.0], [0.0, 0.98, 0.04], [0.02, 0.05, 1.04]]),
+    # gains <= 1 per channel so bright skies never clip unevenly into colour bands
+    "warm": _mat([[0.90, 0.02, 0.0], [0.0, 0.97, 0.02], [0.0, 0.02, 0.98]]),
     "cool": _mat([[1.04, 0.03, 0.0], [0.0, 0.98, 0.02], [0.0, 0.0, 0.92]]),
     "faded": _mat([[0.75, 0.15, 0.05], [0.08, 0.80, 0.10], [0.05, 0.15, 0.82]]),
 }
@@ -273,8 +274,9 @@ class Photo(Shot):
     """Ken Burns move over a still. Portrait/odd-aspect images get a blurred backdrop."""
 
     def __init__(self, path, dur, z0=1.0, z1=1.12, p0=(0.5, 0.5), p1=(0.5, 0.5), tone="sepia",
-                 caption=None, fit=None, contrast=1.05):
+                 caption=None, fit=None, contrast=1.05, shift=0.0):
         self.path, self.dur, self.z0, self.z1, self.p0, self.p1 = path, dur, z0, z1, p0, p1
+        self.shift = shift  # horizontal offset (px) of a fitted photo, e.g. to make room for a quote
         self.tone, self.caption, self.fit, self.contrast = tone, caption, fit, contrast
         self._prep = None
 
@@ -323,7 +325,7 @@ class Photo(Shot):
             return cv2.warpAffine(img, M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
         # fit mode: foreground centered, slight zoom, small drift
         k = z / zmax
-        cx = W / 2 + (px - 0.5) * 120
+        cx = W / 2 + (px - 0.5) * 120 + self.shift
         cy = H / 2 + (py - 0.5) * 60
         M = np.array([[k, 0, cx - k * iw / 2], [0, k, cy - k * ih / 2]], np.float32)
         out = bg.copy()
@@ -343,27 +345,36 @@ class Footage(Shot):
     look = "footage"
 
     def __init__(self, path, dur, start=0.0, speed=1.0, tone="sepia", caption=None, contrast=1.08,
-                 clip_len=None, hflip=False):
+                 clip_len=None, hflip=False, seg_end=None, crop=None, zoom=1.0):
         self.path, self.dur, self.start, self.speed = path, dur, start, speed
         self.tone, self.caption, self.contrast, self.clip_len, self.hflip = tone, caption, contrast, clip_len, hflip
+        self.seg_end = seg_end  # play [start, seg_end) only, then hold the last frame
+        self.crop, self.zoom = crop, zoom
         self.proc = None
         self.t_read = None
         self.last = None
 
     def _open(self, t):
         seek = self.start + t * self.speed
-        if self.clip_len:
+        if self.seg_end is not None:
+            seek = min(seek, self.seg_end - 0.2)
+        elif self.clip_len:
             seek = seek % max(self.clip_len - 0.2, 0.5)
         vf = []
         if self.speed != 1.0:
             vf.append(f"setpts=PTS/{self.speed}")
-        vf += [f"fps={FPS}", f"scale={W}:{H}:force_original_aspect_ratio=increase:flags=bicubic",
+        if self.crop:
+            vf.append("crop=%d:%d:%d:%d" % tuple(self.crop))
+        zw, zh = int(W * self.zoom) // 2 * 2, int(H * self.zoom) // 2 * 2
+        vf += [f"fps={FPS}", f"scale={zw}:{zh}:force_original_aspect_ratio=increase:flags=bicubic",
                f"crop={W}:{H}"]
         if self.hflip:
             vf.append("hflip")
         vf.append("format=bgr24")
-        cmd = ["ffmpeg", "-v", "error", "-stream_loop", "-1", "-ss", f"{seek:.3f}", "-i", self.path,
-               "-an", "-vf", ",".join(vf), "-f", "rawvideo", "-"]
+        loop = [] if self.seg_end is not None else ["-stream_loop", "-1"]
+        limit = ["-t", f"{max(0.2, (self.seg_end - seek) / self.speed):.3f}"] if self.seg_end is not None else []
+        cmd = ["ffmpeg", "-v", "error"] + loop + ["-ss", f"{seek:.3f}", "-i", self.path,
+               "-an", "-vf", ",".join(vf)] + limit + ["-f", "rawvideo", "-"]
         self.proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.DEVNULL)
         self.t_read = t - 1.0 / FPS
 
@@ -428,11 +439,11 @@ def blend_bgra(dst, layer_bgra_premul, opacity=1.0):
 @functools.lru_cache(maxsize=None)
 def encoder_args(pref="auto", quality="high"):
     """Return (name, ffmpeg video codec args). Prefers NVIDIA NVENC when usable."""
-    cq = {"high": 20, "web": 24}[quality]
+    cq = {"high": 22, "web": 25}[quality]
     nvenc = ["-c:v", "h264_nvenc", "-preset", "p7", "-tune", "hq", "-rc", "vbr", "-cq", str(cq + 1),
              "-b:v", "0", "-maxrate", "10M", "-bufsize", "20M", "-profile:v", "high",
              "-spatial-aq", "1", "-temporal-aq", "1", "-bf", "3", "-pix_fmt", "yuv420p"]
-    x264 = ["-c:v", "libx264", "-preset", "medium", "-crf", str(cq), "-maxrate", "8M", "-bufsize", "16M",
+    x264 = ["-c:v", "libx264", "-preset", "medium", "-crf", str(cq), "-maxrate", "6M", "-bufsize", "12M",
             "-profile:v", "high", "-tune", "film", "-pix_fmt", "yuv420p"]
     if pref in ("auto", "nvenc", "gpu"):
         test = subprocess.run(["ffmpeg", "-v", "error", "-f", "lavfi", "-i", f"color=black:s={W}x{H}:r={FPS}",

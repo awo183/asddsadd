@@ -1077,7 +1077,7 @@ def map_erode(c, t, dur, st):
     _pin(c, *P(80.27, 13.08), "Madras", smooth((t - zt - 1.6) / 0.8))
     ka = smooth((t - zt - 2.4) / 1.0)
     draw_text(c, "Kaveri river", *P(78.4, 10.45), font(SERIF_I, 34), (40, 75, 105), ka * 0.95, align="center")
-    draw_text(c, "MADRAS PRESIDENCY", *P(78.3, 12.6), font(SERIF, 38, 600), (70, 52, 34), ka * 0.85, align="center",
+    draw_text(c, "MADRAS PRESIDENCY", *P(78.9, 12.35), font(SERIF, 38, 600), (70, 52, 34), ka * 0.85, align="center",
               tracking=6)
     master_fade(c, t, dur, 0.8, 0.8)
 

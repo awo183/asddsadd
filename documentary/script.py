@@ -50,12 +50,12 @@ BEATS = [
     dict(id="title", ch=0, voice=None, vis=["anim:title"], dur=9.0, text=""),
 
     # ------------------------------------------------------------------ chapter 1
-    dict(id="c1a", ch=1, voice="N", vis=["footage:india_period", "map:erode"], text=
+    dict(id="c1a", ch=1, voice="N", vis=["map:erode", "photo:erode_birthplace"], text=
         "Srinivasa Ramanujan was born on the twenty-second of December, 1887, in the town of Erode, "
         "in what was then the Madras Presidency of British India. "
         "He was born in his grandmother's house, but he grew up in Kumbakonam, "
         "an ancient temple town in the fertile delta of the Kaveri river."),
-    dict(id="c1b", ch=1, voice="N", vis=["photo:kumbakonam_temple", "footage:india_period"], text=
+    dict(id="c1b", ch=1, voice="N", vis=["footage:kumbakonam", "photo:kumbakonam_temple"], text=
         "His family were Tamil Brahmins: devout, respected, and poor. "
         "His father worked as a clerk in a cloth merchant's shop. "
         "His mother, Komalatammal, sang devotional songs at the local temple. "
@@ -63,7 +63,7 @@ BEATS = [
     dict(id="c1c", ch=1, voice="N", vis=["photo:ramanujan_house", "photo:ramanujan_house2"], text=
         "The family lived in a small, single-storey house on Sarangapani Sannidhi Street, "
         "in the shadow of the great temple tower. The house still stands. Today it is a museum."),
-    dict(id="c1d", ch=1, voice="N", vis=["footage:india_period"], text=
+    dict(id="c1d", ch=1, voice="N", vis=["photo:kaveri", "footage:india_period"], text=
         "Life in Kumbakonam was fragile. When he was two years old, Ramanujan survived smallpox. "
         "Several of his younger brothers and sisters did not survive infancy."),
     dict(id="c1e", ch=1, voice="N", vis=["photo:school", "anim:digits_pi"], text=
@@ -86,7 +86,7 @@ BEATS = [
         "and worked out for himself why it was true. Then he went further. "
         "He began to record his own discoveries: formulas for infinite series, for continued fractions, "
         "for the hidden properties of whole numbers."),
-    dict(id="c2c", ch=2, voice="N", vis=["anim:slate", "photo:notebook"], text=
+    dict(id="c2c", ch=2, voice="N", vis=["anim:slate", "footage:notebook"], text=
         "Paper was expensive, so he worked on a slate, rubbing out his calculations with his elbow, "
         "and copied only the final results into his notebooks. "
         "It was a habit that would shape the rest of his life. "
@@ -95,7 +95,7 @@ BEATS = [
         "His passion came at a price. In 1904, he won a scholarship to the Government College in Kumbakonam. "
         "But he could think only of mathematics. He neglected his other subjects, failed his examinations, "
         "and lost the scholarship. Ashamed, he ran away from home for several weeks."),
-    dict(id="c2e", ch=2, voice="N", vis=["photo:pachaiyappa", "footage:madras"], text=
+    dict(id="c2e", ch=2, voice="N", vis=["photo:madras_city", "photo:madras_city"], text=
         "Two years later, he tried again, at Pachaiyappa's College in Madras. "
         "Once more he excelled in mathematics. Once more he failed nearly everything else. "
         "He left without a degree."),
@@ -113,11 +113,11 @@ BEATS = [
         "of mathematics. Rao was sceptical of the shabbily dressed young man. "
         "But as Ramanujan led him through elliptic integrals and divergent series, "
         "his doubts gave way to astonishment. He agreed to support Ramanujan with a small monthly allowance."),
-    dict(id="c2i", ch=2, voice="N", vis=["photo:madras_port", "footage:madras"], text=
+    dict(id="c2i", ch=2, voice="N", vis=["footage:journal", "photo:madras_port"], text=
         "In 1911, Ramanujan published his first paper, on Bernoulli numbers, in the Journal of the "
         "Indian Mathematical Society. And in March 1912, he found a steady job: "
         "an accounts clerk at the Madras Port Trust, at thirty rupees a month."),
-    dict(id="c2j", ch=2, voice="N", vis=["photo:francis_spring", "footage:madras"], pause=1.0, text=
+    dict(id="c2j", ch=2, voice="N", vis=["photo:madras_port", "photo:madras_city"], pause=1.0, text=
         "His superiors, including the Port Trust's chairman, Sir Francis Spring, quietly encouraged his research. "
         "Ramanujan finished his office work quickly, and spent the rest of his time on mathematics. "
         "But to be truly understood, his work needed the attention of the experts in Europe."),
@@ -153,7 +153,7 @@ BEATS = [
         "to bring Ramanujan to Cambridge."),
 
     # ------------------------------------------------------------------ chapter 4
-    dict(id="c4a", ch=4, voice="N", vis=["photo:kumbakonam_temple", "footage:india_period"], text=
+    dict(id="c4a", ch=4, voice="N", vis=["footage:kumbakonam", "photo:ramanujan_house2"], text=
         "There was an obstacle. For an orthodox Brahmin, crossing the sea, the kala pani, or black water, "
         "meant losing caste: being cut off from family and community. "
         "At first, Ramanujan refused, and his mother would not hear of it."),
@@ -161,7 +161,7 @@ BEATS = [
         "Early in 1914, Hardy's colleague Eric Neville, visiting Madras to lecture, pressed the invitation again. "
         "This time, the answer changed. According to family accounts, Ramanujan's mother dreamed that "
         "the family goddess, Namagiri, commanded her not to stand in the way of her son's destiny."),
-    dict(id="c4c", ch=4, voice="N", vis=["footage:ship", "map:voyage"], text=
+    dict(id="c4c", ch=4, voice="N", vis=["photo:nevasa", "footage:ship", "map:voyage"], text=
         "Ramanujan cut his long hair, learned to wear Western clothes, and on the seventeenth of March, 1914, "
         "he boarded the steamship Nevasa at Madras. He left behind his mother, his father, and his young wife. "
         "Nearly a month later, he arrived in London."),
@@ -212,7 +212,7 @@ BEATS = [
         "Then there was pi. In 1914, Ramanujan published seventeen new series for one over pi. "
         "The most famous of them converges with breathtaking speed: each new term adds roughly eight correct digits. "
         "Seventy years later, in 1985, it was used to calculate pi to more than seventeen million digits."),
-    dict(id="c5j", ch=5, voice="N", vis=["anim:highly_composite", "photo:ramanujan_cambridge_group"], pause=1.2, text=
+    dict(id="c5j", ch=5, voice="N", vis=["anim:highly_composite", "footage:reporter", "photo:ramanujan_cambridge_group"], pause=1.2, text=
         "In March 1916, Cambridge awarded Ramanujan a Bachelor of Arts degree by research, "
         "the forerunner of the modern doctorate, for his work on highly composite numbers: "
         "numbers like twelve, sixty, and three hundred and sixty, that have more divisors than any smaller number. "
@@ -258,7 +258,7 @@ BEATS = [
         "As Littlewood once put it, every positive integer was one of Ramanujan's personal friends."),
 
     # ------------------------------------------------------------------ chapter 7
-    dict(id="c7a", ch=7, voice="N", vis=["photo:royal_society", "photo:ramanujan_portrait"], text=
+    dict(id="c7a", ch=7, voice="N", vis=["photo:royal_society", "photo:ramanujan_portrait2"], text=
         "Even as his body failed, recognition finally came. On the second of May, 1918, "
         "Ramanujan was elected a Fellow of the Royal Society of London, one of the youngest in its history, "
         "and only the second Indian ever to receive the honour."),
@@ -271,7 +271,7 @@ BEATS = [
         "His health had improved, a little, and his doctors decided he was well enough to travel home."),
 
     # ------------------------------------------------------------------ chapter 8
-    dict(id="c8a", ch=8, voice="N", vis=["footage:ship", "map:return"], text=
+    dict(id="c8a", ch=8, voice="N", vis=["footage:suez", "map:return"], text=
         "In late February 1919, Ramanujan sailed for India. He arrived in Bombay in March, "
         "and travelled on to Madras, where admirers waited to greet him. "
         "His wife Janaki joined him, and cared for him through the months that followed."),
@@ -296,11 +296,11 @@ BEATS = [
         "and my association with him is the one romantic incident in my life."),
 
     # ------------------------------------------------------------------ chapter 9
-    dict(id="c9a", ch=9, voice="N", vis=["photo:notebook", "anim:formula_wall"], text=
+    dict(id="c9a", ch=9, voice="N", vis=["footage:notebook", "anim:formula_wall"], text=
         "Ramanujan left behind nearly four thousand results, almost all of them recorded without proof. "
         "For a century, mathematicians have worked to prove them. "
         "The overwhelming majority have turned out to be true."),
-    dict(id="c9b", ch=9, voice="N", vis=["photo:wren_library", "photo:notebook"], text=
+    dict(id="c9b", ch=9, voice="N", vis=["photo:wren_library", "footage:notebook"], text=
         "In 1976, the American mathematician George Andrews was searching through a box of old papers "
         "in the library of Trinity College. Inside, he found more than a hundred pages in Ramanujan's handwriting, "
         "from the final year of his life. It became known as the lost notebook."),

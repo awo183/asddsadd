@@ -1,0 +1,1471 @@
+1
+00:00:00,450 --> 00:00:05,892
+In the winter of 1913, a thick envelope
+arrived at Trinity College, Cambridge.
+
+2
+00:00:05,892 --> 00:00:08,752
+It was addressed to Godfrey Harold Hardy,
+
+3
+00:00:08,752 --> 00:00:11,821
+one of the finest mathematicians in England.
+
+4
+00:00:11,821 --> 00:00:15,170
+The postmark was from
+Madras, in southern India.
+
+5
+00:00:16,170 --> 00:00:21,268
+Inside were page after page of formulas,
+written in a careful, cramped hand.
+
+6
+00:00:21,268 --> 00:00:22,878
+Some were already known.
+
+7
+00:00:22,878 --> 00:00:24,018
+A few were wrong.
+
+8
+00:00:24,018 --> 00:00:27,507
+But others were unlike
+anything Hardy had ever seen.
+
+9
+00:00:28,507 --> 00:00:30,356
+They defeated me completely.
+
+10
+00:00:30,356 --> 00:00:34,055
+I had never seen anything in
+the least like them before.
+
+11
+00:00:34,055 --> 00:00:37,358
+They must be true, because,
+if they were not true,
+
+12
+00:00:37,358 --> 00:00:40,859
+no one would have had the
+imagination to invent them.
+
+13
+00:00:42,659 --> 00:00:44,979
+The man who sent them had no degree.
+
+14
+00:00:44,979 --> 00:00:47,299
+He had failed out of college, twice.
+
+15
+00:00:47,299 --> 00:00:51,618
+He was a clerk in a shipping office,
+earning thirty rupees a month.
+
+16
+00:00:51,618 --> 00:00:53,744
+His name was Srinivasa Ramanujan.
+
+17
+00:00:54,744 --> 00:00:59,457
+Within five years, he would be one of
+the most celebrated mathematicians in the
+
+18
+00:00:59,457 --> 00:00:59,815
+world.
+
+19
+00:00:59,815 --> 00:01:03,811
+And within seven years, he would
+be dead, at the age of thirty-two.
+
+20
+00:01:20,811 --> 00:01:25,179
+Srinivasa Ramanujan was born on
+the twenty-second of December,
+
+21
+00:01:25,179 --> 00:01:31,098
+1887, in the town of Erode, in what was
+then the Madras Presidency of British India.
+
+22
+00:01:31,098 --> 00:01:33,845
+He was born in his grandmother's house,
+
+23
+00:01:33,845 --> 00:01:39,482
+but he grew up in Kumbakonam, an ancient
+temple town in the fertile delta of the
+
+24
+00:01:39,482 --> 00:01:40,398
+Kaveri river.
+
+25
+00:01:41,398 --> 00:01:45,351
+His family were Tamil Brahmins:
+devout, respected, and poor.
+
+26
+00:01:45,351 --> 00:01:49,041
+His father worked as a clerk
+in a cloth merchant's shop.
+
+27
+00:01:49,041 --> 00:01:53,521
+His mother, Komalatammal, sang
+devotional songs at the local temple.
+
+28
+00:01:53,521 --> 00:01:58,265
+She was a strong-willed woman, and
+the dominant force in her son's life.
+
+29
+00:01:59,265 --> 00:02:04,549
+The family lived in a small, single-storey
+house on Sarangapani Sannidhi Street,
+
+30
+00:02:04,549 --> 00:02:07,190
+in the shadow of the great temple tower.
+
+31
+00:02:07,190 --> 00:02:08,709
+The house still stands.
+
+32
+00:02:08,709 --> 00:02:10,096
+Today it is a museum.
+
+33
+00:02:11,096 --> 00:02:13,256
+Life in Kumbakonam was fragile.
+
+34
+00:02:13,256 --> 00:02:17,089
+When he was two years old,
+Ramanujan survived smallpox.
+
+35
+00:02:17,089 --> 00:02:21,827
+Several of his younger brothers and
+sisters did not survive infancy.
+
+36
+00:02:22,827 --> 00:02:25,091
+At school, his gift appeared early.
+
+37
+00:02:25,091 --> 00:02:30,265
+By the age of eleven, he had exhausted
+the mathematical knowledge of two college
+
+38
+00:02:30,265 --> 00:02:32,594
+students who lodged with his family.
+
+39
+00:02:32,594 --> 00:02:36,604
+At thirteen, he mastered an
+advanced textbook on trigonometry,
+
+40
+00:02:36,604 --> 00:02:39,320
+and began to discover theorems of his own.
+
+41
+00:02:40,320 --> 00:02:45,018
+Classmates remembered a quiet boy who
+seemed to live in a world of numbers.
+
+42
+00:02:45,018 --> 00:02:49,027
+He could recite the digits of pi,
+and of the square root of two,
+
+43
+00:02:49,027 --> 00:02:51,658
+to as many places as anyone cared to hear.
+
+44
+00:02:51,658 --> 00:02:56,231
+Then, at the age of sixteen, a book
+came into his hands that would change
+
+45
+00:02:56,231 --> 00:02:56,920
+everything.
+
+46
+00:03:04,420 --> 00:03:09,743
+It was called A Synopsis of Elementary
+Results in Pure and Applied Mathematics,
+
+47
+00:03:09,743 --> 00:03:13,315
+by George Shoobridge Carr,
+a private tutor in London.
+
+48
+00:03:13,315 --> 00:03:14,932
+It was not a great book.
+
+49
+00:03:14,932 --> 00:03:18,705
+It was a list: some five
+thousand theorems and formulas,
+
+50
+00:03:18,705 --> 00:03:24,028
+set down with little or no proof, meant
+to help students cram for examinations.
+
+51
+00:03:25,028 --> 00:03:27,123
+For Ramanujan, it was a doorway.
+
+52
+00:03:27,123 --> 00:03:32,426
+With no teacher to guide him, he took each
+bare result and worked out for himself
+
+53
+00:03:32,426 --> 00:03:33,473
+why it was true.
+
+54
+00:03:33,473 --> 00:03:34,848
+Then he went further.
+
+55
+00:03:34,848 --> 00:03:39,365
+He began to record his own discoveries:
+formulas for infinite series,
+
+56
+00:03:39,365 --> 00:03:43,817
+for continued fractions, for the
+hidden properties of whole numbers.
+
+57
+00:03:44,817 --> 00:03:47,671
+Paper was expensive, so
+he worked on a slate,
+
+58
+00:03:47,671 --> 00:03:50,462
+rubbing out his calculations with his elbow,
+
+59
+00:03:50,462 --> 00:03:53,824
+and copied only the final
+results into his notebooks.
+
+60
+00:03:53,824 --> 00:03:57,186
+It was a habit that would
+shape the rest of his life.
+
+61
+00:03:57,186 --> 00:04:01,182
+Ramanujan wrote down what he
+found, but rarely how he found it.
+
+62
+00:04:02,182 --> 00:04:04,122
+His passion came at a price.
+
+63
+00:04:04,122 --> 00:04:08,971
+In 1904, he won a scholarship to the
+Government College in Kumbakonam.
+
+64
+00:04:08,971 --> 00:04:11,673
+But he could think only of mathematics.
+
+65
+00:04:11,673 --> 00:04:17,423
+He neglected his other subjects, failed
+his examinations, and lost the scholarship.
+
+66
+00:04:17,423 --> 00:04:20,817
+Ashamed, he ran away from
+home for several weeks.
+
+67
+00:04:21,817 --> 00:04:26,127
+Two years later, he tried again,
+at Pachaiyappa's College in Madras.
+
+68
+00:04:26,127 --> 00:04:28,473
+Once more he excelled in mathematics.
+
+69
+00:04:28,473 --> 00:04:31,198
+Once more he failed nearly everything else.
+
+70
+00:04:31,198 --> 00:04:32,783
+He left without a degree.
+
+71
+00:04:33,783 --> 00:04:37,641
+For the next five years, Ramanujan
+lived on the edge of poverty.
+
+72
+00:04:37,641 --> 00:04:41,439
+He tutored students when he could,
+and at times he went hungry.
+
+73
+00:04:41,439 --> 00:04:43,971
+All the while, the notebooks kept growing.
+
+74
+00:04:44,971 --> 00:04:49,774
+In 1909, following custom, his mother
+arranged his marriage to Janaki,
+
+75
+00:04:49,774 --> 00:04:50,734
+a girl of ten.
+
+76
+00:04:50,734 --> 00:04:56,360
+As was usual at the time, she remained
+with her own family for several more years.
+
+77
+00:04:56,360 --> 00:05:00,888
+Now, with a household to support,
+Ramanujan went looking for work,
+
+78
+00:05:00,888 --> 00:05:04,387
+carrying his notebooks from
+one office to the next.
+
+79
+00:05:05,387 --> 00:05:08,482
+In 1910, he found his
+way to Ramachandra Rao,
+
+80
+00:05:08,482 --> 00:05:13,158
+a senior government official and a
+passionate patron of mathematics.
+
+81
+00:05:13,158 --> 00:05:16,734
+Rao was sceptical of the
+shabbily dressed young man.
+
+82
+00:05:16,734 --> 00:05:21,754
+But as Ramanujan led him through
+elliptic integrals and divergent series,
+
+83
+00:05:21,754 --> 00:05:24,230
+his doubts gave way to astonishment.
+
+84
+00:05:24,230 --> 00:05:28,494
+He agreed to support Ramanujan
+with a small monthly allowance.
+
+85
+00:05:29,494 --> 00:05:32,729
+In 1911, Ramanujan
+published his first paper,
+
+86
+00:05:32,729 --> 00:05:37,907
+on Bernoulli numbers, in the Journal
+of the Indian Mathematical Society.
+
+87
+00:05:37,907 --> 00:05:43,515
+And in March 1912, he found a steady
+job: an accounts clerk at the Madras Port
+
+88
+00:05:43,515 --> 00:05:45,816
+Trust, at thirty rupees a month.
+
+89
+00:05:46,816 --> 00:05:50,083
+His superiors, including
+the Port Trust's chairman,
+
+90
+00:05:50,083 --> 00:05:53,414
+Sir Francis Spring, quietly
+encouraged his research.
+
+91
+00:05:53,414 --> 00:05:56,168
+Ramanujan finished his office work quickly,
+
+92
+00:05:56,168 --> 00:05:59,114
+and spent the rest of
+his time on mathematics.
+
+93
+00:05:59,114 --> 00:06:04,430
+But to be truly understood, his work needed
+the attention of the experts in Europe.
+
+94
+00:06:11,930 --> 00:06:17,337
+With the help of his supporters, Ramanujan
+wrote to leading mathematicians in
+
+95
+00:06:17,337 --> 00:06:17,898
+Britain.
+
+96
+00:06:17,898 --> 00:06:20,005
+The replies were discouraging.
+
+97
+00:06:20,005 --> 00:06:21,830
+One offered polite advice.
+
+98
+00:06:21,830 --> 00:06:24,709
+Others returned his work without comment.
+
+99
+00:06:24,709 --> 00:06:28,570
+Then, on the sixteenth of
+January, 1913, he wrote to G.
+
+100
+00:06:28,570 --> 00:06:28,711
+H.
+
+101
+00:06:28,711 --> 00:06:30,045
+Hardy at Cambridge.
+
+102
+00:06:31,045 --> 00:06:37,145
+Dear Sir, I beg to introduce myself to you
+as a clerk in the Accounts Department of
+
+103
+00:06:37,145 --> 00:06:42,804
+the Port Trust Office at Madras, on a
+salary of only twenty pounds per annum.
+
+104
+00:06:42,804 --> 00:06:48,978
+I have had no university education, but I
+have undergone the ordinary school course.
+
+105
+00:06:48,978 --> 00:06:54,931
+I have not trodden through the conventional
+regular course which is followed in a
+
+106
+00:06:54,931 --> 00:06:59,561
+university course, but I am
+striking out a new path for myself.
+
+107
+00:07:01,361 --> 00:07:04,307
+Hardy was thirty-five, a Fellow of Trinity,
+
+108
+00:07:04,307 --> 00:07:06,911
+and a champion of rigour: the careful,
+
+109
+00:07:06,911 --> 00:07:11,090
+step-by-step proof that is the
+bedrock of modern mathematics.
+
+110
+00:07:11,090 --> 00:07:15,544
+Strangers often sent him papers
+claiming to solve great problems.
+
+111
+00:07:15,544 --> 00:07:17,531
+Most were the work of cranks.
+
+112
+00:07:17,531 --> 00:07:19,860
+At first, he set the letter aside.
+
+113
+00:07:20,860 --> 00:07:23,717
+But the formulas would not leave him alone.
+
+114
+00:07:23,717 --> 00:07:29,299
+There were strange infinite series, and
+continued fractions: fractions nested inside
+
+115
+00:07:29,299 --> 00:07:34,549
+fractions, without end, that somehow
+collapsed into exact and beautiful values.
+
+116
+00:07:35,549 --> 00:07:40,454
+That evening, Hardy took the letter to
+his colleague and closest collaborator,
+
+117
+00:07:40,454 --> 00:07:41,963
+John Edensor Littlewood.
+
+118
+00:07:41,963 --> 00:07:45,673
+By the end of the night, the
+two men had reached a verdict.
+
+119
+00:07:45,673 --> 00:07:46,994
+This was not a fraud.
+
+120
+00:07:46,994 --> 00:07:48,754
+It was the work of a genius.
+
+121
+00:07:49,754 --> 00:07:53,003
+Some of the results were
+already known in Europe.
+
+122
+00:07:53,003 --> 00:07:54,329
+A few were mistaken.
+
+123
+00:07:54,329 --> 00:07:58,505
+But those that were new revealed
+a mind of extraordinary power,
+
+124
+00:07:58,505 --> 00:08:00,030
+working entirely alone.
+
+125
+00:08:00,030 --> 00:08:01,687
+Hardy wrote back at once.
+
+126
+00:08:01,687 --> 00:08:03,013
+He asked for proofs.
+
+127
+00:08:03,013 --> 00:08:07,720
+And he began to plan something bolder:
+to bring Ramanujan to Cambridge.
+
+128
+00:08:15,220 --> 00:08:16,687
+There was an obstacle.
+
+129
+00:08:16,687 --> 00:08:19,489
+For an orthodox Brahmin, crossing the sea,
+
+130
+00:08:19,489 --> 00:08:24,826
+the kala pani, or black water, meant
+losing caste: being cut off from family and
+
+131
+00:08:24,826 --> 00:08:25,493
+community.
+
+132
+00:08:25,493 --> 00:08:29,830
+At first, Ramanujan refused, and
+his mother would not hear of it.
+
+133
+00:08:30,830 --> 00:08:33,979
+Early in 1914, Hardy's
+colleague Eric Neville,
+
+134
+00:08:33,979 --> 00:08:37,881
+visiting Madras to lecture,
+pressed the invitation again.
+
+135
+00:08:37,881 --> 00:08:39,934
+This time, the answer changed.
+
+136
+00:08:39,934 --> 00:08:45,479
+According to family accounts, Ramanujan's
+mother dreamed that the family goddess,
+
+137
+00:08:45,479 --> 00:08:50,203
+Namagiri, commanded her not to stand
+in the way of her son's destiny.
+
+138
+00:08:51,203 --> 00:08:55,372
+Ramanujan cut his long hair,
+learned to wear Western clothes,
+
+139
+00:08:55,372 --> 00:08:57,970
+and on the seventeenth of March, 1914,
+
+140
+00:08:57,970 --> 00:09:00,841
+he boarded the steamship Nevasa at Madras.
+
+141
+00:09:00,841 --> 00:09:04,805
+He left behind his mother, his
+father, and his young wife.
+
+142
+00:09:04,805 --> 00:09:07,744
+Nearly a month later, he arrived in London.
+
+143
+00:09:08,744 --> 00:09:11,332
+Neville met him and took him to Cambridge.
+
+144
+00:09:11,332 --> 00:09:14,043
+Soon he moved into rooms at Trinity College,
+
+145
+00:09:14,043 --> 00:09:17,185
+in Whewell's Court, a few
+minutes' walk from Hardy.
+
+146
+00:09:17,185 --> 00:09:22,175
+He had arrived at one of the great centres
+of mathematical learning in the world.
+
+147
+00:09:22,175 --> 00:09:25,256
+In less than four months,
+Britain would be at war.
+
+148
+00:09:32,956 --> 00:09:37,937
+The partnership that followed is one of
+the most remarkable in the history of
+
+149
+00:09:37,937 --> 00:09:38,454
+science.
+
+150
+00:09:38,454 --> 00:09:40,719
+Hardy and Ramanujan were opposites.
+
+151
+00:09:40,719 --> 00:09:43,177
+Hardy was an atheist, a cricket lover,
+
+152
+00:09:43,177 --> 00:09:46,541
+a rationalist who trusted
+only what could be proved.
+
+153
+00:09:46,541 --> 00:09:48,546
+Ramanujan was deeply religious.
+
+154
+00:09:48,546 --> 00:09:53,527
+He is said to have remarked that an
+equation had no meaning for him unless it
+
+155
+00:09:53,527 --> 00:09:55,274
+expressed a thought of God.
+
+156
+00:09:56,274 --> 00:10:01,701
+Hardy soon discovered that Ramanujan's
+knowledge was as patchy as it was profound.
+
+157
+00:10:01,701 --> 00:10:06,533
+Working alone, he had rediscovered
+results that had taken Europe's finest
+
+158
+00:10:06,533 --> 00:10:08,916
+mathematicians a century to develop.
+
+159
+00:10:08,916 --> 00:10:13,748
+Yet he had never learned some of the
+most basic ideas of modern analysis.
+
+160
+00:10:14,748 --> 00:10:19,746
+The limitations of his knowledge
+were as startling as its profundity.
+
+161
+00:10:19,746 --> 00:10:25,178
+Here was a man who could work out
+modular equations and theorems of complex
+
+162
+00:10:25,178 --> 00:10:27,858
+multiplication, to orders unheard of;
+
+163
+00:10:27,858 --> 00:10:33,652
+and yet he had never heard of a doubly
+periodic function or of Cauchy's theorem,
+
+164
+00:10:33,652 --> 00:10:39,519
+and had indeed but the vaguest idea of
+what a function of a complex variable was.
+
+165
+00:10:41,319 --> 00:10:46,006
+Hardy faced a delicate task: to teach
+Ramanujan the discipline of proof,
+
+166
+00:10:46,006 --> 00:10:49,001
+without breaking the
+spell of his inspiration.
+
+167
+00:10:49,001 --> 00:10:50,368
+They found a balance.
+
+168
+00:10:50,368 --> 00:10:55,316
+Ramanujan brought the ideas, sometimes
+half a dozen new theorems in a single
+
+169
+00:10:55,316 --> 00:10:55,836
+morning.
+
+170
+00:10:55,836 --> 00:10:58,506
+Hardy and Littlewood helped to test them,
+
+171
+00:10:58,506 --> 00:11:02,932
+to prove them, and to set them in
+a form the world could understand.
+
+172
+00:11:03,932 --> 00:11:07,356
+Consider one of their
+great problems: partitions.
+
+173
+00:11:07,356 --> 00:11:12,038
+A partition is a way of writing a
+number as a sum of whole numbers.
+
+174
+00:11:12,038 --> 00:11:15,531
+The number four can be
+written in five ways: four;
+
+175
+00:11:15,531 --> 00:11:16,579
+three plus one;
+
+176
+00:11:16,579 --> 00:11:17,488
+two plus two;
+
+177
+00:11:17,488 --> 00:11:19,025
+two plus one plus one;
+
+178
+00:11:19,025 --> 00:11:21,470
+and one plus one plus one plus one.
+
+179
+00:11:22,470 --> 00:11:25,179
+As numbers grow, the partitions explode.
+
+180
+00:11:25,179 --> 00:11:26,398
+Ten has forty-two.
+
+181
+00:11:26,398 --> 00:11:30,258
+One hundred has more than one
+hundred and ninety million.
+
+182
+00:11:30,258 --> 00:11:32,764
+Two hundred has nearly four trillion.
+
+183
+00:11:32,764 --> 00:11:35,269
+Counting them one by one is hopeless.
+
+184
+00:11:36,269 --> 00:11:39,697
+So Hardy and Ramanujan
+set out to find a formula.
+
+185
+00:11:39,697 --> 00:11:43,335
+In 1918, they published it:
+a remarkable expression,
+
+186
+00:11:43,335 --> 00:11:47,392
+built from pi, square roots,
+and the exponential function.
+
+187
+00:11:47,392 --> 00:11:53,198
+To test it, their colleague Percy MacMahon
+worked out the partitions of two hundred
+
+188
+00:11:53,198 --> 00:11:53,758
+by hand.
+
+189
+00:11:53,758 --> 00:11:58,795
+Using just a handful of terms, their
+formula landed on the exact answer,
+
+190
+00:11:58,795 --> 00:12:00,613
+correct to the last digit.
+
+191
+00:12:01,613 --> 00:12:05,275
+Along the way, they created
+a powerful new technique,
+
+192
+00:12:05,275 --> 00:12:09,145
+the circle method, which
+mathematicians still use today.
+
+193
+00:12:09,145 --> 00:12:12,807
+Ramanujan also noticed
+patterns no one had suspected.
+
+194
+00:12:12,807 --> 00:12:18,611
+Take any number ending in four or nine: its
+number of partitions is always divisible
+
+195
+00:12:18,611 --> 00:12:19,163
+by five.
+
+196
+00:12:19,163 --> 00:12:22,480
+Similar patterns hold for
+seven, and for eleven.
+
+197
+00:12:23,480 --> 00:12:24,826
+Then there was pi.
+
+198
+00:12:24,826 --> 00:12:29,762
+In 1914, Ramanujan published
+seventeen new series for one over pi.
+
+199
+00:12:29,762 --> 00:12:35,521
+The most famous of them converges with
+breathtaking speed: each new term adds
+
+200
+00:12:35,521 --> 00:12:37,690
+roughly eight correct digits.
+
+201
+00:12:37,690 --> 00:12:43,673
+Seventy years later, in 1985, it was used
+to calculate pi to more than seventeen
+
+202
+00:12:43,673 --> 00:12:44,795
+million digits.
+
+203
+00:12:45,795 --> 00:12:51,370
+In March 1916, Cambridge awarded Ramanujan
+a Bachelor of Arts degree by research,
+
+204
+00:12:51,370 --> 00:12:54,055
+the forerunner of the modern doctorate,
+
+205
+00:12:54,055 --> 00:12:58,323
+for his work on highly composite
+numbers: numbers like twelve,
+
+206
+00:12:58,323 --> 00:13:04,105
+sixty, and three hundred and sixty, that
+have more divisors than any smaller number.
+
+207
+00:13:04,105 --> 00:13:08,579
+The man who had twice failed
+college now held a Cambridge degree.
+
+208
+00:13:16,279 --> 00:13:18,153
+But Cambridge was not home.
+
+209
+00:13:18,153 --> 00:13:20,581
+The war had emptied the university.
+
+210
+00:13:20,581 --> 00:13:23,495
+Littlewood left to serve in the artillery.
+
+211
+00:13:23,495 --> 00:13:26,826
+Colleges became barracks
+and military hospitals.
+
+212
+00:13:26,826 --> 00:13:30,295
+And the English winters
+were long, dark, and cold.
+
+213
+00:13:31,295 --> 00:13:35,824
+Ramanujan was a strict vegetarian who
+cooked his own meals in his rooms.
+
+214
+00:13:35,824 --> 00:13:40,039
+With wartime shortages, the foods
+he depended on were hard to find.
+
+215
+00:13:40,039 --> 00:13:44,254
+It was said that he would sometimes
+work for thirty hours straight,
+
+216
+00:13:44,254 --> 00:13:45,890
+and then sleep for twenty.
+
+217
+00:13:46,890 --> 00:13:48,259
+He was deeply lonely.
+
+218
+00:13:48,259 --> 00:13:52,564
+Few people in England shared his
+language, his faith, or his food.
+
+219
+00:13:52,564 --> 00:13:56,412
+Hardy admired him enormously,
+but Hardy was a reserved man,
+
+220
+00:13:56,412 --> 00:14:01,304
+uneasy with personal matters, and their
+friendship lived almost entirely in
+
+221
+00:14:01,304 --> 00:14:02,086
+mathematics.
+
+222
+00:14:02,086 --> 00:14:04,043
+Letters from home grew scarce.
+
+223
+00:14:04,043 --> 00:14:08,739
+Some of his wife's letters, it was
+later said, never reached him at all.
+
+224
+00:14:09,739 --> 00:14:13,469
+In the spring of 1917,
+Ramanujan fell seriously ill.
+
+225
+00:14:13,469 --> 00:14:16,841
+Doctors suspected
+tuberculosis, then incurable.
+
+226
+00:14:16,841 --> 00:14:22,795
+Some modern researchers believe he may
+instead have suffered from a parasitic liver
+
+227
+00:14:22,795 --> 00:14:25,952
+infection, picked up years earlier in India.
+
+228
+00:14:25,952 --> 00:14:29,467
+Whatever its cause, the
+illness never let him go.
+
+229
+00:14:30,467 --> 00:14:35,632
+For the next two years, he moved between
+hospitals and nursing homes: in Cambridge,
+
+230
+00:14:35,632 --> 00:14:38,743
+in the Mendip Hills, in
+Derbyshire, and in London.
+
+231
+00:14:38,743 --> 00:14:43,161
+He was a difficult patient, homesick,
+refusing food he could not trust,
+
+232
+00:14:43,161 --> 00:14:45,339
+and sinking into a deep depression.
+
+233
+00:14:46,339 --> 00:14:52,192
+In early 1918, at one of his lowest moments,
+Ramanujan tried to take his own life.
+
+234
+00:14:52,192 --> 00:14:53,048
+He survived.
+
+235
+00:14:53,048 --> 00:14:57,688
+Hardy, it is said, intervened with
+the authorities on his behalf.
+
+236
+00:15:00,188 --> 00:15:05,181
+It was during this dark period that one
+of the most famous stories in mathematics
+
+237
+00:15:05,181 --> 00:15:05,859
+took place.
+
+238
+00:15:05,859 --> 00:15:10,852
+Hardy came to visit his friend at a nursing
+home in Putney, in south-west London.
+
+239
+00:15:11,852 --> 00:15:16,352
+I remember once going to see him
+when he was lying ill at Putney.
+
+240
+00:15:16,352 --> 00:15:20,090
+I had ridden in taxi-cab
+number seventeen twenty-nine,
+
+241
+00:15:20,090 --> 00:15:24,244
+and remarked that the number
+seemed to me rather a dull one,
+
+242
+00:15:24,244 --> 00:15:27,636
+and that I hoped it was
+not an unfavourable omen.
+
+243
+00:15:27,636 --> 00:15:30,959
+No, he replied, it is a
+very interesting number;
+
+244
+00:15:30,959 --> 00:15:36,775
+it is the smallest number expressible as
+the sum of two cubes in two different ways.
+
+245
+00:15:38,375 --> 00:15:40,450
+One cubed, plus twelve cubed.
+
+246
+00:15:40,450 --> 00:15:42,381
+Nine cubed, plus ten cubed.
+
+247
+00:15:42,381 --> 00:15:44,671
+Both make seventeen twenty-nine.
+
+248
+00:15:44,671 --> 00:15:48,605
+Even gravely ill, Ramanujan
+saw numbers as old friends.
+
+249
+00:15:48,605 --> 00:15:54,400
+As Littlewood once put it, every positive
+integer was one of Ramanujan's personal
+
+250
+00:15:54,400 --> 00:15:54,973
+friends.
+
+251
+00:16:02,473 --> 00:16:06,013
+Even as his body failed,
+recognition finally came.
+
+252
+00:16:06,013 --> 00:16:11,820
+On the second of May, 1918, Ramanujan was
+elected a Fellow of the Royal Society of
+
+253
+00:16:11,820 --> 00:16:14,865
+London, one of the youngest in its history,
+
+254
+00:16:14,865 --> 00:16:18,689
+and only the second Indian
+ever to receive the honour.
+
+255
+00:16:19,689 --> 00:16:24,763
+In October of the same year, he became
+the first Indian to be elected a Fellow of
+
+256
+00:16:24,763 --> 00:16:26,454
+Trinity College, Cambridge.
+
+257
+00:16:26,454 --> 00:16:29,524
+The news travelled to
+India, and made him famous.
+
+258
+00:16:29,524 --> 00:16:34,786
+The clerk from the Madras Port Trust now
+stood among the most honoured scientists of
+
+259
+00:16:34,786 --> 00:16:35,350
+his time.
+
+260
+00:16:36,350 --> 00:16:38,646
+In November 1918, the war ended.
+
+261
+00:16:38,646 --> 00:16:41,803
+Ships could once again sail safely to India.
+
+262
+00:16:41,803 --> 00:16:47,542
+His health had improved, a little, and
+his doctors decided he was well enough to
+
+263
+00:16:47,542 --> 00:16:48,403
+travel home.
+
+264
+00:16:55,903 --> 00:16:59,318
+In late February 1919,
+Ramanujan sailed for India.
+
+265
+00:16:59,318 --> 00:17:03,279
+He arrived in Bombay in March,
+and travelled on to Madras,
+
+266
+00:17:03,279 --> 00:17:05,669
+where admirers waited to greet him.
+
+267
+00:17:05,669 --> 00:17:11,064
+His wife Janaki joined him, and cared
+for him through the months that followed.
+
+268
+00:17:12,064 --> 00:17:14,875
+He was painfully thin, and often in pain.
+
+269
+00:17:14,875 --> 00:17:16,862
+Yet he never stopped working.
+
+270
+00:17:16,862 --> 00:17:21,455
+Lying in bed, he filled loose sheets
+of paper with new mathematics.
+
+271
+00:17:21,455 --> 00:17:25,910
+In January 1920, he wrote what
+would be his last letter to Hardy.
+
+272
+00:17:26,910 --> 00:17:31,800
+I am extremely sorry for not writing
+you a single letter up to now.
+
+273
+00:17:31,800 --> 00:17:37,932
+I discovered very interesting functions
+recently, which I call mock theta functions.
+
+274
+00:17:39,732 --> 00:17:41,143
+Mock theta functions.
+
+275
+00:17:41,143 --> 00:17:43,695
+Ramanujan described seventeen of them,
+
+276
+00:17:43,695 --> 00:17:47,994
+with no definition: only examples,
+and a few cryptic properties.
+
+277
+00:17:47,994 --> 00:17:53,637
+It would take mathematicians more than
+eighty years to understand what he had found.
+
+278
+00:17:54,637 --> 00:17:59,221
+On the twenty-sixth of April,
+1920, Srinivasa Ramanujan died.
+
+279
+00:17:59,221 --> 00:18:01,325
+He was thirty-two years old.
+
+280
+00:18:06,325 --> 00:18:07,687
+Hardy was devastated.
+
+281
+00:18:07,687 --> 00:18:10,736
+He spent much of the rest
+of his life studying,
+
+282
+00:18:10,736 --> 00:18:13,720
+explaining, and championing
+his friend's work.
+
+283
+00:18:13,720 --> 00:18:14,303
+He wrote:
+
+284
+00:18:15,303 --> 00:18:19,088
+I owe more to him than to
+anyone else in the world,
+
+285
+00:18:19,088 --> 00:18:25,172
+with one exception, and my association
+with him is the one romantic incident in my
+
+286
+00:18:25,172 --> 00:18:25,543
+life.
+
+287
+00:18:33,543 --> 00:18:36,973
+Ramanujan left behind nearly
+four thousand results,
+
+288
+00:18:36,973 --> 00:18:39,798
+almost all of them recorded without proof.
+
+289
+00:18:39,798 --> 00:18:43,564
+For a century, mathematicians
+have worked to prove them.
+
+290
+00:18:43,564 --> 00:18:47,128
+The overwhelming majority
+have turned out to be true.
+
+291
+00:18:48,128 --> 00:18:53,939
+In 1976, the American mathematician George
+Andrews was searching through a box of
+
+292
+00:18:53,939 --> 00:18:57,167
+old papers in the library
+of Trinity College.
+
+293
+00:18:57,167 --> 00:19:02,189
+Inside, he found more than a hundred
+pages in Ramanujan's handwriting,
+
+294
+00:19:02,189 --> 00:19:04,485
+from the final year of his life.
+
+295
+00:19:04,485 --> 00:19:07,139
+It became known as the lost notebook.
+
+296
+00:19:08,139 --> 00:19:10,147
+And the mock theta functions?
+
+297
+00:19:10,147 --> 00:19:13,817
+In 2002, a young Dutch
+mathematician, Sander Zwegers,
+
+298
+00:19:13,817 --> 00:19:17,279
+finally revealed the hidden
+structure behind them.
+
+299
+00:19:17,279 --> 00:19:21,780
+Today, they appear in places
+Ramanujan could never have imagined,
+
+300
+00:19:21,780 --> 00:19:24,619
+including the mathematics of black holes,
+
+301
+00:19:24,619 --> 00:19:25,866
+and string theory.
+
+302
+00:19:26,866 --> 00:19:29,766
+His ideas live on in computer algorithms,
+
+303
+00:19:29,766 --> 00:19:33,445
+in signal processing, and
+in the design of networks.
+
+304
+00:19:33,445 --> 00:19:36,345
+His name is attached to Ramanujan graphs,
+
+305
+00:19:36,345 --> 00:19:40,095
+the Ramanujan tau function,
+the Ramanujan conjecture,
+
+306
+00:19:40,095 --> 00:19:44,127
+and to the Hardy-Ramanujan
+number, seventeen twenty-nine.
+
+307
+00:19:45,127 --> 00:19:49,896
+Hardy once rated mathematicians on
+a scale from zero to one hundred,
+
+308
+00:19:49,896 --> 00:19:51,579
+for pure natural talent.
+
+309
+00:19:51,579 --> 00:19:53,542
+He gave himself twenty-five.
+
+310
+00:19:53,542 --> 00:19:54,874
+Littlewood, thirty.
+
+311
+00:19:54,874 --> 00:19:57,118
+The great David Hilbert, eighty.
+
+312
+00:19:57,118 --> 00:19:59,292
+Ramanujan, he gave one hundred.
+
+313
+00:20:00,292 --> 00:20:03,754
+In India, his birthday, the
+twenty-second of December,
+
+314
+00:20:03,754 --> 00:20:06,447
+is celebrated as National Mathematics Day.
+
+315
+00:20:06,447 --> 00:20:09,139
+His house in Kumbakonam welcomes visitors,
+
+316
+00:20:09,139 --> 00:20:12,665
+and students around the world
+still open his notebooks,
+
+317
+00:20:12,665 --> 00:20:14,332
+searching for what he saw.
+
+318
+00:20:15,332 --> 00:20:20,413
+Srinivasa Ramanujan had no formal training,
+few resources, and very little time.
+
+319
+00:20:20,413 --> 00:20:24,669
+He came from a small temple town,
+with a borrowed book and a slate.
+
+320
+00:20:24,669 --> 00:20:26,892
+He lived for just thirty-two years.
+
+321
+00:20:26,892 --> 00:20:31,655
+More than a century later, the world
+is still catching up with what he saw.
+

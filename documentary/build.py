@@ -66,6 +66,8 @@ def plan(vo_dir, media_dir):
         for v, wgt in zip(vis, weights):
             sd = d * wgt / tw
             spec = resolver.resolve(v, sd + XF, beat=b)
+            if "quote" in b["vis"] and spec["type"] == "photo":
+                spec["shift"] = -420.0  # leave the right half for the quotation
             items.append(dict(t0=s, dur=sd + XF, spec=spec))
             cap = spec.get("caption")
             if cap:
@@ -175,6 +177,8 @@ def render_overlay(spec):
         s = skia.Surface(w, h)
         c = s.getCanvas()
         c.clear(skia.Color(0, 0, 0, 0))
+        c.drawPaint(skia.Paint(Shader=skia.GradientShader.MakeLinear(
+            points=[(0, 0), (w, 0)], colors=[skia.Color(0, 0, 0, 150), skia.Color(0, 0, 0, 0)])))
         c.drawRect(skia.Rect.MakeXYWH(0, 20, 5, 120), paint(GOLD, 0.95))
         draw_text(c, spec["title"], 30, 78, font(SERIF, 54, 600), (250, 245, 235), 1.0, shadow=10)
         if spec.get("sub"):
@@ -185,7 +189,7 @@ def render_overlay(spec):
         s = skia.Surface(w, h)
         c = s.getCanvas()
         c.clear(skia.Color(0, 0, 0, 0))
-        draw_text(c, spec["text"].upper(), 4, 38, font(SANS, 20, 500), (235, 228, 210), 0.85, shadow=6, tracking=4)
+        draw_text(c, spec["text"].upper(), 4, 38, font(SANS, 24, 500), (240, 234, 218), 0.9, shadow=8, tracking=4)
         return 70, 52, s.makeImageSnapshot().toarray()
     if kind == "quote":
         s = skia.Surface(W, H)
@@ -214,11 +218,14 @@ def make_shot(spec):
     if k == "photo":
         return engine.Photo(spec["path"], spec["_dur"], z0=spec.get("z0", 1.0), z1=spec.get("z1", 1.12),
                             p0=tuple(spec.get("p0", (0.5, 0.5))), p1=tuple(spec.get("p1", (0.5, 0.5))),
-                            tone=spec.get("tone", "sepia"), fit=spec.get("fit"))
+                            tone=spec.get("tone", "sepia"), fit=spec.get("fit"), contrast=spec.get("contrast", 1.05),
+                            shift=spec.get("shift", 0.0))
     if k == "footage":
         return engine.Footage(spec["path"], spec["_dur"], start=spec.get("start", 0.0),
                               speed=spec.get("speed", 1.0), tone=spec.get("tone", "sepia"),
-                              clip_len=spec.get("clip_len"), hflip=spec.get("hflip", False))
+                              clip_len=spec.get("clip_len"), hflip=spec.get("hflip", False),
+                              seg_end=spec.get("seg_end"), crop=spec.get("crop"), zoom=spec.get("zoom", 1.0),
+                              contrast=spec.get("contrast", 1.08))
     raise ValueError(k)
 
 
@@ -247,7 +254,7 @@ def render_segment(args):
             lt = t - items[i]["t0"]
             img = sh.frame(lt)
             if sh.look != "anim":
-                img = engine.film_look(img, fi, amount=3.0 if sh.look == "photo" else 2.0)
+                img = engine.film_look(img, fi, amount=2.0 if sh.look == "photo" else 1.0)
             layers.append((items[i], img))
         if not layers:
             frame = np.zeros((H, W, 3), np.uint8)
@@ -391,7 +398,7 @@ def main():
         "-map", "0:v", "-map", "1:a", "-map", "2:s", "-map_metadata", "3", "-map_chapters", "3",
         "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-c:s", "mov_text",
         "-metadata:s:a:0", "language=eng", "-metadata:s:s:0", "language=eng", "-metadata:s:s:0", "title=English",
-        "-af", "loudnorm=I=-16:TP=-1.5:LRA=11", "-ar", "48000", "-movflags", "+faststart", "-shortest", final]
+        "-af", "loudnorm=I=-16:TP=-1.5:LRA=11", "-ar", "48000", "-movflags", "+faststart", final]
     subprocess.run(cmd, check=True)
     print("wrote", final)
 
