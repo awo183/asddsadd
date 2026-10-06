@@ -8,8 +8,8 @@ cloud sandbox a proxy adds it). Fails loudly instead of falling back to any
 other engine.
 
 Each sentence is requested with character timestamps, cached (re-runs cost
-nothing), sped up slightly with a pitch-preserving stretch (VOICE_TEMPO, since
-eleven_v4 ignores the speed setting) and trimmed of silence. Writes, per segment, build/titanic/<lang>/voice/
+nothing) and trimmed of silence. The voice is used exactly as ElevenLabs
+renders it (VOICE_TEMPO can stretch it, but that adds audible artefacts). Writes, per segment, build/titanic/<lang>/voice/
 <segment>.wav plus timings.json:
   {segment: {"duration": s, "sentences": [start, ...],
              "words": [[word, start, end, sentence_index], ...]}}
@@ -41,7 +41,7 @@ VOICE = os.environ.get("ELEVEN_VOICE", "6xPz2opT0y5qtoRh1U1Y")   # "Christian"
 SETTINGS = {"stability": 0.5, "similarity_boost": 0.8, "style": 0.0, "use_speaker_boost": True,
             "speed": float(os.environ.get("ELEVEN_SPEED", "1.07"))}
 SR = 44100
-TEMPO = float(os.environ.get("VOICE_TEMPO", "1.05"))   # eleven_v4 ignores "speed"; stretch instead
+TEMPO = float(os.environ.get("VOICE_TEMPO", "1.0"))    # optional stretch; off: it colours the voice
 PAUSE = 0.30            # between sentences inside a segment
 OUT = os.path.join(timeline.CBUILD, "voice")
 CACHE = os.path.join(timeline.BUILD, "titanic", "tts_cache")

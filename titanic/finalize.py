@@ -1,7 +1,7 @@
 """Join the rendered scenes with the mix and write, for the current FILM_LANG:
 the 1080p film (with a soft subtitle track), a 720p copy under 26 MB, an .srt
-and a voice-only MP3. The mix is normalised to -16 LUFS with two-pass loudnorm."""
-import json
+and a voice-only MP3. The audio arrives already mastered to -16 LUFS from
+audio.py (fixed gain + gentle limiter); this step only encodes and measures."""
 import os
 import re
 import subprocess
@@ -131,18 +131,6 @@ def run(cmd, capture=False):
     return r.stderr if capture else None
 
 
-def loudnorm(src, dst, target=-16.0, tp=-2.0, lra=11, extra=()):
-    """Two-pass EBU R128 normalisation (linear when possible)."""
-    err = run(["ffmpeg", "-hide_banner", "-nostats", "-i", src, *extra, "-af",
-               f"loudnorm=I={target}:TP={tp}:LRA={lra}:print_format=json", "-f", "null", "-"],
-              capture=True)
-    m = json.loads(err[err.rindex("{"):err.rindex("}") + 1])
-    af = (f"loudnorm=I={target}:TP={tp}:LRA={lra}:measured_I={m['input_i']}:"
-          f"measured_TP={m['input_tp']}:measured_LRA={m['input_lra']}:"
-          f"measured_thresh={m['input_thresh']}:offset={m['target_offset']}:linear=true")
-    return af
-
-
 def measure(path):
     err = run(["ffmpeg", "-hide_banner", "-nostats", "-i", path, "-map", "0:a:0", "-af",
                "ebur128=peak=true", "-f", "null", "-"], capture=True)
@@ -159,16 +147,12 @@ def main():
     joined = os.path.join(B, "joined.mp4")
     run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i",
          os.path.join(B, "scenes", "list.txt"), "-c", "copy", joined])
-    mix = os.path.join(B, "mix.wav")
-    mixn = os.path.join(B, "mix_norm.wav")
-    af = loudnorm(mix, mixn)
-    run(["ffmpeg", "-v", "error", "-y", "-i", mix, "-af", af, "-ar", "48000", "-c:a", "pcm_s24le",
-         mixn])
+    mix = os.path.join(B, "mix.wav")          # already mastered to -16 LUFS by audio.py
     master = os.path.join(OUT, f"{NAME}.mp4")
-    run(["ffmpeg", "-v", "error", "-y", "-i", joined, "-i", mixn, "-i", srt,
+    run(["ffmpeg", "-v", "error", "-y", "-i", joined, "-i", mix, "-i", srt,
          "-map", "0:v", "-map", "1:a", "-map", "2:s", "-c:v", "libx264", "-preset", "slow",
          "-crf", "20", "-maxrate", "9M", "-bufsize", "18M", "-pix_fmt", "yuv420p", "-r", "30",
-         "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-shortest",
+         "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-shortest",
          "-c:s", "mov_text", "-metadata:s:s:0", f"language={SUB_LANG}",
          "-metadata:s:a:0", f"language={SUB_LANG}", "-metadata", f"title={TITLE}",
          "-movflags", "+faststart", master])
@@ -176,18 +160,19 @@ def main():
     log = os.path.join(B, "x264pass")
     dur = sum(s["dur"] for s in timeline.build())
     kbps = min(2400, int(25.0 * 8 * 1000 / dur - 128 - 20))      # stays under ~25 MB
-    base = ["ffmpeg", "-v", "error", "-y", "-i", master, "-vf", "scale=1280:720:flags=lanczos",
-            "-c:v", "libx264", "-preset", "slow", "-b:v", f"{kbps}k", "-passlogfile", log]
-    run(base + ["-pass", "1", "-an", "-f", "mp4", "/dev/null"])
-    run(base + ["-pass", "2", "-map", "0:v", "-map", "0:a", "-map", "0:s", "-c:a", "aac",
-                "-b:a", "128k", "-c:s", "mov_text", "-metadata:s:s:0", f"language={SUB_LANG}",
-                "-movflags", "+faststart", small])
-    voice = os.path.join(B, "stems", "voice.wav")
-    if os.path.exists(voice):
-        vaf = loudnorm(voice, None)
-        run(["ffmpeg", "-v", "error", "-y", "-i", voice, "-af", vaf, "-ac", "1", "-ar", "44100",
-             "-c:a", "libmp3lame", "-b:a", "160k", "-metadata", f"title={TITLE} (narration)",
-             os.path.join(OUT, f"{NAME}-narration.mp3")])
+    # video from the master, audio straight from the mastered mix (no AAC-to-AAC re-encode)
+    vid = ["-vf", "scale=1280:720:flags=lanczos", "-c:v", "libx264", "-preset", "slow",
+           "-b:v", f"{kbps}k", "-passlogfile", log]
+    run(["ffmpeg", "-v", "error", "-y", "-i", master, *vid, "-pass", "1", "-an", "-f", "mp4",
+         "/dev/null"])
+    run(["ffmpeg", "-v", "error", "-y", "-i", master, "-i", mix, *vid, "-pass", "2",
+         "-map", "0:v", "-map", "1:a", "-map", "0:s", "-c:a", "aac", "-b:a", "160k",
+         "-ar", "48000", "-shortest", "-c:s", "mov_text", "-metadata:s:s:0", f"language={SUB_LANG}",
+         "-metadata:s:a:0", f"language={SUB_LANG}", "-movflags", "+faststart", small])
+    voice = os.path.join(B, "voice_master.wav")
+    run(["ffmpeg", "-v", "error", "-y", "-i", voice, "-ac", "1", "-ar", "44100",
+         "-c:a", "libmp3lame", "-b:a", "192k", "-metadata", f"title={TITLE} (narration)",
+         os.path.join(OUT, f"{NAME}-narration.mp3")])
     i, tp = measure(master)
     size = os.path.getsize(small) / 1e6
     print(f"wrote {master} ({dur:.1f}s, {i:.1f} LUFS, true peak {tp:.1f} dBFS)")

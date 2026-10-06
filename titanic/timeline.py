@@ -12,15 +12,15 @@ CBUILD = os.path.join(BUILD, "titanic", LANG)
 
 # (scene, seconds before the voice, seconds after it). None = no voice.
 PLAN = [
-    ("hook", 0.6, 0.5),
-    ("title", None, 3.0),
-    ("rules", 0.4, 0.5),
-    ("ferry", 0.4, 0.5),
-    ("night", 0.4, 0.5),
-    ("radio", 0.4, 0.5),
-    ("boats", 0.4, 0.5),
-    ("after", 0.4, 1.6),
-    ("end", None, 6.0),
+    ("hook", 0.6, 0.45),
+    ("title", None, 2.6),
+    ("rules", 0.35, 0.4),
+    ("ferry", 0.35, 0.4),
+    ("night", 0.35, 0.4),
+    ("radio", 0.35, 0.45),
+    ("boats", 0.35, 0.4),
+    ("after", 0.35, 1.5),
+    ("end", None, 5.0),
 ]
 
 

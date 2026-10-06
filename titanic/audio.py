@@ -4,7 +4,9 @@ An original, synthesized explainer score: a curious plucked ostinato over warm
 pads (D dorian), which builds at the collision and the "too late" beat, drops
 away for the last line, and resolves on the end card. Paper slides, pops,
 marker squeaks, counters, whooshes and a Morse "CQD" are synthesized too.
-Music ducks under the voice. Writes build/titanic/<lang>/mix.wav (+ stems).
+Music ducks under the voice. The mix is mastered to -16 LUFS with one fixed
+gain and a gentle look-ahead peak limiter (no dynamic loudness processing).
+Writes build/titanic/<lang>/mix.wav, voice_master.wav (+ stems).
 """
 import json
 import os
@@ -256,6 +258,49 @@ def score(T, scenes):
     return A.reverb(mus, 2.2, 0.28)
 
 
+# ------------------------------------------------------------------ mastering
+TARGET_LUFS = -16.0
+CEILING_DB = -2.0           # sample-peak ceiling; leaves room for AAC overshoot
+
+
+def lufs(x):
+    import pyloudnorm
+    return pyloudnorm.Meter(SR).integrated_loudness(x)
+
+
+def limit(x, ceiling_db=CEILING_DB, lookahead=0.006, release=0.12, block=32):
+    """Transparent look-ahead peak limiter: only touches the rare peaks above the
+    ceiling, with a smooth 6 ms attack and 120 ms release (no pumping)."""
+    c = 10 ** (ceiling_db / 20)
+    peak = np.abs(x).max(axis=1) if x.ndim > 1 else np.abs(x)
+    nb = int(np.ceil(len(peak) / block))
+    pk = np.pad(peak, (0, nb * block - len(peak))).reshape(nb, block).max(axis=1)
+    need = np.clip(1 - c / np.maximum(pk, 1e-9), 0, 1)          # gain reduction needed per block
+    la = max(1, int(lookahead * SR / block))
+    held = np.array([need[i:i + la + 1].max() for i in range(nb)])  # look ahead
+    dec = np.exp(-block / (release * SR))
+    red = np.empty(nb)
+    r = 0.0
+    for i in range(nb):
+        r = max(held[i], r * dec)
+        red[i] = r
+    red = np.convolve(red, np.ones(la) / la, mode="same")             # smooth the attack
+    red = np.maximum(red, need)                                       # never under-limit a block
+    g = 1 - np.interp(np.arange(len(peak)), np.arange(nb) * block + block / 2, red)
+    return x * (g[:, None] if x.ndim > 1 else g)
+
+
+def master(x, target=TARGET_LUFS):
+    """A fixed gain to the target loudness, then the peak limiter; repeated
+    once so the limited result still lands on the target."""
+    for _ in range(3):
+        x = x * 10 ** ((target - lufs(x)) / 20)
+        x = limit(x)
+        if abs(lufs(x) - target) < 0.1:
+            break
+    return x
+
+
 def main():
     scenes = timeline.build()
     T = sum(s["dur"] for s in scenes)
@@ -269,7 +314,6 @@ def main():
             v = v.mean(axis=1)
         v = resample_poly(v, SR, sr) if sr != SR else v
         add(voice, np.stack([v, v], 1), s["start"] + s["voice"], 1.0)
-    voice = A.reverb(voice, 0.4, 0.04)
     envv = A.moving_average(np.abs(voice[:, 0]), int(0.2 * SR))
     envv = np.clip(envv / (np.percentile(envv[envv > 1e-4], 90) * 0.5 + 1e-9), 0, 1)
     duck = 1.0 - 0.72 * A.moving_average(envv, int(0.35 * SR))       # about -11 dB under speech
@@ -287,12 +331,16 @@ def main():
         os.makedirs(os.path.join(timeline.CBUILD, "stems"), exist_ok=True)
         for name, stem in (("voice", voice), ("music", music), ("fx", fx)):
             sf.write(os.path.join(timeline.CBUILD, "stems", f"{name}.wav"),
-                     stem[:nS].astype(np.float32), SR)
+                     stem[:nS].astype(np.float32), SR, subtype="FLOAT")
     mix = (voice + music + fx)[:nS]
     mix[: int(0.05 * SR)] *= np.linspace(0, 1, int(0.05 * SR))[:, None]
-    mix /= max(np.abs(mix).max(), 1e-9) / 0.89
-    sf.write(os.path.join(timeline.CBUILD, "mix.wav"), mix.astype(np.float32), SR, subtype="PCM_24")
-    print(f"mix.wav: {T:.2f}s, {sum(len(v) for v in cues.values())} sound cues")
+    mix = master(mix)
+    sf.write(os.path.join(timeline.CBUILD, "mix.wav"), mix.astype(np.float32), SR, subtype="FLOAT")
+    vo = master(voice[:nS].copy())
+    sf.write(os.path.join(timeline.CBUILD, "voice_master.wav"), vo.astype(np.float32), SR,
+             subtype="FLOAT")
+    print(f"mix.wav: {T:.2f}s, {sum(len(v) for v in cues.values())} sound cues, "
+          f"{lufs(mix):.1f} LUFS, peak {20 * np.log10(np.abs(mix).max()):.1f} dBFS")
 
 
 if __name__ == "__main__":
