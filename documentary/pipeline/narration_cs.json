@@ -1,0 +1,233 @@
+{
+ "language": "cs",
+ "note": "text = what is shown in subtitles; tts = what the voice reads (numbers spelled out with Czech grammar)",
+ "segments": [
+  {
+   "id": "h01",
+   "chapter": "hook",
+   "text": "29. srpna 1949 v sedm hodin ráno vybuchla v kazašské stepi první sovětská atomová bomba, se silou 22 tisíc tun TNT.",
+   "tts": "Devětadvacátého srpna devatenáct set čtyřicet devět, v sedm hodin ráno, vybuchla v kazašské stepi první sovětská atomová bomba, se silou dvaadvaceti tisíc tun té en té."
+  },
+  {
+   "id": "h02",
+   "chapter": "hook",
+   "text": "U nás se dodnes vypráví, že uran do ní vykopali političtí vězni v Jáchymově, kněží, skauti a sedláci. Jenže když si vedle sebe položíte sovětská čísla a archivní záznamy, vyjde vám jiný příběh, a po pravdě ještě horší."
+  },
+  {
+   "id": "h03",
+   "chapter": "hook",
+   "text": "Ukážu vám, odkud se ten uran opravdu vzal, kdo ho kopal a proč desítky tisíc lidí dřely v radioaktivním prachu pro bomby, které přišly až po té první."
+  },
+  {
+   "id": "s204",
+   "chapter": "ch1",
+   "text": "Necelé čtyři měsíce po Hirošimě, 23. listopadu 1945, podepsalo Československo se Sovětským svazem tajnou dohodu o těžbě a dodávkách radioaktivních surovin. Veškerý uran měl jít do SSSR, a to až do konce čtyřicátých let za cenu nižší, než byla na světovém trhu.",
+   "tts": "Necelé čtyři měsíce po Hirošimě, třiadvacátého listopadu devatenáct set čtyřicet pět, podepsalo Československo se Sovětským svazem tajnou dohodu o těžbě a dodávkách radioaktivních surovin. Veškerý uran měl jít do es es es er, a to až do konce čtyřicátých let za cenu nižší, než byla na světovém trhu."
+  },
+  {
+   "id": "s201",
+   "chapter": "ch1",
+   "text": "Moskva totiž spěchala. Po amerických bombách na Japonsko potřeboval Stalin vlastní bombu, a to co nejdřív."
+  },
+  {
+   "id": "s202",
+   "chapter": "ch1",
+   "text": "Vědecky projekt vedl fyzik Igor Kurčatov, nad ním stál šéf tajné policie Lavrentij Berija a díky špionům znali Sověti spoustu amerických tajemství. Chyběla jim ale surovina, uran."
+  },
+  {
+   "id": "s203",
+   "chapter": "ch1",
+   "text": "A jediné známé ložisko uranu, ke kterému měla Rudá armáda po válce přístup, bylo právě v Jáchymově."
+  },
+  {
+   "id": "s101",
+   "chapter": "ch1",
+   "text": "Jáchymov přitom svět znal už dávno, i když kvůli něčemu úplně jinému. 9. ledna 1520 se tu začaly razit velké stříbrné mince, kterým se brzy začalo říkat tolary.",
+   "tts": "Jáchymov přitom svět znal už dávno, i když kvůli něčemu úplně jinému. Devátého ledna patnáct set dvacet se tu začaly razit velké stříbrné mince, kterým se brzy začalo říkat tolary."
+  },
+  {
+   "id": "s102",
+   "chapter": "ch1",
+   "text": "Z tolaru se přes holandštinu stal dolar, takže americká měna má jméno po městě v Krušných horách. A ne, to si nevymýšlím."
+  },
+  {
+   "id": "s103",
+   "chapter": "ch1",
+   "text": "Horníci tu ale v žilách stříbra naráželi i na těžký černý nerost, který jim kazil práci. Říkali mu smolinec a pro ně to byla opravdu smůla."
+  },
+  {
+   "id": "s104",
+   "chapter": "ch1",
+   "text": "Teprve o staletí později z jáchymovského smolince Marie Curieová získala radium a v roce 1906 tu otevřeli první radonové lázně na světě.",
+   "tts": "Teprve o staletí později z jáchymovského smolince Marie Curieová získala radium a v roce devatenáct set šest tu otevřeli první radonové lázně na světě."
+  },
+  {
+   "id": "s105",
+   "chapter": "ch1",
+   "text": "Jenže ten samý radon, který léčil v lázních, je v dolech zabiják, protože se usazuje v plicích. Na tohle si vzpomeňte, až se dostaneme k táborům."
+  },
+  {
+   "id": "s205",
+   "chapter": "ch1",
+   "text": "Zamyslete se nad tím na vteřinu. Když se ta smlouva podepisovala, bylo Československo pořád demokratický stát, a jeho nejcennější surovinu už měl v rukou Stalin."
+  },
+  {
+   "id": "s206",
+   "chapter": "ch1",
+   "text": "Jestli vás tyhle zapomenuté kapitoly našich dějin zajímají, dejte odběr, ať vám další díl neuteče."
+  },
+  {
+   "id": "s301",
+   "chapter": "ch3",
+   "text": "V lednu 1946 vznikl národní podnik Jáchymovské doly a ruda začala odjíždět v zapečetěných vagonech na východ.",
+   "tts": "V lednu devatenáct set čtyřicet šest vznikl národní podnik Jáchymovské doly a ruda začala odjíždět v zapečetěných vagonech na východ."
+  },
+  {
+   "id": "s302",
+   "chapter": "ch3",
+   "text": "Jenže tady verze, kterou znáte, přestává sedět. V letech 1946 až 1948 nekopali jáchymovský uran vězni z lágrů, ale němečtí váleční zajatci a civilní horníci.",
+   "tts": "Jenže tady verze, kterou znáte, přestává sedět. V letech devatenáct set čtyřicet šest až devatenáct set čtyřicet osm nekopali jáchymovský uran vězni z lágrů, ale němečtí váleční zajatci a civilní horníci."
+  },
+  {
+   "id": "s303",
+   "chapter": "ch3",
+   "text": "Kolik ho bylo? V roce 1946 dodalo Československo Sovětům 18 tun uranu, o rok později 49 a v roce 1948 přes sto tun.",
+   "tts": "Kolik ho bylo? V roce devatenáct set čtyřicet šest dodalo Československo Sovětům osmnáct tun uranu, o rok později čtyřicet devět a v roce devatenáct set čtyřicet osm přes sto tun."
+  },
+  {
+   "id": "s304",
+   "chapter": "ch3",
+   "text": "Jenže Jáchymov nebyl jediný zdroj. V poraženém Německu našli sovětští fyzici přes sto tun ukrytého oxidu uranu a Kurčatov prý později řekl, že jim to ušetřilo rok práce na prvním reaktoru. Další ruda tekla ze Saska, kde Sověti brzy těžili víc než v Jáchymově."
+  },
+  {
+   "id": "s306",
+   "chapter": "ch3",
+   "text": "Jinými slovy, do první bomby šel ukořistěný německý uran a ruda z let, kdy v Jáchymově ještě žádné vězeňské tábory nestály. A dokazují to dvě data."
+  },
+  {
+   "id": "s305",
+   "chapter": "ch3",
+   "text": "Reaktor A na Uralu, který vyrobil plutonium pro první bombu, se rozjel v červnu 1948. Tábory pro vězně u jáchymovských dolů začaly vznikat až v roce 1949.",
+   "tts": "Reaktor A na Uralu, který vyrobil plutonium pro první bombu, se rozjel v červnu devatenáct set čtyřicet osm. Tábory pro vězně u jáchymovských dolů začaly vznikat až v roce devatenáct set čtyřicet devět."
+  },
+  {
+   "id": "s307",
+   "chapter": "ch3",
+   "text": "Pak přišlo to srpnové ráno, kterým jsme začali, a o necelý měsíc později prezident Truman oznámil, že Spojené státy mají důkazy o atomovém výbuchu v SSSR.",
+   "tts": "Pak přišlo to srpnové ráno, kterým jsme začali, a o necelý měsíc později prezident Truman oznámil, že Spojené státy mají důkazy o atomovém výbuchu v es es es er."
+  },
+  {
+   "id": "s308",
+   "chapter": "ch3",
+   "text": "Americký monopol skončil a začal závod ve zbrojení. A ten potřeboval mnohem víc uranu, než kolik dokázali vytěžit placení horníci."
+  },
+  {
+   "id": "s401",
+   "chapter": "ch4",
+   "text": "Mezitím se změnilo samotné Československo. V únoru 1948 převzali moc komunisté Klementa Gottwalda a ještě ten rok přijali zákon o táborech nucené práce.",
+   "tts": "Mezitím se změnilo samotné Československo. V únoru devatenáct set čtyřicet osm převzali moc komunisté Klementa Gottwalda a ještě ten rok přijali zákon o táborech nucené práce."
+  },
+  {
+   "id": "s402",
+   "chapter": "ch4",
+   "text": "Do tábora vás přitom nemusel poslat soud, stačilo rozhodnutí komise. Jestli vás napadá, jak tohle mohlo být legální, tak bohužel bylo. Měli na to zákon."
+  },
+  {
+   "id": "s403",
+   "chapter": "ch4",
+   "text": "Kněží, skauti, sedláci a kdokoli, kdo se režimu nehodil, mohl skončit v uranovém dole. Podle archivních záznamů vznikaly první tábory nucené práce u dolů od října 1949.",
+   "tts": "Kněží, skauti, sedláci a kdokoli, kdo se režimu nehodil, mohl skončit v uranovém dole. Podle archivních záznamů vznikaly první tábory nucené práce u dolů od října devatenáct set čtyřicet devět."
+  },
+  {
+   "id": "s404",
+   "chapter": "ch4",
+   "text": "Takže ano, političtí vězni opravdu kopali uran pro Stalina. Jen ne pro tu první bombu, ale pro všechny, které přišly po ní."
+  },
+  {
+   "id": "s501",
+   "chapter": "ch5",
+   "text": "A pro ty další bomby se v letech 1949 až 1961 postavilo u dolů na Jáchymovsku, u Horního Slavkova a u Příbrami osmnáct táborů.",
+   "tts": "A pro ty další bomby se v letech devatenáct set čtyřicet devět až devatenáct set šedesát jedna postavilo u dolů na Jáchymovsku, u Horního Slavkova a u Příbrami osmnáct táborů."
+  },
+  {
+   "id": "s502",
+   "chapter": "ch5",
+   "text": "Některé dostaly jména po šachtách, takže vězni žili v táborech jménem Rovnost, Svornost nebo Bratrství. Tu ironii asi nemusím vysvětlovat."
+  },
+  {
+   "id": "s503",
+   "chapter": "ch5",
+   "text": "Kolik lidí jimi prošlo? Historici odhadují šedesát až sedmdesát tisíc. Sami sobě vězni říkali mukl, což se vysvětluje jako muž určený k likvidaci."
+  },
+  {
+   "id": "s504",
+   "chapter": "ch5",
+   "text": "Každá směna měla normu a kdo ji nesplnil, dostal ještě míň jídla. Při opakovaném neplnění přišly další tresty, třeba korekce, tedy samotka."
+  },
+  {
+   "id": "s505",
+   "chapter": "ch5",
+   "text": "Horší než hlad ale byla radiace. Ochranné obleky ani respirátory vězni neměli, takže se jim prach z rudy usazoval na oblečení, na kůži i v plicích, a v tom samém oblečení často i spali."
+  },
+  {
+   "id": "s506",
+   "chapter": "ch5",
+   "text": "Teď jeden konkrétní příběh, se jmény a s datem."
+  },
+  {
+   "id": "s507",
+   "chapter": "ch5",
+   "text": "28. září 1950 se ze schodiště na tábor Svornost pokusili utéct dva vězni, Rudolf Kindl, ročník 1929, a Ilja Stalev Chubenov. Dozorci je dopadli a oba na místě zastřelili.",
+   "tts": "Osmadvacátého září devatenáct set padesát se ze schodiště na tábor Svornost pokusili utéct dva vězni, Rudolf Kindl, ročník devatenáct set dvacet devět, a Ilja Stalev Chubenov. Dozorci je dopadli a oba na místě zastřelili."
+  },
+  {
+   "id": "s508",
+   "chapter": "ch5",
+   "text": "Vězni tomu schodišti říkali Mauthausenské a dnes u něj stojí cedule s jejich jmény. Podobných míst je kolem Jáchymova víc, jen je mezitím většinou zarostl les."
+  },
+  {
+   "id": "s601",
+   "chapter": "ch6",
+   "text": "Nejobávanějším místem ale byla sedmipatrová budova u Ostrova, Rudá věž smrti. Patřila k táboru Vykmanov II a ruda se v ní drtila a třídila, než odjela do Sovětského svazu.",
+   "tts": "Nejobávanějším místem ale byla sedmipatrová budova u Ostrova, Rudá věž smrti. Patřila k táboru Vykmanov dva a ruda se v ní drtila a třídila, než odjela do Sovětského svazu."
+  },
+  {
+   "id": "s602",
+   "chapter": "ch6",
+   "text": "Pracovalo tu kolem tří set vězňů, které režim považoval za zvlášť nebezpečné. Vynášeli rudu do nejvyššího patra a sypali ji na obrovská síta, celé směny v radioaktivním prachu a bez jakékoli ochrany."
+  },
+  {
+   "id": "s603",
+   "chapter": "ch6",
+   "text": "Na budově dnes visí deska, která ji nazývá konečným pracovištěm politických vězňů padesátých let určených k likvidaci. Od roku 2008 je to národní kulturní památka.",
+   "tts": "Na budově dnes visí deska, která ji nazývá konečným pracovištěm politických vězňů padesátých let určených k likvidaci. Od roku dva tisíce osm je to národní kulturní památka."
+  },
+  {
+   "id": "s701",
+   "chapter": "ch7",
+   "text": "Tábory se pak postupně zavíraly a velkou část vězňů propustila amnestie v roce 1960.",
+   "tts": "Tábory se pak postupně zavíraly a velkou část vězňů propustila amnestie v roce devatenáct set šedesát."
+  },
+  {
+   "id": "s702",
+   "chapter": "ch7",
+   "text": "Těžba ale běžela dál. Kolem roku 1960 se tu těžilo až tři tisíce tun uranu ročně a za šest desítek let se u nás vytěžilo kolem 112 tisíc tun. Většina skončila v Sovětském svazu.",
+   "tts": "Těžba ale běžela dál. Kolem roku devatenáct set šedesát se tu těžilo až tři tisíce tun uranu ročně a za šest desítek let se u nás vytěžilo kolem sto dvanácti tisíc tun. Většina skončila v Sovětském svazu."
+  },
+  {
+   "id": "s703",
+   "chapter": "ch7",
+   "text": "Kolem zbytků táborů dnes vede naučná stezka Jáchymovské peklo a každý rok v květnu se tam scházejí bývalí vězni a jejich rodiny."
+  },
+  {
+   "id": "s704",
+   "chapter": "ch7",
+   "text": "Takže až zase uslyšíte, že první sovětskou bombu vykopali jáchymovští vězni, víte, že to tak úplně není. Vězni z Jáchymova, Horního Slavkova a Příbrami kopali dvanáct let uran pro všechny bomby, které přišly po ní."
+  },
+  {
+   "id": "s705",
+   "chapter": "ch7",
+   "text": "A ve městě, které dalo světu dolar, se za ten uran platilo lidskými životy."
+  }
+ ]
+}

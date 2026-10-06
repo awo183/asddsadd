@@ -1,4 +1,4 @@
-"""English subtitles (SRT) from the narration timing in timeline.json."""
+"""Subtitles (SRT) from the narration timing in timeline.json (language from DOC_LANG)."""
 import json, os, re
 from common import BUILD
 
@@ -7,7 +7,8 @@ MAX_CHARS = 42 * 2  # two lines of ~42 characters
 
 def chunks(text):
     """Split narration into subtitle-sized pieces at sentence / clause boundaries."""
-    sentences = re.split(r"(?<=[.!?])\s+", text.strip())
+    # a dot after a digit is a Czech ordinal ("29. srpna"), not the end of a sentence
+    sentences = re.split(r"(?<=[^\d][.!?])\s+", text.strip())
     out = []
     for s in sentences:
         while len(s) > MAX_CHARS:
@@ -38,7 +39,8 @@ def ts(t):
 
 def main():
     tl = json.load(open(os.path.join(BUILD, "timeline.json")))
-    texts = {s["id"]: s["text"] for s in json.load(open(os.path.join(os.path.dirname(__file__), "narration.json")))["segments"]}
+    lang = os.environ.get("DOC_LANG", "cs")
+    texts = {s["id"]: s["text"] for s in json.load(open(os.path.join(os.path.dirname(__file__), f"narration_{lang}.json")))["segments"]}
     cues = []
     for seg in tl["narration"]:
         parts = chunks(texts[seg["id"]])
@@ -48,7 +50,7 @@ def main():
             d = seg["dur"] * len(p) / total
             cues.append((t, t + d - 0.04, two_lines(p)))
             t += d
-    out = os.path.join(BUILD, "subtitles.en.srt")
+    out = os.path.join(BUILD, f"subtitles.{lang}.srt")
     with open(out, "w") as f:
         for i, (a, b, txt) in enumerate(cues, 1):
             f.write(f"{i}\n{ts(a)} --> {ts(b)}\n{txt}\n\n")

@@ -40,12 +40,12 @@ def title(t, dur, **_):
     d = Draw(img)
     a = ramp(t, 0.6, 2.4) * (1 - ramp(t, dur - 1.0, dur))
     track = lerp(40, 12, ease_out(t / dur))
-    text_center(d, (W / 2, H / 2 - 40), "URANIUM FOR STALIN", font("display", 176),
+    text_center(d, (W / 2, H / 2 - 40), "URAN PRO STALINA", font("display", 176),
                 with_alpha(INK, a), tracking=track)
     a2 = ramp(t, 2.0, 3.6) * (1 - ramp(t, dur - 1.0, dur))
     w = 520 * ease_out(ramp(t, 1.6, 3.2))
     d.rectangle([W / 2 - w, H / 2 + 72, W / 2 + w, H / 2 + 75], fill=with_alpha(URANIUM, a2))
-    text_center(d, (W / 2, H / 2 + 128), "Czechoslovakia, the Soviet bomb and the hell of Jáchymov",
+    text_center(d, (W / 2, H / 2 + 128), "Československý uran, sovětská bomba a jáchymovské peklo",
                 font("serif", 44, 400), with_alpha(DIM, a2))
     return img
 
@@ -93,8 +93,8 @@ def dedication(t, dur, **_):
     img = draw_particles(img, t, seed=5, n=50, alpha=0.35, color=INK, rise=12)
     d = Draw(img)
     a = ramp(t, 0.5, 2.0) * (1 - ramp(t, dur - 1.2, dur))
-    text_center(d, (W / 2, H / 2 - 40), "In memory of the prisoners", font("serif", 64, 400), with_alpha(INK, a))
-    text_center(d, (W / 2, H / 2 + 40), "of the Czechoslovak uranium camps, 1949 – 1961", font("serif", 64, 400),
+    text_center(d, (W / 2, H / 2 - 40), "Památce vězňů", font("serif", 64, 400), with_alpha(INK, a))
+    text_center(d, (W / 2, H / 2 + 40), "československých uranových táborů 1949 – 1961", font("serif", 64, 400),
                 with_alpha(INK, a))
     return img
 
@@ -245,16 +245,16 @@ def map_zoom_jachymov(t, dur, **_):
     img = draw_map(view, {"CSK": (AMBER, 0.28, AMBER)})
     d = Draw(img)
     a_country = 1 - ramp(t, dur * 0.35, dur * 0.55)
-    map_label(d, view, 17.6, 49.0, "CZECHOSLOVAKIA", a_country, 44, AMBER)
-    map_label(d, view, 10.4, 51.3, "GERMANY", a_country * 0.8, 32)
-    map_label(d, view, 19.3, 52.2, "POLAND", a_country * 0.8, 32)
-    map_label(d, view, 14.0, 47.6, "AUSTRIA", a_country * 0.8, 32)
+    map_label(d, view, 17.6, 49.0, "ČESKOSLOVENSKO", a_country, 44, AMBER)
+    map_label(d, view, 10.4, 51.3, "NĚMECKO", a_country * 0.8, 32)
+    map_label(d, view, 19.3, 52.2, "POLSKO", a_country * 0.8, 32)
+    map_label(d, view, 14.0, 47.6, "RAKOUSKO", a_country * 0.8, 32)
     a_reg = ramp(t, dur * 0.55, dur * 0.75)
-    map_label(d, view, 13.45, 50.82, "SAXONY", a_reg, 38)
-    map_label(d, view, 13.8, 50.02, "BOHEMIA", a_reg, 38)
-    map_label(d, view, 12.45, 50.52, "ORE  MOUNTAINS", a_reg * 0.9, 30, INK, 10)
+    map_label(d, view, 13.45, 50.82, "SASKO", a_reg, 38)
+    map_label(d, view, 13.8, 50.02, "ČECHY", a_reg, 38)
+    map_label(d, view, 12.45, 50.52, "KRUŠNÉ  HORY", a_reg * 0.9, 30, INK, 10)
     a_m = ramp(t, dur * 0.7, dur * 0.85)
-    marker(d, view.xy(*JACHYMOV), t, URANIUM, "JÁCHYMOV", "St. Joachimsthal", a_m)
+    marker(d, view.xy(*JACHYMOV), t, URANIUM, "JÁCHYMOV", "Sankt Joachimsthal", a_m)
     return img
 
 
@@ -280,10 +280,10 @@ def map_distance(t, dur, **_):
     xy = [view.xy(*p) for p in pts[:n]]
     d.line(xy, fill=with_alpha(URANIUM, 0.95), width=5, joint="curve")
     marker(d, view.xy(*JACHYMOV), t, AMBER, "JÁCHYMOV", None, ramp(t, 0.2, 0.9), side="l")
-    marker(d, view.xy(*TEST_SITE), t, RED, "SEMIPALATINSK", "test site, 1949", ramp(t, dur - 1.8, dur - 1.0), side="l")
-    map_label(d, view, 48.0, 61.0, "SOVIET UNION", ramp(t, 0.3, 1.2), 44, (214, 120, 110), 12)
+    marker(d, view.xy(*TEST_SITE), t, RED, "SEMIPALATINSK", "zkušební polygon, 1949", ramp(t, dur - 1.8, dur - 1.0), side="l")
+    map_label(d, view, 48.0, 61.0, "SOVĚTSKÝ SVAZ", ramp(t, 0.3, 1.2), 44, (214, 120, 110), 12)
     a = ramp(t, 1.2, 1.8)
-    text_center(d, (W / 2, H - 120), f"{int(round(km * x / 10) * 10):,} km", font("display", 110),
+    text_center(d, (W / 2, H - 120), f"{int(round(km * x / 10) * 10):,} km".replace(",", " "), font("display", 110),
                 with_alpha(INK, a))
     return img
 
@@ -318,10 +318,10 @@ def train_route(t, dur, **_):
             x, y = at(pos)
             d.rectangle([x - 14, y - 9, x + 14, y + 9], fill=with_alpha(URANIUM, 0.95), outline=(0, 0, 0, 200))
     marker(d, view.xy(*JACHYMOV), t, AMBER, "JÁCHYMOV", None, 1, side="l")
-    marker(d, view.xy(*MOSCOW), t, RED, "MOSCOW", None, ramp(t, 2.0, 2.6))
+    marker(d, view.xy(*MOSCOW), t, RED, "MOSKVA", None, ramp(t, 2.0, 2.6))
     a = ramp(t, 1.5, 2.2)
-    text_center(d, (W / 2, 120), "SEALED WAGONS — EAST TO THE USSR", font("display", 90), with_alpha(INK, a), tracking=6)
-    d.text((W - 60, H - 50), "Schematic route", font=font("sans", 22), fill=with_alpha(DIM, 0.8), anchor="rm")
+    text_center(d, (W / 2, 120), "ZAPEČETĚNÉ VAGONY — NA VÝCHOD", font("display", 90), with_alpha(INK, a), tracking=6)
+    d.text((W - 60, H - 50), "Schematická trasa", font=font("sans", 22), fill=with_alpha(DIM, 0.8), anchor="rm")
     return img
 
 
@@ -350,11 +350,11 @@ def camp_map(t, dur, **_):
     n = int(round(18 * ease_out(ramp(t, 1.0, dur - 1.5))))
     a = ramp(t, 0.8, 1.4)
     d.text((110, H - 210), f"{n}", font=font("display", 200), fill=with_alpha(INK, a), anchor="ls")
-    d.text((110 + d.textlength("18", font=font("display", 200)) + 24, H - 230), "LABOUR CAMPS",
+    d.text((110 + d.textlength("18", font=font("display", 200)) + 24, H - 230), "PRACOVNÍCH TÁBORŮ",
            font=font("oswald", 54, 500), fill=with_alpha(INK, a), anchor="ls")
-    d.text((110 + d.textlength("18", font=font("display", 200)) + 24, H - 188), "around the uranium mines · 1949–1961",
+    d.text((110 + d.textlength("18", font=font("display", 200)) + 24, H - 188), "u uranových dolů · 1949–1961",
            font=font("serif", 32), fill=with_alpha(DIM, a), anchor="ls")
-    map_label(d, view, 14.42, 50.08, "Prague", ramp(t, 0.2, 0.8), 30, DIM, 2)
+    map_label(d, view, 14.42, 50.08, "Praha", ramp(t, 0.2, 0.8), 30, DIM, 2)
     x, y = view.xy(14.42, 50.08)
     d.ellipse([x - 5, y + 18, x + 5, y + 28], fill=with_alpha(DIM, ramp(t, 0.2, 0.8)))
     return img
@@ -365,15 +365,15 @@ def etymology(t, dur, **_):
     img = canvas()
     d = Draw(img)
     f = font("display", 190)
-    steps = [("JOACHIMSTHALER", "silver coin of Joachimsthal, 1520", 0.3),
-             ("THALER", "the coin's name across Europe", dur * 0.38),
-             ("DOLLAR", "", dur * 0.66)]
+    steps = [("JOACHIMSTHALER", "stříbrná mince z Jáchymova, 1520", 0.3),
+             ("TOLAR", "zkráceně", dur * 0.38),
+             ("DOLAR", "", dur * 0.66)]
     for i, (word, sub, t0) in enumerate(steps):
         t1 = steps[i + 1][2] if i + 1 < len(steps) else dur + 1
         a = ramp(t, t0, t0 + 0.7) * (1 - ramp(t, t1 - 0.4, t1 + 0.2))
         if a <= 0:
             continue
-        col = URANIUM if word == "DOLLAR" else INK
+        col = URANIUM if word == "DOLAR" else INK
         if word == "JOACHIMSTHALER":
             # "JOACHIMS" dims out before the cut, leaving THALER
             dim = ramp(t, t1 - 1.6, t1 - 0.6)
@@ -416,8 +416,8 @@ def elements(t, dur, **_):
         d.text((cx, cy + h2 - 46), name.upper(), font=font("oswald", int(40 * s), 400), fill=with_alpha(col, a),
                anchor="mm")
     a = ramp(t, 2.2, 3.0)
-    text_center(d, (W / 2, H - 170), "Discovered in 1898 by Marie and Pierre Curie", font("serif", 44), with_alpha(INK, a))
-    text_center(d, (W / 2, H - 112), "from pitchblende residues shipped from Joachimsthal", font("serif", 36),
+    text_center(d, (W / 2, H - 170), "Objeveny v roce 1898 – Marie a Pierre Curieovi", font("serif", 44), with_alpha(INK, a))
+    text_center(d, (W / 2, H - 112), "ze zbytků jáchymovského smolince", font("serif", 36),
                 with_alpha(DIM, a))
     return img
 
@@ -444,7 +444,7 @@ def _lungs(d, cx, cy, s, a, col):
 def radon(t, dur, **_):
     img = canvas()
     d = Draw(img)
-    chain = [("U-238", "uranium"), ("…", ""), ("Ra-226", "radium"), ("Rn-222", "radon gas")]
+    chain = [("U-238", "uran"), ("…", ""), ("Ra-226", "radium"), ("Rn-222", "plyn radon")]
     x0, y0, gap = 220, 330, 300
     for i, (iso, name) in enumerate(chain):
         a = ramp(t, 0.3 + i * 0.6, 0.9 + i * 0.6)
@@ -482,7 +482,7 @@ def radon(t, dur, **_):
         stuck += u >= 1
     a = ramp(t, 4.0, 4.8)
     d.text((140, H - 210), "Radon-222", font=font("oswald", 56, 500), fill=with_alpha(URANIUM, a))
-    d.text((140, H - 140), "radioactive gas · half-life 3.8 days · its decay products lodge in the lungs",
+    d.text((140, H - 140), "radioaktivní plyn · poločas rozpadu 3,8 dne · produkty rozpadu se usazují v plicích",
            font=font("serif", 34), fill=with_alpha(DIM, a))
     return img
 
@@ -499,12 +499,12 @@ def agreement(t, dur, **_):
     for _ in range(400):
         x, y = rng.uniform(0, pw), rng.uniform(0, ph)
         pd.point((x, y), fill=(190, 178, 150, 255))
-    lines = [("PRAGUE, 23 NOVEMBER 1945", "type", 30),
+    lines = [("PRAHA, 23. LISTOPADU 1945", "type", 30),
              ("", "type", 20),
-             ("AGREEMENT", "type", 50),
-             ("between Czechoslovakia and the USSR", "type", 30),
-             ("on the mining of radioactive ores", "type", 30),
-             ("and their delivery to the Soviet Union", "type", 30)]
+             ("DOHODA", "type", 50),
+             ("mezi Československem a SSSR", "type", 30),
+             ("o těžbě radioaktivních rud", "type", 30),
+             ("a jejich dodávkách do Sovětského svazu", "type", 30)]
     y = 110
     cps = 34
     chars = int(max(0, t - 0.8) * cps)
@@ -536,14 +536,14 @@ def agreement(t, dur, **_):
         stamp = Image.new("RGBA", (760, 200), (0, 0, 0, 0))
         sd = ImageDraw.Draw(stamp)
         sd.rounded_rectangle([10, 10, 750, 190], 16, outline=(176, 30, 30, 230), width=10)
-        sd.text((380, 100), "TOP SECRET", font=font("display", 140), fill=(176, 30, 30, 230), anchor="mm")
+        sd.text((380, 100), "PŘÍSNĚ TAJNÉ", font=font("display", 128), fill=(176, 30, 30, 230), anchor="mm")
         stamp = stamp.resize((int(760 * sc), int(200 * sc)), Image.BICUBIC).rotate(-9, expand=True,
                                                                                    resample=Image.BICUBIC)
         stamp.putalpha(stamp.getchannel("A").point(lambda v: int(v * min(1, k * 1.2))))
         base.alpha_composite(stamp, (int(W / 2 - stamp.width / 2 + 120), int(H / 2 + 140 - stamp.height / 2)))
     img = base.convert("RGB")
     d = Draw(img)
-    d.text((W - 60, H - 50), "Illustration – not the original document", font=font("sans", 22),
+    d.text((W - 60, H - 50), "Ilustrace – nejde o originál dokumentu", font=font("sans", 22),
            fill=with_alpha(DIM, 0.8), anchor="rm")
     return img
 
@@ -553,14 +553,14 @@ def bar_chart(t, dur, **_):
     d = Draw(img)
     years = [1946, 1947, 1948, 1949]
     data = {  # tonnes of uranium for the Soviet programme
-        "Germany (Soviet zone)": ([15, 150, 321.2, 767.8], STEEL),
-        "Czechoslovakia": ([18, 49.1, 103.2, 147.3], AMBER),
-        "Bulgaria": ([26.6, 7.6, 18.2, 30.3], (120, 112, 100)),
-        "Poland": ([0, 2.3, 9.3, 43.3], (90, 84, 76)),
+        "Německo (sovětská zóna)": ([15, 150, 321.2, 767.8], STEEL),
+        "Československo": ([18, 49.1, 103.2, 147.3], AMBER),
+        "Bulharsko": ([26.6, 7.6, 18.2, 30.3], (120, 112, 100)),
+        "Polsko": ([0, 2.3, 9.3, 43.3], (90, 84, 76)),
     }
     a = ramp(t, 0.2, 0.9)
-    d.text((140, 110), "URANIUM FOR THE SOVIET BOMB PROGRAMME", font=font("oswald", 56, 500), fill=with_alpha(INK, a))
-    d.text((140, 180), "tonnes of uranium supplied per year", font=font("serif", 34), fill=with_alpha(DIM, a))
+    d.text((140, 110), "URAN PRO SOVĚTSKOU BOMBU", font=font("oswald", 56, 500), fill=with_alpha(INK, a))
+    d.text((140, 180), "tuny uranu dodané za rok", font=font("serif", 34), fill=with_alpha(DIM, a))
     x0, y0, gw, hmax, vmax = 220, H - 190, 360, 600, 800
     for g in range(0, 801, 200):
         y = y0 - g / vmax * hmax
@@ -575,7 +575,7 @@ def bar_chart(t, dur, **_):
             bx = gx + si * (bw + 8)
             hh = v / vmax * hmax
             d.rectangle([bx, y0 - hh, bx + bw, y0], fill=with_alpha(col, a))
-            if name == "Czechoslovakia" and g > 0.05:
+            if name == "Československo" and g > 0.05:
                 d.text((bx + bw / 2, y0 - hh - 26), f"{vals[yi]:.0f}", font=font("oswald", 34, 600),
                        fill=with_alpha(AMBER, g), anchor="mm")
         d.text((gx + 2 * (bw + 8) - 4, y0 + 40), str(yr), font=font("oswald", 40, 400), fill=with_alpha(INK, a),
@@ -585,7 +585,7 @@ def bar_chart(t, dur, **_):
         d.rectangle([lx, ly + si * 52 - 14, lx + 28, ly + si * 52 + 14], fill=with_alpha(col, a))
         d.text((lx + 44, ly + si * 52), name, font=font("sans", 30), fill=with_alpha(INK if si == 1 else DIM, a),
                anchor="lm")
-    d.text((W - 60, H - 50), "Data: Soviet production figures cited in histories of the Soviet atomic project",
+    d.text((W - 60, H - 50), "Údaje: sovětská čísla citovaná v dějinách sovětského atomového projektu",
            font=font("sans", 22), fill=with_alpha(DIM, 0.8 * a), anchor="rm")
     return img
 
@@ -593,11 +593,11 @@ def bar_chart(t, dur, **_):
 def plutonium_chain(t, dur, **_):
     img = canvas()
     d = Draw(img)
-    steps = [("URANIUM ORE", "Jáchymov · Saxony · Bulgaria · Poland · USSR", AMBER),
-             ("URANIUM METAL", "processed in the USSR", INK),
-             ("REACTOR A", "Chelyabinsk-40 · June 1948", INK),
-             ("PLUTONIUM-239", "separated from spent fuel", URANIUM),
-             ("RDS-1", "29 August 1949", RED)]
+    steps = [("URANOVÁ RUDA", "Jáchymov · Sasko · Bulharsko · Polsko · SSSR", AMBER),
+             ("KOVOVÝ URAN", "zpracování v SSSR", INK),
+             ("REAKTOR A", "Čeljabinsk-40 · červen 1948", INK),
+             ("PLUTONIUM-239", "oddělené z vyhořelého paliva", URANIUM),
+             ("RDS-1", "29. srpna 1949", RED)]
     n = len(steps)
     xs = [180 + i * (W - 360) / (n - 1) for i in range(n)]
     y = H / 2 - 20
@@ -627,11 +627,11 @@ def plutonium_chain(t, dur, **_):
 def timeline_1948(t, dur, **_):
     img = canvas()
     d = Draw(img)
-    events = [("NOV 1945", "Secret uranium agreement with the USSR", AMBER),
-              ("FEB 1948", "Communist seizure of power", RED),
-              ("OCT 1948", "Law on forced labour camps", RED),
-              ("1949", "First labour camps at the uranium mines", INK),
-              ("AUG 1949", "First Soviet atomic test", URANIUM)]
+    events = [("LISTOPAD 1945", "Tajná uranová dohoda se SSSR", AMBER),
+              ("ÚNOR 1948", "Komunisté přebírají moc", RED),
+              ("1948", "Zákon o táborech nucené práce", RED),
+              ("1949", "První tábory u uranových dolů", INK),
+              ("SRPEN 1949", "První sovětský jaderný test", URANIUM)]
     x0, x1, y = 170, W - 170, H / 2 + 20
     grow = ease_in_out(ramp(t, 0.2, dur - 1.5))
     d.line([(x0, y), (lerp(x0, x1, grow), y)], fill=with_alpha(DIM, 0.9), width=4)
@@ -657,14 +657,15 @@ def timeline_1948(t, dur, **_):
 def camp_names(t, dur, **_):
     img = canvas()
     d = Draw(img)
-    names = [("ROVNOST", "Equality"), ("SVORNOST", "Concord"), ("BRATRSTVÍ", "Brotherhood")]
+    names = [("ROVNOST", ""), ("SVORNOST", ""), ("BRATRSTVÍ", "")]
     for i, (cz, en) in enumerate(names):
         t0 = 0.3 + i * 1.2
         a = ramp(t, t0, t0 + 0.7)
         x = W / 2 + (i - 1) * 560
         d.text((x, H / 2 - 40), cz, font=font("display", 130), fill=with_alpha(INK, a), anchor="mm")
-        d.text((x, H / 2 + 50), f"“{en}”", font=font("serif", 50), fill=with_alpha(AMBER, ramp(t, t0 + 0.5, t0 + 1.1)),
-               anchor="mm")
+        if en:
+            d.text((x, H / 2 + 50), f"“{en}”", font=font("serif", 50), fill=with_alpha(AMBER, ramp(t, t0 + 0.5, t0 + 1.1)),
+                   anchor="mm")
     # barbed wire drawn across the bottom
     wa = ease_in_out(ramp(t, 1.0, dur - 0.5))
     y = H - 230
@@ -676,7 +677,7 @@ def camp_names(t, dur, **_):
         d.line([(xb - 12, y - 12), (xb + 12, y + 16)], fill=(190, 190, 185, 240), width=3)
         d.line([(xb + 12, y - 12), (xb - 12, y + 16)], fill=(190, 190, 185, 240), width=3)
         xb += 90
-    d.text((W / 2, H - 140), "Mines – and labour camps – at Jáchymov", font=font("serif", 32),
+    d.text((W / 2, H - 140), "Jména šachet. A táborů.", font=font("serif", 32),
            fill=with_alpha(DIM, ramp(t, 3.0, 3.8)), anchor="mm")
     return img
 
@@ -697,18 +698,19 @@ def prisoners(t, dur, **_):
     img = canvas()
     d = Draw(img)
     icon = _person_icon(16)
-    cols, rows = 50, 13  # 650 figures x 100 = 65,000
-    gx0, gy0, sx, sy = 260, 300, 28, 44
+    cols, rows = 50, 14  # 700 figures x 100 = 70,000 (upper estimate); 600 = lower estimate
+    gx0, gy0, sx, sy = 260, 290, 28, 44
     filled = int(cols * rows * ease_in_out(ramp(t, 0.8, dur - 2.0)))
     off = Image.new("RGB", icon.size, (52, 54, 55))
     on = Image.new("RGB", icon.size, AMBER)
+    hi = Image.new("RGB", icon.size, RED)
     for i in range(cols * rows):
         r, c = divmod(i, cols)
-        img.paste(on if i < filled else off, (gx0 + c * sx, gy0 + r * sy), icon)
+        img.paste((on if i < 600 else hi) if i < filled else off, (gx0 + c * sx, gy0 + r * sy), icon)
     d = Draw(img)
     n = filled * 100
-    d.text((W / 2, 170), f"≈ {n:,}", font=font("display", 150), fill=INK, anchor="mm")
-    d.text((W / 2, H - 120), "prisoners passed through the uranium camps, 1949–1961  ·  each figure = 100  ·  historians' estimate",
+    d.text((W / 2, 170), f"{n:,}".replace(",", " "), font=font("display", 150), fill=INK, anchor="mm")
+    d.text((W / 2, H - 100), "odhad historiků: 60 000 až 70 000 vězňů prošlo uranovými tábory 1949–1961  ·  1 postava = 100",
            font=font("serif", 30), fill=DIM, anchor="mm")
     return img
 
@@ -735,8 +737,8 @@ def mukl(t, dur, **_):
         x += w + gap * (0.2 + 0.8 * expand)
     d = Draw(img)
     a = ramp(t, 3.3, 4.1)
-    text_center(d, (W / 2, H / 2 + 80), "“a man destined for liquidation”", font("serif", 64), with_alpha(INK, a))
-    text_center(d, (W / 2, H / 2 + 170), "how former prisoners still explain the word mukl", font("serif", 32),
+    text_center(d, (W / 2, H / 2 + 80), "MUKL", font("serif", 64), with_alpha(INK, a))
+    text_center(d, (W / 2, H / 2 + 170), "tak slovo mukl vysvětlují bývalí vězni", font("serif", 32),
                 with_alpha(DIM, a))
     return img
 
@@ -786,26 +788,24 @@ def tower_diagram(t, dur, **_):
     img = base.convert("RGB")
     d = Draw(img)
     la = ramp(t, 1.0, 1.8)
-    d.text((tx - 120, ty + 40), "Ore hauled\nto the top floor", font=font("serif", 32), fill=with_alpha(INK, la), anchor="ra",
+    d.text((tx - 120, ty + 40), "Ruda vynášená\ndo nejvyššího patra", font=font("serif", 32), fill=with_alpha(INK, la), anchor="ra",
            align="right")
-    d.text((tx + tw + 50, ty + 2 * th / floors - 40), "Sieves", font=font("serif", 32), fill=with_alpha(AMBER, la), anchor="la")
-    d.text((tx + tw + 50, ty + 4.6 * th / floors), "Radioactive dust,\nno protection", font=font("serif", 32),
+    d.text((tx + tw + 50, ty + 2 * th / floors - 40), "Síta", font=font("serif", 32), fill=with_alpha(AMBER, la), anchor="la")
+    d.text((tx + tw + 50, ty + 4.6 * th / floors), "Radioaktivní prach,\nbez ochrany", font=font("serif", 32),
            fill=with_alpha(URANIUM, ramp(t, 2.0, 2.8)), anchor="la")
-    d.text((W - 60, H - 50), "Schematic", font=font("sans", 22), fill=with_alpha(DIM, 0.8), anchor="rm")
+    d.text((W - 60, H - 50), "Schéma", font=font("sans", 22), fill=with_alpha(DIM, 0.8), anchor="rm")
     return img
 
 
-def production_counter(t, dur, **_):
+def production_counter(t, dur, total=100000, years="1946 – 1990", label="tun uranu vytěžených v Československu", **_):
     img = canvas()
     img = draw_particles(img, t, seed=31, n=80, alpha=0.45)
     d = Draw(img)
-    x = ease_out(ramp(t, 0.5, dur - 1.5))
-    yr = int(lerp(1946, 1990, x))
-    n = int(round(100000 * x / 500) * 500)
-    d.text((W / 2, H / 2 - 170), f"1946 – {yr}", font=font("oswald", 60, 400), fill=DIM, anchor="mm")
-    d.text((W / 2, H / 2), f"≈ {n:,}", font=font("display", 260), fill=INK, anchor="mm")
-    d.text((W / 2, H / 2 + 160), "tonnes of uranium mined in Czechoslovakia", font=font("serif", 46), fill=AMBER,
-           anchor="mm")
+    x = ease_out(ramp(t, 0.4, dur - 1.2))
+    n = int(round(total * x / 500) * 500)
+    d.text((W / 2, H / 2 - 170), years, font=font("oswald", 60, 400), fill=DIM, anchor="mm")
+    d.text((W / 2, H / 2), f"≈ {n:,}".replace(",", " "), font=font("display", 260), fill=INK, anchor="mm")
+    d.text((W / 2, H / 2 + 160), label, font=font("serif", 46), fill=AMBER, anchor="mm")
     return img
 
 
@@ -836,3 +836,178 @@ ANIMS = {f.__name__: f for f in [title, chapter, dateline, dedication, map_zoom_
                                  camp_map, etymology, elements, radon, agreement, bar_chart, plutonium_chain,
                                  timeline_1948, camp_names, prisoners, mukl, tower_diagram, production_counter,
                                  credits_roll]}
+
+
+# ---------------------------------------------------------------- set pieces (v2)
+def title_slam(t, dur, title="URAN PRO STALINA", sub="", **_):
+    """Title stamped onto the screen with a hit, then held over drifting dust."""
+    img = canvas()
+    img = draw_particles(img, t, seed=11, n=140, alpha=0.7)
+    d = Draw(img)
+    hit = 0.35
+    if t < hit:
+        return img
+    k = ease_out(min(1, (t - hit) / 0.22))
+    s = lerp(1.6, 1.0, k)
+    a = min(1, (t - hit) / 0.12) * (1 - ramp(t, dur - 0.8, dur))
+    text_center(d, (W / 2, H / 2 - 30), title, font("display", int(150 * s)), with_alpha(INK, a), tracking=int(9 * s))
+    a2 = ramp(t, hit + 0.8, hit + 1.6) * (1 - ramp(t, dur - 0.8, dur))
+    w = 520 * ease_out(ramp(t, hit + 0.5, hit + 1.4))
+    d.rectangle([W / 2 - w, H / 2 + 72, W / 2 + w, H / 2 + 76], fill=with_alpha(RED, a2))
+    if sub:
+        text_center(d, (W / 2, H / 2 + 132), sub, font("serif", 44), with_alpha(DIM, a2))
+    return img
+
+
+def chapter2(t, dur, num="01", name="", years="", **_):
+    """Fast chapter card: number slides in, title punches in, out in ~2 s."""
+    img = canvas()
+    img = draw_particles(img, t, seed=hash(num) % 97, n=50, alpha=0.4)
+    d = Draw(img)
+    out = 1 - ramp(t, dur - 0.35, dur)
+    xin = ease_out(min(1, t / 0.35))
+    text_center(d, (lerp(-200, W / 2 - 520, xin), H / 2 - 10), num, font("display", 260),
+                with_alpha(URANIUM, 0.9 * out), anchor="mm")
+    k = ease_out(min(1, max(0, t - 0.15) / 0.3))
+    a = min(1, max(0, t - 0.15) / 0.15) * out
+    text_center(d, (W / 2 + 150, H / 2 - 30), name.upper(), font("display", int(lerp(150, 120, k))),
+                with_alpha(INK, a), anchor="mm", tracking=6)
+    if years:
+        text_center(d, (W / 2 + 150, H / 2 + 60), years, font("mono", 38), with_alpha(DIM, a), anchor="mm")
+    d.rectangle([W / 2 - 380, H / 2 + 100, W / 2 - 380 + 1060 * ease_out(ramp(t, 0.3, 0.9)), H / 2 + 104],
+                fill=with_alpha(RED, out))
+    return img
+
+
+def teletype(t, dur, header="", body="", note="", **_):
+    """News wire printing out on paper."""
+    img = canvas()
+    d = Draw(img)
+    pw = 1300
+    px = W / 2 - pw / 2
+    paper = Image.new("RGB", (pw, H + 400), (228, 221, 200))
+    pd = Draw(paper)
+    for y in range(0, H + 400, 40):
+        pd.line([(0, y), (pw, y)], fill=(214, 205, 182), width=1)
+    f_h = font("mono", 40)
+    f_b = font("mono", 46)
+    n = int(max(0, t - 0.3) * 28)
+    lines = [(header, f_h)] + [(l, f_b) for l in wrap(pd, body, f_b, pw - 160)]
+    y = 330
+    for text, f in lines:
+        shown = text[:max(0, n)]
+        n -= len(text)
+        pd.text((80, y), shown, font=f, fill=(40, 34, 28))
+        y += 70 if f is f_b else 90
+    scroll = max(0.0, (y - (H - 160))) * ease(ramp(t, 0, dur))
+    sh = Image.new("RGBA", (pw + 80, H + 280), (0, 0, 0, 0))
+    Draw(sh).rectangle([40, 40, pw + 40, H + 240], fill=(0, 0, 0, 160))
+    from PIL import ImageFilter as _F
+    sh = sh.filter(_F.GaussianBlur(20))
+    base = img.convert("RGBA")
+    base.alpha_composite(sh, (int(px - 30), int(-60 - scroll)))
+    base = base.convert("RGB")
+    base.paste(paper, (int(px), int(-100 - scroll)))
+    d = Draw(base)
+    if note:
+        d.text((W - 60, H - 50), note, font=font("sans", 24), fill=(150, 146, 138, 220), anchor="rs")
+    return base
+
+
+def _pin_photo(base, key, cx, cy, w, rot, label, a):
+    from common import load_photo
+    im = load_photo(key, True)
+    s = w / im.width
+    ph = im.resize((int(im.width * s), int(im.height * s)), Image.BICUBIC)
+    card = Image.new("RGB", (ph.width + 24, ph.height + 70), (232, 226, 210))
+    card.paste(ph, (12, 12))
+    Draw(card).text((card.width / 2, ph.height + 42), label, font=font("mono", 34), fill=(40, 34, 28), anchor="mm")
+    rg = card.convert("RGBA").rotate(rot, expand=True, resample=Image.BICUBIC)
+    rg.putalpha(rg.getchannel("A").point(lambda v: int(v * a)))
+    sh = Image.new("RGBA", (rg.width + 60, rg.height + 60), (0, 0, 0, 0))
+    sh.paste((0, 0, 0, int(160 * a)), (30, 30), rg.getchannel("A"))
+    sh = sh.filter(ImageFilter.GaussianBlur(14))
+    base.alpha_composite(sh, (int(cx - rg.width / 2 - 30 + 12), int(cy - rg.height / 2 - 30 + 16)))
+    base.alpha_composite(rg, (int(cx - rg.width / 2), int(cy - rg.height / 2)))
+    pin_y = cy - rg.height / 2 + 22
+    Draw(base).ellipse([cx - 11, pin_y - 11, cx + 11, pin_y + 11], fill=(190, 30, 28, int(255 * a)))
+    return (cx, pin_y)
+
+
+@functools.lru_cache(maxsize=1)
+def _cork():
+    rng = np.random.default_rng(8)
+    small = rng.normal(0, 1, (135, 240)).astype(np.float32)
+    big = np.array(Image.fromarray(((small * 22) + 128).clip(0, 255).astype(np.uint8)).resize((W, H), Image.BICUBIC),
+                   dtype=np.float32) - 128
+    base = np.array([58, 44, 32], np.float32)[None, None] + big[..., None] * 0.5
+    return Image.fromarray(np.clip(base, 0, 255).astype(np.uint8))
+
+
+def evidence_board(t, dur, items=(), cards=(), links=(), **_):
+    """Investigation board: pinned photos, index cards, red string drawn between them."""
+    base = _cork().copy().convert("RGBA")
+    pins = {}
+    for i, (key, x, y, w, rot, label) in enumerate(items):
+        a = ramp(t, 0.15 + i * 0.35, 0.45 + i * 0.35)
+        if a > 0:
+            pins[key] = _pin_photo(base, key, x, y, w, rot, label, a)
+    for j, (cid, text, x, y, rot) in enumerate(cards):
+        a = ramp(t, 0.3 + (len(items) + j) * 0.35, 0.6 + (len(items) + j) * 0.35)
+        if a <= 0:
+            continue
+        f = font("display", 84)
+        tw = int(Draw(base).textlength(text, font=f)) + 70
+        c = Image.new("RGBA", (tw, 150), (240, 234, 214, 255))
+        Draw(c).text((tw / 2, 78), text, font=f, fill=(176, 30, 30, 255), anchor="mm")
+        c = c.rotate(rot, expand=True, resample=Image.BICUBIC)
+        c.putalpha(c.getchannel("A").point(lambda v: int(v * a)))
+        base.alpha_composite(c, (int(x - c.width / 2), int(y - c.height / 2)))
+        pins[cid] = (x, y - 50)
+        Draw(base).ellipse([x - 11, y - 61, x + 11, y - 39], fill=(190, 30, 28, int(255 * a)))
+    d = Draw(base)
+    t_links = 0.3 + (len(items) + len(cards)) * 0.35
+    for k, (p, q) in enumerate(links):
+        if p not in pins or q not in pins:
+            continue
+        u = ease_in_out(ramp(t, t_links + k * 0.5, t_links + k * 0.5 + 0.6))
+        if u <= 0:
+            continue
+        (x0, y0), (x1, y1) = pins[p], pins[q]
+        pts = []
+        for i in range(31):
+            f = i / 30 * u
+            sag = math.sin(math.pi * f) * 40
+            pts.append((lerp(x0, x1, f), lerp(y0, y1, f) + sag))
+        d.line(pts, fill=(200, 30, 28, 255), width=5, joint="curve")
+    img = base.convert("RGB")
+    z = lerp(1.0, 1.08, ease_in_out(t / max(dur, 0.1)))
+    if z > 1.001:
+        cw, ch = W / z, H / z
+        img = img.resize((W, H), Image.BICUBIC, box=((W - cw) / 2, (H - ch) / 2, (W + cw) / 2, (H + ch) / 2))
+    return img
+
+
+def split_compare(t, dur, left="", right="", llabel="", rlabel="", **_):
+    """Two archive images side by side; a divider sweeps across to reveal the right one."""
+    from common import load_photo, cover_rect
+    from common import grade as _grade
+    a = Image.fromarray(_grade(load_photo(left), sat=0.8))
+    b = Image.fromarray(_grade(load_photo(right), sat=0.8))
+    z = lerp(1.0, 1.08, t / max(dur, 0.1))
+    A = a.resize((W, H), Image.BICUBIC, box=cover_rect(a.width, a.height, z, 0.5, 0.5))
+    B = b.resize((W, H), Image.BICUBIC, box=cover_rect(b.width, b.height, z, 0.5, 0.5))
+    split = int(lerp(W, W / 2, ease_in_out(ramp(t, 0.6, 1.6))))
+    out = A.copy()
+    out.paste(B.crop((split, 0, W, H)), (split, 0))
+    d = Draw(out)
+    d.rectangle([split - 3, 0, split + 3, H], fill=(236, 230, 218))
+    la = ramp(t, 0.3, 0.8)
+    ra = ramp(t, 1.4, 1.9)
+    for txt, x, al in ((llabel, W * 0.25, la), (rlabel, W * 0.75, ra)):
+        if txt:
+            text_center(d, (x, H - 120), txt, font("display", 110), with_alpha(INK, al), tracking=6)
+    return out
+
+
+ANIMS.update({f.__name__: f for f in [title_slam, chapter2, teletype, evidence_board, split_compare]})

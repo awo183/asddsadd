@@ -2,19 +2,23 @@
 import argparse, os, subprocess
 from common import BUILD
 
+LANG = os.environ.get("DOC_LANG", "cs")
+ISO3 = {"cs": "ces", "en": "eng"}[LANG]
+
 ap = argparse.ArgumentParser()
-ap.add_argument("--out", default=os.path.join(BUILD, "Uranium_for_Stalin.mp4"))
-ap.add_argument("--web", default=os.path.join(BUILD, "Uranium_for_Stalin_web.mp4"),
+ap.add_argument("--out", default=os.path.join(BUILD, f"Uran_pro_Stalina.mp4" if LANG == "cs" else "Uranium_for_Stalin.mp4"))
+ap.add_argument("--web", default=os.path.join(BUILD, f"Uran_pro_Stalina_web.mp4" if LANG == "cs" else "Uranium_for_Stalin_web.mp4"),
                 help="smaller copy (<100 MB) for sharing / committing; '' to skip")
 ap.add_argument("--web-bitrate", default="950k")
 args = ap.parse_args()
 
 picture = os.path.join(BUILD, "picture.mp4")
 mix = os.path.join(BUILD, "mix.wav")
-srt = os.path.join(BUILD, "subtitles.en.srt")
-meta = ["-metadata", "title=Uranium for Stalin",
+srt = os.path.join(BUILD, f"subtitles.{LANG}.srt")
+TITLE = {"cs": "Uran pro Stalina", "en": "Uranium for Stalin"}[LANG]
+meta = ["-metadata", f"title={TITLE}",
         "-metadata", "comment=Czechoslovak uranium, the first Soviet atomic bomb and the labour camps of Jáchymov",
-        "-metadata:s:a:0", "language=eng", "-metadata:s:s:0", "language=eng"]
+        "-metadata:s:a:0", f"language={ISO3}", "-metadata:s:s:0", f"language={ISO3}"]
 
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", picture, "-i", mix, "-i", srt,
                 "-map", "0:v", "-map", "1:a", "-map", "2:s", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",

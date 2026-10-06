@@ -335,3 +335,29 @@ def grade(im, sat=0.85, warm=0.0, contrast=1.05):
         a[..., 0] += 8 * warm
         a[..., 2] -= 8 * warm
     return np.clip(a, 0, 255).astype(np.uint8)
+
+
+def print_frame(im, lt, dur, rot=-2.5, z1=1.08):
+    """Photo as a physical print dropped onto a dark table, then a slow push-in."""
+    k = ease_out(min(1.0, lt / 0.45))
+    p = min(max(lt / max(dur, 0.1), 0), 1)
+    iw, ih = im.size
+    scale = min((W * 0.74) / iw, (H * 0.78) / ih)
+    pw, ph = int(iw * scale), int(ih * scale)
+    border = int(min(pw, ph) * 0.035) + 8
+    card = Image.new("RGB", (pw + 2 * border, ph + 2 * border + border), (232, 226, 210))
+    card.paste(im.resize((pw, ph), Image.BICUBIC), (border, border))
+    s = lerp(1.35, 1.0, k) * lerp(1.0, z1, ease_in_out(p))
+    card = card.resize((int(card.width * s), int(card.height * s)), Image.BICUBIC)
+    rgba = card.convert("RGBA").rotate(rot * (0.4 + 0.6 * k), expand=True, resample=Image.BICUBIC)
+    bg = paper_bg().copy().convert("RGBA")
+    sh = Image.new("RGBA", (rgba.width + 80, rgba.height + 80), (0, 0, 0, 0))
+    sh.paste((0, 0, 0, int(190 * k)), (40, 40), rgba.getchannel("A"))
+    sh = sh.filter(ImageFilter.GaussianBlur(24))
+    off = int(lerp(60, 18, k))
+    x, y = int(W / 2 - rgba.width / 2), int(H / 2 - rgba.height / 2)
+    bg.alpha_composite(sh, (x - 40 + off, y - 40 + off))
+    a = min(1.0, lt / 0.12)
+    rgba.putalpha(rgba.getchannel("A").point(lambda v: int(v * a)))
+    bg.alpha_composite(rgba, (x, y))
+    return bg.convert("RGB")

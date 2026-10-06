@@ -1,225 +1,252 @@
-"""Edit decision list: which pictures play under which line of narration.
+"""Build build/timeline.json from the narration timings and the edit decision list (edl_<lang>.py).
 
-Builds build/timeline.json (shots with absolute times, narration placement,
-music sections and sound-effect cues) from narration durations.
+EDL items:
+  ("music", mood)                       start a score section here
+  ("sfx", kind)                         one-off sound effect here
+  ("card", shot)                        full-screen shot with its own fixed duration (no narration)
+  ("seg", id, [shots], extra_seconds)   shots that play under narration segment <id>
+
+Shot timing inside a segment: shots with "fixed" keep that length; a shot with
+"at_word": "<word>" starts exactly when that word is spoken (cut on the word); the
+remaining time is shared by weight "w". Overlays may also use "word" instead of "t0".
+Word times come from build/voice/alignment.json when available (ElevenLabs), otherwise
+they are estimated from the character position in the segment.
 """
-import json, os, sys
+import importlib, json, os, re, sys
 from common import BUILD
 
+HERE = os.path.dirname(os.path.abspath(__file__))
+LANG = os.environ.get("DOC_LANG", "cs")
 VOICE = os.path.join(BUILD, "voice")
-PD, BY, BYSA = "Public domain", "CC BY", "CC BY-SA"
+LEAD = 0.2       # silence before a line starts
+GAP = 0.35       # breath after each line
 
 
-def P(key, cap=None, w=1.0, **kw):          # still photograph
-    return dict(type="photo", key=key, cap=cap, w=w, **kw)
+def P(key, w=1.0, **kw):          # still photograph
+    return dict(type="photo", key=key, w=w, **kw)
 
 
-def V(key, t_in, cap=None, w=1.0, **kw):    # archive film
-    return dict(type="video", key=key, t_in=t_in, cap=cap, w=w, **kw)
+def V(key, t_in, w=1.0, **kw):    # archive film
+    return dict(type="video", key=key, t_in=t_in, w=w, **kw)
 
 
 def A(anim, fixed=None, w=1.0, **params):   # motion graphic
-    return dict(type="anim", anim=anim, fixed=fixed, w=w, params=params)
+    shot = dict(type="anim", anim=anim, w=w, params=params)
+    if fixed:
+        shot["fixed"] = fixed
+    return shot
 
 
-def card(num, name, years):
-    return ("card", A("chapter", 3.4, num=num, name=name, years=years))
-
-
-# Captions: (what it shows, source · licence). Full credits roll at the end.
-EDL = [
-    ("music", "cold_open"),
-    ("seg", "c01", [A("dateline", 4.6, lines=["29 AUGUST 1949 · 07:00", "SEMIPALATINSK TEST SITE · KAZAKH SSR"]),
-                    V("rds1_site", 2.0, ("Semipalatinsk test site, Kazakhstan", "Present-day footage · Carl Willis · CC BY 3.0"), trans="black")]),
-    ("seg", "c02", [P("rds1_museum", ("RDS-1, the first Soviet atomic bomb", "Museum replica · Wikimedia Commons · CC BY-SA 2.0"),
-                      z0=1.0, z1=1.18, c1=(0.45, 0.5)),
-                    V("rds1_site", 10.0, None),
-                    A("dateline", 1.1, lines=[], flash_at=0.0)]),
-    ("sfx", "explosion"),
-    ("seg", "c03", [P("rds1_cloud", ("RDS-1 casing", "Polytechnic Museum, Moscow · CC0"), trans="white", td=1.6, z1=1.1),
-                    V("hiroshima_dmg", 247.0, ("Hiroshima after the bombing, 1945–46", "U.S. Air Force film · Public domain"), crop="1440:1080:240:0")]),
-    ("seg", "c04", [A("map_distance", 9.0),
-                    V("jachymov_valley", 0.0, ("Jáchymov, Ore Mountains", "Wikimedia Commons · CC BY-SA 3.0"), speed=0.75)], 0.9),
-    ("music", "title"),
-    ("card", A("title", 7.5)),
-
-    ("music", "ch1"),
-    card("I", "The Valley of Silver", "1516 – 1945"),
-    ("seg", "s101", [A("map_zoom_jachymov", w=1)]),
-    ("seg", "s102", [P("thaler_obv", ("Joachimsthaler silver coin", "Electrotype copy · Wikimedia Commons · CC BY 2.0"), z0=1.05, z1=1.25),
-                     A("etymology", 6.6)]),
-    ("seg", "s103", [P("pitchblende2", ("Pitchblende (uraninite)", "Wikimedia Commons · CC BY-SA 3.0"), z0=1.0, z1=1.2),
-                     P("svornost_1928", ("Svornost mine, Jáchymov, 1928", "Wikimedia Commons · Public domain"))]),
-    ("seg", "s104", [P("curies", ("Pierre and Marie Curie in their laboratory", "Wikimedia Commons · Public domain"), c0=(0.5, 0.4), c1=(0.55, 0.45)),
-                     A("elements", 6.0),
-                     P("radium_palace_1926", ("Radium Palace spa hotel, Jáchymov, 1926", "Prager Presse · Public domain"))]),
-    ("seg", "s105", [P("radium_palace_1949", ("Radium Palace, 1949", "Spa almanac · Public domain"), z1=1.08),
-                     A("radon", 8.5)]),
-    ("seg", "s106", [P("uran_museum", ("Uranium glass, Royal Mint Museum, Jáchymov", "Wikimedia Commons · CC BY-SA 4.0"), z0=1.0, z1=1.15),
-                     P("uran_factory_1922", ("Uranium and radium factory, Jáchymov, 1922", "Prager Presse · Public domain"))], 1.0),
-
-    ("music", "ch2"),
-    card("II", "The Race for the Bomb", "1945"),
-    ("seg", "s201", [V("truman_1945", 86.0, ("President Truman announces the Hiroshima bomb, 1945", "U.S. National Archives · Public domain")),
-                     V("hiroshima_dmg", 475.0, ("Hiroshima, 1945–46", "U.S. Air Force film · Public domain"), crop="1440:1080:240:0"),
-                     P("stalin", ("Joseph Stalin", "Official portrait, 1940s · CC0"), fit="contain")]),
-    ("seg", "s202", [V("october_1937", 195.0, ("Soviet leaders on the Lenin Mausoleum, 1937", "Soviet newsreel · Public domain"), crop="960:720:160:0"),
-                     P("beria", ("Lavrentiy Beria", "NKVD chief · Public domain"), fit="contain"),
-                     P("kurchatov_1943", ("Igor Kurchatov, 1943", "Wikimedia Commons · Public domain"), c0=(0.5, 0.35), c1=(0.5, 0.3))]),
-    ("seg", "s203", [V("trinity", 0.0, ("Trinity test, New Mexico, July 1945", "U.S. Army film · Public domain")),
-                     P("pitchblende", ("Uranium ore", "Wikimedia Commons · CC BY-SA 2.0"), c0=(0.5, 0.35), c1=(0.5, 0.32), z0=1.0, z1=1.12)]),
-    ("seg", "s204", [P("svornost_modern", ("Svornost mine, Jáchymov — in use since the 16th century", "Wikimedia Commons · CC BY-SA 4.0")),
-                     V("jachymov_valley", 3.0, None, speed=0.75)]),
-    ("seg", "s205", [A("agreement", 9.5),
-                     P("pitchblende2", ("Pitchblende from the Ore Mountains", "Wikimedia Commons · CC BY-SA 3.0"), z0=1.3, z1=1.1)]),
-    ("seg", "s206", [P("gottwald_stalin", ("Communist rally: “With Gottwald we won”", "Czechoslovakia, late 1940s · Public domain"), z0=1.0, z1=1.1)], 1.0),
-
-    ("music", "ch3"),
-    card("III", "Ore for Moscow", "1946 – 1949"),
-    ("seg", "s301", [P("ortho_eduard_nikolaj", ("Eduard and Nikolaj mines, Jáchymov", "Aerial survey, 1950s · CENIA / GEODIS · CC BY 4.0"), z0=1.0, z1=1.25, c1=(0.4, 0.5)),
-                     V("anthracite", 95.0, ("Underground mining in the 1940s (illustrative)", "U.S. Bureau of Mines film · Public domain"))]),
-    ("seg", "s302", [V("anthracite", 405.0, ("Loading rail wagons, 1940s (illustrative)", "U.S. Bureau of Mines film · Public domain")),
-                     A("train_route", 10.0)]),
-    ("seg", "s303", [A("bar_chart", w=1)]),
-    ("seg", "s304", [P("pitchblende2", ("Pitchblende", "Wikimedia Commons · CC BY-SA 3.0"), z0=1.1, z1=1.35, c0=(0.3, 0.6), c1=(0.6, 0.4)),
-                     A("bar_chart", 6.0)]),
-    ("seg", "s305", [A("plutonium_chain", 12.5),
-                     P("kurchatov_1943", None, z0=1.25, z1=1.05, c0=(0.5, 0.3)),
-                     P("rds1_mockup", ("RDS-1 replica", "Polytechnic Museum, Moscow · CC0"))]),
-    ("seg", "s306", [P("rds1_cloud", None, z0=1.15, z1=1.0),
-                     P("joe1_map", ("U.S. chart predicting fallout from the Soviet test, 1949", "U.S. government · Public domain"), z0=1.0, z1=1.3, c1=(0.45, 0.4)),
-                     V("crossroads_hd", 250.0, ("U.S. nuclear test, Bikini, 1946", "U.S. National Archives · Public domain"), crop="1440:1080:240:0")], 1.0),
-
-    ("music", "ch4"),
-    card("IV", "Victorious February", "1948"),
-    ("seg", "s401", [P("gottwald", ("Klement Gottwald", "Official portrait · ČTK · Public domain"), fit="contain"),
-                     P("gottwald_stalin", None, z0=1.25, z1=1.05, c0=(0.55, 0.3))]),
-    ("seg", "s402", [A("timeline_1948", w=1)]),
-    ("seg", "s403", [P("gottwald_1951", ("Gottwald with his ministers, 1951", "Wikimedia Commons · Public domain")),
-                     P("vojna_05", ("Memorial room, Vojna camp", "Wikimedia Commons · CC BY-SA 3.0"))]),
-    ("seg", "s404", [V("october_1937", 316.0, ("Red Square, Moscow, 1937", "Soviet newsreel · Public domain"), crop="960:720:160:0"),
-                     P("vojna_02", ("Vojna camp, Příbram", "Wikimedia Commons · CC BY-SA 3.0"))], 1.0),
-
-    ("music", "ch5"),
-    card("V", "The Hell of Jáchymov", "1949 – 1961"),
-    ("seg", "s501", [A("camp_map", 8.0), A("camp_names", w=1)]),
-    ("seg", "s502", [A("prisoners", w=1)]),
-    ("seg", "s503", [A("mukl", w=1)]),
-    ("seg", "s504", [V("anthracite", 55.0, ("Underground mining (illustrative)", "U.S. Bureau of Mines film · Public domain")),
-                     P("ortho_nikolaj", ("Nikolaj mine and labour camp", "Aerial survey, 1950s · CENIA / GEODIS · CC BY 4.0"), z0=1.0, z1=1.3, c1=(0.55, 0.45))]),
-    ("seg", "s505", [V("anthracite", 118.0, ("Underground mining (illustrative)", "U.S. Bureau of Mines film · Public domain")),
-                     P("ortho_bratrstvi", ("Bratrství mine, Jáchymov", "Aerial survey, 1950s · CENIA / GEODIS · CC BY 4.0"), z0=1.0, z1=1.25)]),
-    ("seg", "s506", [P("mauthausen_stairs", ("Memorial sign at the “Mauthausen stairs”", "Svornost camp · Wikimedia Commons · CC BY-SA 4.0"), z0=1.0, z1=1.35, c0=(0.5, 0.5), c1=(0.35, 0.72)),
-                     P("svornost_camp", ("Memorial sign, Svornost camp", "Wikimedia Commons · CC BY-SA 4.0"))]),
-    ("seg", "s507", [P("elias", ("Memorial cross at the Eliáš camp", "Wikimedia Commons · CC BY-SA 4.0"), fit="contain"),
-                     P("nikolaj_05", ("Foundations of the Nikolaj camp", "Wikimedia Commons · CC BY-SA 4.0")),
-                     P("ustredni_01", ("Site of the Central camp, Jáchymov", "Wikimedia Commons · CC BY-SA 4.0")),
-                     P("rovnost", ("Memorial sign, Rovnost camp", "Wikimedia Commons · CC BY-SA 4.0"))], 1.0),
-
-    ("music", "ch6"),
-    card("VI", "The Tower of Death", "Vykmanov · Ostrov"),
-    ("seg", "s601", [P("tower_night", ("The Red Tower of Death, Ostrov", "Wikimedia Commons · CC BY 4.0"), z0=1.0, z1=1.12),
-                     P("tower_05", None)]),
-    ("seg", "s602", [A("tower_diagram", 9.0), V("anthracite", 165.0, ("Ore sorting, 1940s (illustrative)", "U.S. Bureau of Mines film · Public domain")),
-                     P("tower_03", ("Inside the Tower of Death", "Wikimedia Commons · CC BY-SA 4.0"))]),
-    ("seg", "s603", [P("tower_04", ("“The final workplace of political prisoners of the 1950s destined for liquidation”", "Memorial plaque, 1993 · Wikimedia Commons · CC BY-SA 4.0"), z0=1.0, z1=1.1),
-                     P("tower_01", ("Red Tower of Death — national cultural monument", "Wikimedia Commons · CC BY-SA 4.0"))], 1.0),
-
-    ("music", "ch7"),
-    card("VII", "Vojna", "Příbram"),
-    ("seg", "s701", [P("vojna_01", ("Vojna Memorial near Příbram", "Wikimedia Commons · CC BY-SA 3.0")),
-                     P("vojna_02", None), P("vojna_10", None),
-                     P("pribram_poster", ("“Příbram uranium mines seek new workers!”", "Recruitment poster · Public domain"), fit="contain")], 1.0),
-
-    ("music", "ch8"),
-    card("VIII", "The Price", "1960 – today"),
-    ("seg", "s801", [P("vojna_17", ("Vojna Memorial", "Wikimedia Commons · CC BY-SA 3.0")), P("nikolaj_02", ("Site of the Nikolaj camp today", "Wikimedia Commons · CC BY-SA 4.0"))]),
-    ("seg", "s802", [A("production_counter", 8.5), P("svornost_modern", None, z0=1.15, z1=1.0)]),
-    ("seg", "s803", [P("vojna_19", ("Prisoners’ quarters, Vojna Memorial", "Wikimedia Commons · CC BY-SA 3.0")), P("vojna_28", None)]),
-    ("seg", "s804", [P("nikolaj_01", ("“Jáchymov Hell” memorial trail", "Wikimedia Commons · CC BY-SA 4.0"), fit="contain"),
-                     V("jachymov_valley", 1.0, None, speed=0.75)]),
-    ("seg", "s805", [V("rds1_site", 176.0, None), P("mauthausen_stairs", None, z0=1.2, z1=1.0), P("tower_night", None, z0=1.12, z1=1.0)]),
-    ("seg", "s806", [P("thaler_rev", None, z0=1.0, z1=1.18)], 1.6),
-    ("music", "end"),
-    ("card", A("dedication", 5.5)),
-    ("card", A("credits_roll", 20.0, pages=[])),
-]
-
-LEAD = 0.25      # silence before a line starts
-GAP = 0.45       # breath after each line
+def word_time(seg_text, dur, word, align=None):
+    """Seconds from segment start at which <word> is spoken."""
+    i = seg_text.find(word)
+    if i < 0:
+        i = seg_text.lower().find(word.lower())
+    if i < 0:
+        raise KeyError(f"word {word!r} not in: {seg_text[:60]}")
+    if align and "chars" in align:
+        # ElevenLabs alignment: list of (char, start, end) over the spoken text
+        return align["starts"][min(i, len(align["starts"]) - 1)]
+    # estimate: speech time is roughly proportional to letters, pauses at punctuation
+    def weight(s):
+        return len(re.sub(r"[^\w]", "", s)) + 6 * len(re.findall(r"[.!?]", s)) + 3 * len(re.findall(r"[,;:–]", s))
+    return dur * weight(seg_text[:i]) / max(1, weight(seg_text))
 
 
 def build():
+    edl = importlib.import_module(f"edl_{LANG}").EDL
+    segs = {s["id"]: s for s in json.load(open(os.path.join(HERE, f"narration_{LANG}.json")))["segments"]}
     durs = json.load(open(os.path.join(VOICE, "durations.json")))
+    align_path = os.path.join(VOICE, "alignment.json")
+    aligns = json.load(open(align_path)) if os.path.exists(align_path) else {}
     t = 0.0
     shots, narration, music, sfx = [], [], [], []
-    pending_trans = None
-    for item in EDL:
+    for item in edl:
         kind = item[0]
         if kind == "music":
             music.append({"t": round(t, 3), "mood": item[1]})
             continue
         if kind == "sfx":
-            sfx.append({"t": round(t, 3), "kind": item[1]})
+            sfx.append({"t": round(t, 3), "kind": item[1], **(item[2] if len(item) > 2 else {})})
             continue
         if kind == "card":
             s = dict(item[1])
             s["dur"] = s.pop("fixed")
+            s.pop("w", None)
             s["start"] = t
-            s.setdefault("trans", "black")
-            s["td"] = s.get("td", 0.8)
             shots.append(s)
             t += s["dur"]
             continue
         _, sid, plan = item[:3]
         extra = item[3] if len(item) > 3 else 0.0
-        seg_dur = LEAD + durs[sid] + GAP + extra
-        narration.append({"id": sid, "start": round(t + LEAD, 3), "dur": round(durs[sid], 3)})
-        fixed = sum(s.get("fixed") or 0 for s in plan)
-        flex = [s for s in plan if not s.get("fixed")]
-        rest = max(0.0, seg_dur - fixed)
-        wsum = sum(s["w"] for s in flex) or 1
-        if not flex:  # all fixed: stretch the last one to fill the line
-            plan[-1]["fixed"] = plan[-1]["fixed"] + max(0.0, seg_dur - fixed)
-        for s in plan:
-            s = dict(s)
-            d = s.pop("fixed", None) or rest * s["w"] / wsum
-            s.pop("w", None)
-            s["dur"] = d
-            s["start"] = t
-            if s.get("cap") is None:
-                s.pop("cap", None)
-            shots.append(s)
-            t += d
+        text, dur = segs[sid]["text"], durs[sid]
+        seg_start = t
+        seg_dur = LEAD + dur + GAP + extra
+        narration.append({"id": sid, "start": round(t + LEAD, 3), "dur": round(dur, 3)})
+        wt = lambda w: LEAD + word_time(text, dur, w, aligns.get(sid))
+        # split the segment into blocks at "at_word" anchors, share time by weight inside each block
+        anchors = [0.0] + [wt(s["at_word"]) for s in plan[1:] if s.get("at_word")] + [seg_dur]
+        if any(b <= a for a, b in zip(anchors, anchors[1:])):
+            raise ValueError(f"{sid}: cut words out of order: {[s.get('at_word') for s in plan]}")
+        blocks, cur = [], []
+        for i, s in enumerate(plan):
+            if i > 0 and s.get("at_word"):
+                blocks.append(cur)
+                cur = []
+            cur.append(s)
+        blocks.append(cur)
+        for bi, block in enumerate(blocks):
+            b_len = anchors[bi + 1] - anchors[bi]
+            fixed = sum(s.get("fixed") or 0 for s in block)
+            flex = [s for s in block if not s.get("fixed")]
+            rest = max(0.0, b_len - fixed)
+            wsum = sum(s["w"] for s in flex) or 1
+            stretch = (b_len - fixed) if not flex else 0.0
+            for j, s in enumerate(block):
+                s = json.loads(json.dumps(s))
+                d = s.pop("fixed", None) or rest * s["w"] / wsum
+                if not flex and j == len(block) - 1:
+                    d += max(0.0, stretch)
+                s.pop("w", None)
+                s.pop("at_word", None)
+                s.setdefault("trans", "cut")  # inside narration, cut on the word unless told otherwise
+                s["dur"] = d
+                s["start"] = t
+                for o in s.get("overlays", []):
+                    if "word" in o:
+                        o["t0"] = round(seg_start + wt(o.pop("word")) - t, 3)
+                        o.setdefault("t1", o["t0"] + o.pop("hold", 2.2))
+                shots.append(s)
+                t += d
     total = t
-    # sound cues derived from the pictures
-    for s in shots:
-        if s.get("anim") == "dateline" and s["params"].get("lines"):
-            sfx.append({"t": s["start"] + 0.4, "kind": "typewriter", "dur": sum(len(l) for l in s["params"]["lines"]) / 22 + 0.3})
-        if s.get("anim") == "agreement":
-            sfx.append({"t": s["start"] + 0.8, "kind": "typewriter", "dur": 4.6})
-            sfx.append({"t": s["start"] + 0.8 + 155 / 34 + 0.3, "kind": "stamp"})
-        if s.get("anim") in ("radon", "tower_diagram"):
-            sfx.append({"t": s["start"] + 2.5, "kind": "geiger", "dur": s["dur"] - 2.5})
-        if s.get("anim") == "train_route":
-            sfx.append({"t": s["start"] + 0.8, "kind": "train", "dur": s["dur"] - 0.8})
-        if s.get("anim") == "prisoners":
-            sfx.append({"t": s["start"], "kind": "wind", "dur": s["dur"]})
+    shots = subdivide(shots)
+    sfx += auto_sfx(shots)
     for i, s in enumerate(shots):
         s["id"] = i
-    tl = {"duration": total, "shots": shots, "narration": narration, "music": music, "sfx": sorted(sfx, key=lambda x: x["t"])}
-    return tl
+    return {"duration": total, "shots": shots, "narration": narration, "music": music,
+            "sfx": sorted(sfx, key=lambda x: x["t"])}
+
+
+CLIP_LEN = {"rds1_site": 185, "crossroads_hd": 642, "hiroshima_dmg": 912, "truman_1945": 217,
+            "october_1937": 721, "anthracite": 534, "trinity": 12.9, "jachymov_valley": 12.5}
+# punch-in windows used to cover a long still with several "camera set-ups"
+PUNCH = [((0.5, 0.5), 1.0, 1.08), ((0.36, 0.42), 1.45, 1.55), ((0.64, 0.58), 1.5, 1.62),
+         ((0.5, 0.35), 1.7, 1.8), ((0.42, 0.62), 1.35, 1.45)]
+
+
+def subdivide(shots, max_len=3.0, piece=2.4):
+    """Split long stills/films into ~2.4 s pieces so the picture changes every 1.5-3 s."""
+    out = []
+    for s in shots:
+        d = s["dur"]
+        long_clip = s["type"] == "video" and CLIP_LEN.get(s["key"], 0) > 40
+        if s["type"] not in ("photo", "video") or d <= max_len or (s["type"] == "video" and not long_clip) \
+                or s.get("no_split"):
+            out.append(s)
+            continue
+        n = max(2, round(d / piece))
+        step = d / n
+        for k in range(n):
+            q = json.loads(json.dumps(s))
+            q["start"] = s["start"] + k * step
+            q["dur"] = step if k < n - 1 else d - k * step
+            a0, a1 = k * step, k * step + q["dur"]
+            ovs = []
+            for o in s.get("overlays", []):
+                o = dict(o)
+                if o["kind"] in ("illustrative",):
+                    ovs.append(o)
+                    continue
+                if o["kind"] == "tag" and k > 0:
+                    continue
+                t0, t1 = o.get("t0", 0.0), o.get("t1", 99.0)
+                if t1 <= a0 or t0 >= a1:
+                    continue
+                o["t0"], o["t1"] = round(t0 - a0, 3), round(t1 - a0, 3)
+                ovs.append(o)
+            q["overlays"] = ovs
+            q["shake"] = [h - a0 for h in s.get("shake", []) if a0 <= h < a1]
+            if k > 0:
+                q["trans"], q["td"] = "cut", 0.0
+                if s["type"] == "photo":
+                    (cx, cy), z0, z1 = PUNCH[k % len(PUNCH)]
+                    q.pop("fit", None)
+                    q.update(c0=[cx, cy], c1=[cx + 0.02, cy - 0.01], z0=z0, z1=z1)
+                else:
+                    q["t_in"] = s["t_in"] + k * (step * s.get("speed", 1.0) + 5.0)
+            elif s["type"] == "photo" and s.get("fit") is None:
+                q["z1"] = q.get("z0", 1.0) + (q.get("z1", 1.12) - q.get("z0", 1.0)) * 0.6
+            out.append(q)
+    return out
+
+
+def auto_sfx(shots):
+    """Sound design that follows the picture: whooshes on whips, hits on stamps and flashes."""
+    out = []
+    for s in shots:
+        t0, tr = s["start"], s.get("trans", "dissolve")
+        if s.get("sfx"):
+            out.append({"t": t0, "kind": s["sfx"]})
+        if tr in ("whip", "whip_l", "zoom"):
+            out.append({"t": t0 + s.get("td", 0.5) / 2, "kind": "whoosh", "dur": 0.55})
+        elif tr == "flash":
+            out.append({"t": t0 + s.get("td", 0.4) / 2, "kind": "impact"})
+        elif tr == "glitch":
+            out.append({"t": t0 + s.get("td", 0.4) / 2, "kind": "glitch"})
+        elif tr == "burn":
+            out.append({"t": t0 + s.get("td", 0.8) / 2, "kind": "whoosh_soft", "dur": 0.9})
+        for h in s.get("shake", []):
+            out.append({"t": t0 + h, "kind": "impact"})
+        for o in s.get("overlays", []):
+            if o["kind"] == "words" and o.get("style") == "stamp":
+                out.append({"t": t0 + o["t0"] + 0.12, "kind": "stamp"})
+            elif o["kind"] == "words" and o.get("style") == "big" and o.get("hit", True):
+                out.append({"t": t0 + o["t0"], "kind": "impact"})
+            elif o["kind"] == "words" and o.get("style") == "type":
+                out.append({"t": t0 + o["t0"], "kind": "typewriter", "dur": len(o["text"]) / o.get("cps", 26)})
+            elif o["kind"] == "countdown":
+                for k in range(o.get("from", 5)):
+                    out.append({"t": t0 + o.get("t0", 0) + k * o.get("step", 1.0), "kind": "tick"})
+            elif o["kind"] == "dosimeter":
+                out.append({"t": t0 + o.get("t0", 0.3), "kind": "geiger", "dur": min(s["dur"], o.get("t1", 99)) - o.get("t0", 0.3)})
+        a = s.get("anim")
+        if a == "chapter2":
+            out.append({"t": t0, "kind": "whoosh", "dur": 0.5})
+            out.append({"t": t0 + 0.2, "kind": "impact"})
+        elif a == "title_slam":
+            out.append({"t": t0 + 0.35, "kind": "riser", "dur": 1.6})
+            out.append({"t": t0 + 0.35, "kind": "impact_big"})
+        elif a == "agreement":
+            out.append({"t": t0 + 0.8, "kind": "typewriter", "dur": 4.4})
+            out.append({"t": t0 + 0.8 + 170 / 34 + 0.3, "kind": "stamp"})
+        elif a == "teletype":
+            out.append({"t": t0 + 0.3, "kind": "typewriter", "dur": min(s["dur"] - 0.3, 5.0)})
+        elif a == "evidence_board":
+            for i in range(len(s["params"].get("items", [])) + len(s["params"].get("cards", []))):
+                out.append({"t": t0 + 0.2 + i * 0.35, "kind": "pin"})
+        elif a in ("radon", "tower_diagram"):
+            start = min(2.5, s["dur"] * 0.4)
+            out.append({"t": t0 + start, "kind": "geiger", "dur": s["dur"] - start})
+        elif a == "train_route":
+            out.append({"t": t0 + 0.8, "kind": "train", "dur": s["dur"] - 0.8})
+        elif a == "prisoners":
+            out.append({"t": t0, "kind": "wind", "dur": s["dur"]})
+        elif a == "dateline" and s["params"].get("lines"):
+            n = sum(len(l) for l in s["params"]["lines"])
+            out.append({"t": t0 + 0.4, "kind": "typewriter", "dur": n / 22 + 0.3})
+    return out
 
 
 def credits_pages(tl):
-    """Fill the credits roll from the captions actually used + Commons metadata."""
     cred_path = os.path.join(BUILD, "assets", "credits.json")
     meta = json.load(open(cred_path)) if os.path.exists(cred_path) else {}
     used = []
     for s in tl["shots"]:
-        k = s.get("key")
-        if k and k not in used:
-            used.append(k)
+        keys = [s.get("key")] + [s.get("params", {}).get(k) for k in ("left", "right")]
+        keys += [it[0] for it in s.get("params", {}).get("items", [])]
+        for k in keys:
+            if k and k not in used:
+                used.append(k)
     lines = []
     for k in used:
         m = meta.get(k, {})
@@ -227,23 +254,21 @@ def credits_pages(tl):
         artist = (m.get("artist") or "").replace("\n", " ").strip()
         artist = artist.replace("AnonymousUnknown author", "Unknown author").replace("Unknown authorUnknown author", "Unknown author")
         lic = m.get("license") or ""
-        lines.append(f"{title} — {artist + ', ' if artist else ''}{lic}, via Wikimedia Commons")
+        lines.append(f"{title} — {artist + ', ' if artist else ''}{lic}, Wikimedia Commons")
     third = (len(lines) + 2) // 3
-    pages = [
-        ("Uranium for Stalin", [
-            "Written, edited and produced with open tools",
-            "Narration: Kokoro-82M neural voice (Apache-2.0)",
-            "Music and sound design: original synthesised score",
-            "Maps: Natural Earth (public domain)",
-            "Typefaces: Big Shoulders Stencil, Big Shoulders, Source Serif 4, Special Elite, Courier Prime, Playfair Display (SIL OFL / Apache-2.0)",
-            "Historical sources: Czech Radio (radio.cz); Political Prisoners (politicalprisoners.eu); Platform of European Memory and Conscience; Wilson Center Cold War International History Project; histories of the Soviet atomic project",
-            "Figures for prisoners and uranium output are historians' estimates; illustrative footage is labelled on screen.",
+    return [
+        ("Uran pro Stalina", [
+            "Scénář, střih a grafika: otevřené nástroje (pipeline v tomto repozitáři)",
+            "Hudba a zvuky: původní syntetizovaná hudba",
+            "Mapy: Natural Earth (volné dílo)",
+            "Písma: Big Shoulders Stencil, Big Shoulders, Source Serif 4, Special Elite, Courier Prime, IBM Plex Sans, Playfair Display (SIL OFL / Apache-2.0)",
+            "Prameny: Český rozhlas (radio.cz); politicalprisoners.eu; Platforma evropské paměti a svědomí; Wilson Center CWIHP; dějiny sovětského atomového projektu",
+            "Počty vězňů a vytěženého uranu jsou odhady historiků. Ilustrační záběry jsou v obraze označeny.",
         ]),
-        ("Archive footage and photographs (1/3)", lines[:third]),
-        ("Archive footage and photographs (2/3)", lines[third:2 * third]),
-        ("Archive footage and photographs (3/3)", lines[2 * third:]),
+        ("Archivní záběry a fotografie (1/3)", lines[:third]),
+        ("Archivní záběry a fotografie (2/3)", lines[third:2 * third]),
+        ("Archivní záběry a fotografie (3/3)", lines[2 * third:]),
     ]
-    return pages
 
 
 if __name__ == "__main__":
@@ -254,4 +279,5 @@ if __name__ == "__main__":
     out = os.path.join(BUILD, "timeline.json")
     json.dump(tl, open(out, "w"), indent=1, ensure_ascii=False)
     m, s = divmod(tl["duration"], 60)
-    print(f"timeline: {len(tl['shots'])} shots, {int(m)}:{s:04.1f}")
+    durs = [x["dur"] for x in tl["shots"]]
+    print(f"timeline: {len(tl['shots'])} shots, {int(m)}:{s:04.1f}, median shot {sorted(durs)[len(durs)//2]:.1f}s")

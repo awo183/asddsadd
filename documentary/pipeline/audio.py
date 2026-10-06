@@ -107,6 +107,7 @@ MOODS = {
     #            chords (cycle)             chord s  pad   drone  piano pulse  eerie
     "cold_open": (["Dm", "Bb"], 9.0, 0.10, 0.55, 0.0, 0.35, 0.10),
     "title":     (["Dm9", "Bb", "Gm", "A"], 4.0, 0.55, 0.35, 0.0, 0.0, 0.0),
+    "teaser":    (["Dm", "Bb", "Gm", "A"], 2.0, 0.40, 0.45, 0.0, 0.0, 0.10),
     "ch1":       (["Dm", "Bb", "F", "C"], 6.0, 0.30, 0.25, 0.55, 0.0, 0.0),
     "ch2":       (["Dm", "Bb", "Gm", "A"], 6.0, 0.30, 0.35, 0.20, 0.30, 0.0),
     "ch3":       (["Dm", "Dm", "Bb", "A"], 5.0, 0.28, 0.35, 0.0, 0.50, 0.0),
@@ -118,7 +119,8 @@ MOODS = {
     "end":       (["Bb", "F", "Gm", "D"], 7.0, 0.30, 0.15, 0.45, 0.0, 0.0),
 }
 
-PENTA = [62, 65, 67, 69, 72, 74, 77]  # D minor pentatonic-ish melody pool
+PENTA = [62, 65, 67, 69, 72, 74, 77]
+PERC = {"cold_open": 0.5, "teaser": 0.9, "ch2": 0.35, "ch3": 0.55, "ch5": 0.35}  # D minor pentatonic-ish melody pool
 
 
 def section(mood, dur, start_abs):
@@ -181,6 +183,24 @@ def section(mood, dur, start_abs):
         e = e * sw * g_eerie * 0.03
         out[:, 0] += e
         out[:, 1] += np.roll(e, 900)
+    # war-drum percussion for the tense sections
+    g_perc = PERC.get(mood, 0.0)
+    if g_perc > 0:
+        bpm = 84
+        beat = 60 / bpm
+        pl = int(0.9 * SR)
+        tq = np.arange(pl) / SR
+        drum = (np.sin(2 * np.pi * np.cumsum(95 * np.exp(-tq * 9) + 48) / SR) * np.exp(-tq * 5.5)
+                + lowpass(rng.normal(0, 1, pl).astype(np.float32), 600) * np.exp(-tq * 25) * 0.6).astype(np.float32)
+        drum = np.stack([drum, drum], 1)
+        pattern = [1.0, 0, 0.55, 0, 0.8, 0, 0.55, 0.45]  # 8th notes
+        tb, i = 0.0, 0
+        while tb < dur:
+            v = pattern[i % 8]
+            if v:
+                place(out, drum * v * g_perc * 0.55, tb)
+            tb += beat / 2
+            i += 1
     fade = env_adsr(n, 1.5, 2.5)[:, None]
     return out * fade
 
@@ -270,10 +290,74 @@ def sfx_wind(dur):
     return w * mod * env_adsr(n, 2.0, 2.0)[:, None] * 0.35
 
 
+def sfx_whoosh(dur=0.6, soft=False):
+    n = int(dur * SR)
+    tq = np.arange(n) / SR
+    noise = rng.normal(0, 1, (n, 2)).astype(np.float32)
+    env = np.sin(np.pi * np.clip(tq / dur, 0, 1)) ** 2
+    # sweep a band-pass upwards then down by mixing two filtered copies
+    lo = bandpass(noise, 300, 1500)
+    hi = bandpass(noise, 1500, 7000)
+    mixk = (np.sin(np.pi * tq / dur) ** 1.5)[:, None]
+    x = (lo * (1 - mixk) + hi * mixk) * env[:, None]
+    pan = np.linspace(-0.7, 0.7, n)[:, None]
+    x = np.concatenate([x[:, :1] * (1 - pan), x[:, 1:] * (1 + pan)], 1)
+    return x * (0.35 if soft else 0.6)
+
+
+def sfx_impact(big=False):
+    n = int((2.5 if big else 1.2) * SR)
+    tq = np.arange(n) / SR
+    sub = np.sin(2 * np.pi * np.cumsum(60 * np.exp(-tq * 3) + 32) / SR) * np.exp(-tq * (1.6 if big else 3.5))
+    body = lowpass(rng.normal(0, 1, n).astype(np.float32), 900) * np.exp(-tq * 14)
+    crack = highpass(rng.normal(0, 1, n).astype(np.float32), 2500) * np.exp(-tq * 45) * 0.5
+    x = (sub * 1.1 + body * 0.8 + crack).astype(np.float32)
+    x = np.stack([x, x], 1)
+    return x * (1.0 if big else 0.7)
+
+
+def sfx_tick():
+    n = int(0.08 * SR)
+    tq = np.arange(n) / SR
+    x = (np.sin(2 * np.pi * 2200 * tq) * np.exp(-tq * 90) + bandpass(rng.normal(0, 1, n).astype(np.float32), 2000, 6000)
+         * np.exp(-tq * 120) * 0.4).astype(np.float32)
+    return np.stack([x, x], 1) * 0.45
+
+
+def sfx_riser(dur=2.0):
+    n = int(dur * SR)
+    tq = np.arange(n) / SR
+    f = 120 * (8 ** (tq / dur))
+    tone = np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.3
+    noise = highpass(rng.normal(0, 1, n).astype(np.float32), 1500) * 0.5
+    env = (tq / dur) ** 2
+    x = ((tone + noise) * env).astype(np.float32)
+    return np.stack([x, np.roll(x, 300)], 1) * 0.5
+
+
+def sfx_glitch():
+    n = int(0.35 * SR)
+    x = rng.normal(0, 1, n).astype(np.float32)
+    gate = (np.floor(np.arange(n) / (SR * 0.02)) % 2).astype(np.float32)
+    x = bandpass(x, 800, 5000) * gate
+    sq = np.sign(np.sin(2 * np.pi * 180 * np.arange(n) / SR)).astype(np.float32) * 0.2
+    x = (x + sq * gate) * np.linspace(1, 0.3, n)
+    return np.stack([x, x], 1) * 0.35
+
+
+def sfx_pin():
+    n = int(0.15 * SR)
+    tq = np.arange(n) / SR
+    x = (bandpass(rng.normal(0, 1, n).astype(np.float32), 400, 3000) * np.exp(-tq * 60)).astype(np.float32)
+    return np.stack([x, x], 1) * 0.5
+
+
 def sfx_track(tl):
     buf = np.zeros((int((tl["duration"] + 10) * SR), 2), np.float32)
     for c in tl["sfx"]:
         k, t = c["kind"], c["t"]
+        if "dur" in c and c["dur"] < 0.3:
+            continue  # cue shorter than its own attack: skip
         if k == "typewriter":
             place(buf, sfx_typewriter(c["dur"]), t)
         elif k == "stamp":
@@ -286,6 +370,22 @@ def sfx_track(tl):
             place(buf, sfx_train(c["dur"]), t)
         elif k == "wind":
             place(buf, sfx_wind(c["dur"]), t)
+        elif k == "whoosh":
+            place(buf, sfx_whoosh(c.get("dur", 0.6)), t - c.get("dur", 0.6) / 2)
+        elif k == "whoosh_soft":
+            place(buf, sfx_whoosh(c.get("dur", 0.9), soft=True), t - c.get("dur", 0.9) / 2)
+        elif k == "impact":
+            place(buf, sfx_impact(), t)
+        elif k == "impact_big":
+            place(buf, sfx_impact(True), t)
+        elif k == "tick":
+            place(buf, sfx_tick(), t)
+        elif k == "riser":
+            place(buf, sfx_riser(c.get("dur", 2.0)), t - c.get("dur", 2.0))
+        elif k == "glitch":
+            place(buf, sfx_glitch(), t - 0.15)
+        elif k == "pin":
+            place(buf, sfx_pin(), t)
     return buf
 
 

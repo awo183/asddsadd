@@ -1,0 +1,100 @@
+URAN PRO STALINA – narace pro ElevenLabs (čeština)
+
+Jak nahrát:
+1. ElevenLabs > Text to Speech, model: Eleven Multilingual v2 (umí <break> pauzy).
+2. Hlas: klidný mužský vypravěč, ideálně rodilý český hlas z Voice Library.
+   Nastavení: Stability ~45 %, Similarity ~75–80 %, Style ~15–25 %, Speaker boost zapnutý.
+3. Vložte ČÁST 1 a vygenerujte, pak ČÁST 2. Stáhněte jako MP3 (44,1 kHz) nebo WAV.
+4. Značky <break time="1.5s" /> nechte v textu: nevyslovují se, jen udělají pauzu,
+   podle které se nahrávka rozstříhá na jednotlivé repliky k obrazu.
+5. Pošlete mi oba soubory (narace_1.mp3, narace_2.mp3).
+
+Čísla jsou vypsaná slovy záměrně, aby je hlas četl ve správném pádě.
+
+==================== ČÁST 1 (22 replik, 4113 znaků) ====================
+
+Devětadvacátého srpna devatenáct set čtyřicet devět, v sedm hodin ráno, vybuchla v kazašské stepi první sovětská atomová bomba, se silou dvaadvaceti tisíc tun té en té.
+<break time="1.5s" />
+U nás se dodnes vypráví, že uran do ní vykopali političtí vězni v Jáchymově, kněží, skauti a sedláci. Jenže když si vedle sebe položíte sovětská čísla a archivní záznamy, vyjde vám jiný příběh, a po pravdě ještě horší.
+<break time="1.5s" />
+Ukážu vám, odkud se ten uran opravdu vzal, kdo ho kopal a proč desítky tisíc lidí dřely v radioaktivním prachu pro bomby, které přišly až po té první.
+<break time="1.5s" />
+Necelé čtyři měsíce po Hirošimě, třiadvacátého listopadu devatenáct set čtyřicet pět, podepsalo Československo se Sovětským svazem tajnou dohodu o těžbě a dodávkách radioaktivních surovin. Veškerý uran měl jít do es es es er, a to až do konce čtyřicátých let za cenu nižší, než byla na světovém trhu.
+<break time="1.5s" />
+Moskva totiž spěchala. Po amerických bombách na Japonsko potřeboval Stalin vlastní bombu, a to co nejdřív.
+<break time="1.5s" />
+Vědecky projekt vedl fyzik Igor Kurčatov, nad ním stál šéf tajné policie Lavrentij Berija a díky špionům znali Sověti spoustu amerických tajemství. Chyběla jim ale surovina, uran.
+<break time="1.5s" />
+A jediné známé ložisko uranu, ke kterému měla Rudá armáda po válce přístup, bylo právě v Jáchymově.
+<break time="1.5s" />
+Jáchymov přitom svět znal už dávno, i když kvůli něčemu úplně jinému. Devátého ledna patnáct set dvacet se tu začaly razit velké stříbrné mince, kterým se brzy začalo říkat tolary.
+<break time="1.5s" />
+Z tolaru se přes holandštinu stal dolar, takže americká měna má jméno po městě v Krušných horách. A ne, to si nevymýšlím.
+<break time="1.5s" />
+Horníci tu ale v žilách stříbra naráželi i na těžký černý nerost, který jim kazil práci. Říkali mu smolinec a pro ně to byla opravdu smůla.
+<break time="1.5s" />
+Teprve o staletí později z jáchymovského smolince Marie Curieová získala radium a v roce devatenáct set šest tu otevřeli první radonové lázně na světě.
+<break time="1.5s" />
+Jenže ten samý radon, který léčil v lázních, je v dolech zabiják, protože se usazuje v plicích. Na tohle si vzpomeňte, až se dostaneme k táborům.
+<break time="1.5s" />
+Zamyslete se nad tím na vteřinu. Když se ta smlouva podepisovala, bylo Československo pořád demokratický stát, a jeho nejcennější surovinu už měl v rukou Stalin.
+<break time="1.5s" />
+Jestli vás tyhle zapomenuté kapitoly našich dějin zajímají, dejte odběr, ať vám další díl neuteče.
+<break time="1.5s" />
+V lednu devatenáct set čtyřicet šest vznikl národní podnik Jáchymovské doly a ruda začala odjíždět v zapečetěných vagonech na východ.
+<break time="1.5s" />
+Jenže tady verze, kterou znáte, přestává sedět. V letech devatenáct set čtyřicet šest až devatenáct set čtyřicet osm nekopali jáchymovský uran vězni z lágrů, ale němečtí váleční zajatci a civilní horníci.
+<break time="1.5s" />
+Kolik ho bylo? V roce devatenáct set čtyřicet šest dodalo Československo Sovětům osmnáct tun uranu, o rok později čtyřicet devět a v roce devatenáct set čtyřicet osm přes sto tun.
+<break time="1.5s" />
+Jenže Jáchymov nebyl jediný zdroj. V poraženém Německu našli sovětští fyzici přes sto tun ukrytého oxidu uranu a Kurčatov prý později řekl, že jim to ušetřilo rok práce na prvním reaktoru. Další ruda tekla ze Saska, kde Sověti brzy těžili víc než v Jáchymově.
+<break time="1.5s" />
+Jinými slovy, do první bomby šel ukořistěný německý uran a ruda z let, kdy v Jáchymově ještě žádné vězeňské tábory nestály. A dokazují to dvě data.
+<break time="1.5s" />
+Reaktor A na Uralu, který vyrobil plutonium pro první bombu, se rozjel v červnu devatenáct set čtyřicet osm. Tábory pro vězně u jáchymovských dolů začaly vznikat až v roce devatenáct set čtyřicet devět.
+<break time="1.5s" />
+Pak přišlo to srpnové ráno, kterým jsme začali, a o necelý měsíc později prezident Truman oznámil, že Spojené státy mají důkazy o atomovém výbuchu v es es es er.
+<break time="1.5s" />
+Americký monopol skončil a začal závod ve zbrojení. A ten potřeboval mnohem víc uranu, než kolik dokázali vytěžit placení horníci.
+
+==================== ČÁST 2 (20 replik, 3557 znaků) ====================
+
+Mezitím se změnilo samotné Československo. V únoru devatenáct set čtyřicet osm převzali moc komunisté Klementa Gottwalda a ještě ten rok přijali zákon o táborech nucené práce.
+<break time="1.5s" />
+Do tábora vás přitom nemusel poslat soud, stačilo rozhodnutí komise. Jestli vás napadá, jak tohle mohlo být legální, tak bohužel bylo. Měli na to zákon.
+<break time="1.5s" />
+Kněží, skauti, sedláci a kdokoli, kdo se režimu nehodil, mohl skončit v uranovém dole. Podle archivních záznamů vznikaly první tábory nucené práce u dolů od října devatenáct set čtyřicet devět.
+<break time="1.5s" />
+Takže ano, političtí vězni opravdu kopali uran pro Stalina. Jen ne pro tu první bombu, ale pro všechny, které přišly po ní.
+<break time="1.5s" />
+A pro ty další bomby se v letech devatenáct set čtyřicet devět až devatenáct set šedesát jedna postavilo u dolů na Jáchymovsku, u Horního Slavkova a u Příbrami osmnáct táborů.
+<break time="1.5s" />
+Některé dostaly jména po šachtách, takže vězni žili v táborech jménem Rovnost, Svornost nebo Bratrství. Tu ironii asi nemusím vysvětlovat.
+<break time="1.5s" />
+Kolik lidí jimi prošlo? Historici odhadují šedesát až sedmdesát tisíc. Sami sobě vězni říkali mukl, což se vysvětluje jako muž určený k likvidaci.
+<break time="1.5s" />
+Každá směna měla normu a kdo ji nesplnil, dostal ještě míň jídla. Při opakovaném neplnění přišly další tresty, třeba korekce, tedy samotka.
+<break time="1.5s" />
+Horší než hlad ale byla radiace. Ochranné obleky ani respirátory vězni neměli, takže se jim prach z rudy usazoval na oblečení, na kůži i v plicích, a v tom samém oblečení často i spali.
+<break time="1.5s" />
+Teď jeden konkrétní příběh, se jmény a s datem.
+<break time="1.5s" />
+Osmadvacátého září devatenáct set padesát se ze schodiště na tábor Svornost pokusili utéct dva vězni, Rudolf Kindl, ročník devatenáct set dvacet devět, a Ilja Stalev Chubenov. Dozorci je dopadli a oba na místě zastřelili.
+<break time="1.5s" />
+Vězni tomu schodišti říkali Mauthausenské a dnes u něj stojí cedule s jejich jmény. Podobných míst je kolem Jáchymova víc, jen je mezitím většinou zarostl les.
+<break time="1.5s" />
+Nejobávanějším místem ale byla sedmipatrová budova u Ostrova, Rudá věž smrti. Patřila k táboru Vykmanov dva a ruda se v ní drtila a třídila, než odjela do Sovětského svazu.
+<break time="1.5s" />
+Pracovalo tu kolem tří set vězňů, které režim považoval za zvlášť nebezpečné. Vynášeli rudu do nejvyššího patra a sypali ji na obrovská síta, celé směny v radioaktivním prachu a bez jakékoli ochrany.
+<break time="1.5s" />
+Na budově dnes visí deska, která ji nazývá konečným pracovištěm politických vězňů padesátých let určených k likvidaci. Od roku dva tisíce osm je to národní kulturní památka.
+<break time="1.5s" />
+Tábory se pak postupně zavíraly a velkou část vězňů propustila amnestie v roce devatenáct set šedesát.
+<break time="1.5s" />
+Těžba ale běžela dál. Kolem roku devatenáct set šedesát se tu těžilo až tři tisíce tun uranu ročně a za šest desítek let se u nás vytěžilo kolem sto dvanácti tisíc tun. Většina skončila v Sovětském svazu.
+<break time="1.5s" />
+Kolem zbytků táborů dnes vede naučná stezka Jáchymovské peklo a každý rok v květnu se tam scházejí bývalí vězni a jejich rodiny.
+<break time="1.5s" />
+Takže až zase uslyšíte, že první sovětskou bombu vykopali jáchymovští vězni, víte, že to tak úplně není. Vězni z Jáchymova, Horního Slavkova a Příbrami kopali dvanáct let uran pro všechny bomby, které přišly po ní.
+<break time="1.5s" />
+A ve městě, které dalo světu dolar, se za ten uran platilo lidskými životy.

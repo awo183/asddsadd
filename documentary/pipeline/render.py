@@ -16,6 +16,8 @@ from PIL import Image
 from common import (W, H, FPS, BUILD, ASSETS, BG, ken_burns, contain_frame, load_photo, grade, finish,
                     lower_third, ramp, ease)
 from anims import ANIMS
+import fx
+from overlays import draw_overlays
 
 
 # ---------------------------------------------------------------- encoders
@@ -51,6 +53,9 @@ class PhotoSource:
         if s.get("fit") == "contain":
             z = 1 + (s.get("z1", 1.06) - 1) * ease(p)
             return contain_frame(self.im, z)
+        if s.get("fit") == "print":
+            from common import print_frame
+            return print_frame(self.im, lt, s["dur"], s.get("rot", -2.5), s.get("z1", 1.08))
         return ken_burns(self.im, p, s.get("z0", 1.0), s.get("z1", 1.12), tuple(s.get("c0", (0.5, 0.5))),
                          tuple(s.get("c1", (0.5, 0.5))))
 
@@ -154,15 +159,16 @@ def make_source(shot, local_start):
 # ---------------------------------------------------------------- compositing
 def shot_frame(shot, src, lt, n):
     im = src.frame(lt)
-    if shot.get("cap"):
-        label, sub = shot["cap"]
-        a = ramp(lt, 0.6, 1.2) * (1 - ramp(lt, shot["dur"] - 0.9, shot["dur"] - 0.3))
-        if a > 0:
-            im = im.convert("RGBA")
-            im.alpha_composite(lower_third(label, sub, a))
-            im = im.convert("RGB")
-    arr = np.asarray(im)
     real = shot["type"] in ("photo", "video")
+    if shot.get("film", shot["type"] == "video"):
+        im = Image.fromarray(np.clip(fx.film_look(np.asarray(im), n, shot.get("film_strength", 1.0)), 0, 255)
+                             .astype(np.uint8))
+    im = draw_overlays(im, lt, shot.get("overlays"))
+    arr = np.asarray(im)
+    if shot.get("shake"):
+        arr = fx.shake(arr, lt, shot["shake"], shot.get("shake_amp", 22.0))
+    if shot.get("leak"):
+        arr = np.clip(arr.astype(np.float32) + fx.light_leak(n, shot["leak"]), 0, 255).astype(np.uint8)
     return finish(arr, n, grain=2.5 if real else 0.0, vig=real)
 
 
@@ -196,20 +202,10 @@ def render_range(args):
         lt = T - cur["start"]
         trans = cur.get("trans", "dissolve")
         td = cur.get("td", 0.6)
-        if idx > 0 and lt < td and trans in ("dissolve", "black"):
+        if idx > 0 and lt < td and trans in fx.TRANSITIONS and trans not in ("white", "cut"):
             prev = shots[idx - 1]
             plt = T - prev["start"]
-            x = lt / td
-            if trans == "dissolve":
-                a = get(idx - 1, plt).astype(np.float32)
-                b = get(idx, lt).astype(np.float32)
-                k = ease(x)
-                frame = (a * (1 - k) + b * k).astype(np.uint8)
-            else:  # dip to black
-                if x < 0.5:
-                    frame = (get(idx - 1, plt).astype(np.float32) * (1 - ease(x * 2))).astype(np.uint8)
-                else:
-                    frame = (get(idx, lt).astype(np.float32) * ease(x * 2 - 1)).astype(np.uint8)
+            frame = fx.transition(trans, get(idx - 1, plt), get(idx, lt), lt / td, n)
         elif trans == "white" and lt < td:
             b = get(idx, lt).astype(np.float32)
             k = ease(lt / td)
