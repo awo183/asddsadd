@@ -84,8 +84,11 @@ def main():
          "-metadata", f"title={TITLE}", "-movflags", "+faststart", master])
     small = os.path.join(OUT, f"{NAME}-720p.mp4")
     log = os.path.join(B, "x264pass")
+    # keep the 720p copy under ~26 MB whatever the running time, so it can be shared easily
+    dur = sum(s["dur"] for s in timeline.build())
+    kbps = min(1600, int(26 * 8 * 1024 / dur - 140))
     base = ["ffmpeg", "-v", "error", "-y", "-i", master, "-vf", "scale=1280:720:flags=lanczos",
-            "-c:v", "libx264", "-preset", "slow", "-b:v", "1600k", "-passlogfile", log]
+            "-c:v", "libx264", "-preset", "slow", "-b:v", f"{kbps}k", "-passlogfile", log]
     run(base + ["-pass", "1", "-an", "-f", "mp4", "/dev/null"])
     run(base + ["-pass", "2", "-map", "0:v", "-map", "0:a", "-map", "0:s", "-c:a", "aac",
                 "-b:a", "128k", "-c:s", "mov_text", "-movflags", "+faststart", small])
