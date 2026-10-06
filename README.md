@@ -18,8 +18,10 @@ style of psychological-analysis crime channels. It uses FBI archival material
 (public domain), a photo of the actual aircraft, NASA b-roll, an animated route
 map and a synthesized dark score.
 
-- **Film:** [`output/the-calmest-man-on-the-plane.mp4`](output/the-calmest-man-on-the-plane.mp4) (1080p, 2:03), plus a [720p copy](output/the-calmest-man-on-the-plane-720p.mp4)
+- **Film:** [`output/the-calmest-man-on-the-plane.mp4`](output/the-calmest-man-on-the-plane.mp4) (1080p, 2:03, typewriter-style text), plus a [720p copy](output/the-calmest-man-on-the-plane-720p.mp4)
+- **Czech version:** [`output/nejklidnejsi-muz-v-letadle.mp4`](output/nejklidnejsi-muz-v-letadle.mp4) (2:38), plus a [720p copy](output/nejklidnejsi-muz-v-letadle-720p.mp4). It has Czech narration and Czech on-screen text.
 - **Script, sources, and what's archival vs. illustrative:** [`cooper/SCRIPT.md`](cooper/SCRIPT.md)
+- **Rebuild both versions:** `cooper/make.sh`
 - **Code:** `cooper/` (narration, timeline, scenes, render, audio, finalize). It reuses the helpers in `src/`.
 
 ## How it's made

@@ -2,6 +2,7 @@
 
 One string per sentence; numbers are written out the way they should be spoken.
 Sentence order and count match narration.py so both cuts share one scene plan.
+The Czech cut runs longer than the English one; nothing is trimmed to fit.
 """
 
 SEGMENTS = [

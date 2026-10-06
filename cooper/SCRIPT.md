@@ -6,6 +6,15 @@ behaviour analysis, red annotations and hard-hitting reveals.
 
 Running time: **2:03** · Voice: synthetic (Kokoro TTS, blend of `am_michael` and `am_onyx`)
 
+**Czech version, "Nejklidnější muž v letadle":** this has the same scenes, with Czech
+narration ([`narration_cs.py`](narration_cs.py)) and Czech on-screen text
+([`strings.py`](strings.py)). It runs about **2:38**, because the Czech script is longer
+and is spoken at a natural pace. Voice: synthetic (Piper, `cs_CZ-jirka-medium`).
+
+**Look:** all on-screen text uses typewriter type (Special Elite for headlines and Courier
+Prime for captions, both open-licensed) and types itself on with a cursor and keystroke
+sounds.
+
 | Time | Picture | Narration |
 |---|---|---|
 | 0:00 | **Hook.** The FBI composite sketch, with HIJACKED / $200,000 / VANISHED punching in. The screen drops to black on NEVER SEEN AGAIN, then a red circle is drawn around his eyes and CALM. appears | This man hijacked a passenger jet, collected two hundred thousand dollars, and jumped into the night. He was never seen again. But what's most unsettling isn't what he did. It's how calm he was. |

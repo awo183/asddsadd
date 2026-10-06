@@ -121,6 +121,18 @@ def edge(text):
 
 SYNTH = {"google": google, "piper": piper, "edge": edge}[ENGINE]
 
+# How a Czech narrator would say the English names (only Piper needs the help).
+PRONOUNCE = {"Dan Cooper": "Den Kůpr", "Seattlu": "Sítlu", "Washingtonu": "Vošingtonu",
+             "Columbie": "Kolumbie", "v Renu": "v Rýnu", "FBI": "efbíáj", "bourbon": "búrbon"}
+
+
+def spoken(text):
+    if ENGINE != "piper":
+        return text
+    for a, b in PRONOUNCE.items():
+        text = text.replace(a, b)
+    return text
+
 
 def main():
     os.makedirs(OUT, exist_ok=True)
@@ -128,7 +140,7 @@ def main():
     for key, sentences in SEGMENTS:
         parts, starts, t, sr = [], [], 0.0, 24000
         for i, text in enumerate(sentences):
-            x, sr = SYNTH(text)
+            x, sr = SYNTH(spoken(text))
             if x.ndim > 1:
                 x = x.mean(axis=1)
             idx = np.where(np.abs(x) > 0.01)[0]
