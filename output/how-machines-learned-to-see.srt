@@ -1,0 +1,108 @@
+1
+00:00:01,000 --> 00:00:03,372
+There are now billions of cameras on Earth.
+
+2
+00:00:03,472 --> 00:00:06,490
+They watch our streets, our shops, our workplaces.
+
+3
+00:00:06,590 --> 00:00:10,737
+But for most of history, not one of them understood a single thing it saw.
+
+4
+00:00:16,283 --> 00:00:24,781
+In the summer of 1966, researchers at MIT set out to teach a computer to pick out objects in a picture.
+
+5
+00:00:24,881 --> 00:00:26,710
+They gave themselves one summer.
+
+6
+00:00:26,810 --> 00:00:28,601
+It would take nearly half a century.
+
+7
+00:00:29,817 --> 00:00:32,596
+Because a computer doesn't see a face, or a street.
+
+8
+00:00:32,696 --> 00:00:35,567
+It sees a grid of numbers. Millions of them.
+
+9
+00:00:35,667 --> 00:00:38,853
+Each one, just a measure of red, green, or blue light.
+
+10
+00:00:40,050 --> 00:00:43,581
+For decades, engineers tried to write the rules by hand.
+
+11
+00:00:43,681 --> 00:00:44,926
+Find the edges.
+
+12
+00:00:45,026 --> 00:00:46,313
+Find the corners.
+
+13
+00:00:46,413 --> 00:00:49,166
+Describe exactly what a person looks like.
+
+14
+00:00:49,266 --> 00:00:53,550
+But change the lighting, the angle, or the shadows, and the rules fall apart.
+
+15
+00:00:54,750 --> 00:00:56,800
+So researchers flipped the problem.
+
+16
+00:00:56,900 --> 00:01:00,960
+Instead of writing the rules, let the machine learn them, from examples.
+
+17
+00:01:01,060 --> 00:01:05,747
+Layers of artificial neurons, tuning themselves across millions of images.
+
+18
+00:01:06,950 --> 00:01:13,423
+In 2009, a project called ImageNet gathered more than fourteen million labeled photos.
+
+19
+00:01:13,523 --> 00:01:19,718
+In 2012, a neural network called AlexNet slashed the error rate in the ImageNet challenge.
+
+20
+00:01:19,818 --> 00:01:24,777
+Three years later, machines were making fewer mistakes on that test than a trained human.
+
+21
+00:01:25,983 --> 00:01:28,197
+Today, that ability is everywhere.
+
+22
+00:01:28,297 --> 00:01:34,807
+Faster than you can blink, a machine scans each frame and draws a box. Person. Car. Bicycle.
+
+23
+00:01:34,907 --> 00:01:39,509
+It counts shoppers in a store, and warns when a worker steps into a danger zone.
+
+24
+00:01:40,717 --> 00:01:43,336
+But a machine that can see can also watch.
+
+25
+00:01:43,436 --> 00:01:49,061
+The same technology that finds a face in a crowd can be used to recognize whose face it is.
+
+26
+00:01:49,161 --> 00:01:50,848
+Machines have learned to see.
+
+27
+00:01:50,948 --> 00:01:53,327
+The question now is what we let them look at.
+
