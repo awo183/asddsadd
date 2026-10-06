@@ -119,7 +119,7 @@ EDL = [
     ]),
     ("seg", "s105", [
         A("split_compare", w=1.4, left="radium_palace_1949", right="ortho_nikolaj", llabel="LÁZNĚ", rlabel="DŮL"),
-        dict(A("radon", w=1.3), at_word="plicích", trans="cut"),
+        dict(A("radon", w=1.3), at_word="zabiják", trans="cut"),
         dict(P("vojna_28", z0=1.0, z1=1.15), at_word="tohle", trans="glitch", td=0.35),
     ]),
     ("seg", "s205", [
@@ -171,7 +171,7 @@ EDL = [
              at_word="dokazují", trans="zoom", td=0.4),
     ]),
     ("seg", "s305", [
-        V("rds1_site", 150.0, overlays=[T("URAL · REAKTOR A"), Wd("ČERVEN 1948", word="červnu", color="uranium", hold=2.8)], trans="cut"),
+        V("rds1_site", 12.0, overlays=[T("URAL · REAKTOR A"), Wd("ČERVEN 1948", word="červnu", color="uranium", hold=2.8)], trans="cut"),
         dict(P("ortho_nikolaj", z0=1.35, z1=1.1, overlays=[Wd("1949", word="1949", size=240, color="red", hold=2.6)]),
              at_word="Tábory", trans="flash", td=0.3),
     ]),

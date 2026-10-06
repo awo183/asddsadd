@@ -5,8 +5,8 @@ Jak nahrát:
 2. Hlas: klidný mužský vypravěč, ideálně rodilý český hlas z Voice Library.
    Nastavení: Stability ~45 %, Similarity ~75–80 %, Style ~15–25 %, Speaker boost zapnutý.
 3. Vložte ČÁST 1 a vygenerujte, pak ČÁST 2. Stáhněte jako MP3 (44,1 kHz) nebo WAV.
-4. Značky <break time="1.5s" /> nechte v textu: nevyslovují se, jen udělají pauzu,
-   podle které se nahrávka rozstříhá na jednotlivé repliky k obrazu.
+4. Značky <break time="1.5s" /> můžete nechat v textu: nevyslovují se. Novější modely je
+   ignorují, a to nevadí, nahrávka se k obrazu rozstříhá podle rozpoznané řeči.
 5. Pošlete mi oba soubory (narace_1.mp3, narace_2.mp3).
 
 Čísla jsou vypsaná slovy záměrně, aby je hlas četl ve správném pádě.

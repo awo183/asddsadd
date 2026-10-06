@@ -949,11 +949,11 @@ def evidence_board(t, dur, items=(), cards=(), links=(), **_):
     base = _cork().copy().convert("RGBA")
     pins = {}
     for i, (key, x, y, w, rot, label) in enumerate(items):
-        a = ramp(t, 0.15 + i * 0.35, 0.45 + i * 0.35)
+        a = ramp(t, -0.2 + i * 0.3, 0.1 + i * 0.3)
         if a > 0:
             pins[key] = _pin_photo(base, key, x, y, w, rot, label, a)
     for j, (cid, text, x, y, rot) in enumerate(cards):
-        a = ramp(t, 0.3 + (len(items) + j) * 0.35, 0.6 + (len(items) + j) * 0.35)
+        a = ramp(t, 0.2 + (len(items) + j) * 0.3, 0.5 + (len(items) + j) * 0.3)
         if a <= 0:
             continue
         f = font("display", 84)
@@ -966,7 +966,7 @@ def evidence_board(t, dur, items=(), cards=(), links=(), **_):
         pins[cid] = (x, y - 50)
         Draw(base).ellipse([x - 11, y - 61, x + 11, y - 39], fill=(190, 30, 28, int(255 * a)))
     d = Draw(base)
-    t_links = 0.3 + (len(items) + len(cards)) * 0.35
+    t_links = 0.2 + (len(items) + len(cards)) * 0.3
     for k, (p, q) in enumerate(links):
         if p not in pins or q not in pins:
             continue

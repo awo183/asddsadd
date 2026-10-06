@@ -40,7 +40,7 @@ See [`SCRIPT_CS.md`](SCRIPT_CS.md) for the brief, sources, timestamped script wi
    ```bash
    NARRATION="narration/narace_1.mp3 narration/narace_2.mp3" ./build.sh
    ```
-   `import_narration.py` splits the recording into the 42 script lines at the breaks; it was tested to an exact split. The edit re-times itself to your voice.
+   `align_narration.py` transcribes the recording offline (Vosk, small Czech model) and cuts each of the 42 script lines at the pause before its first word. The `<break>` tags help but aren't required: newer ElevenLabs models ignore them, and the alignment still works. Lines you haven't recorded yet keep the draft voice. The edit re-times itself to your voice.
 
 **ElevenLabs API instead:** add `ELEVENLABS_API_KEY` (and optionally `ELEVENLABS_VOICE_ID`) to the environment and run `./build.sh`. `tts_elevenlabs.py` generates every line with its neighbours as context.
 

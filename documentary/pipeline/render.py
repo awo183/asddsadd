@@ -128,13 +128,31 @@ class VideoSource:
             pass
 
 
+# Natural length of each motion graphic and how much empty intro to skip. When the edit gives
+# an animation less time than it needs, it plays its whole arc faster instead of being cut off.
+ANIM_TIMING = {  # name: (natural seconds, skip)
+    "radon": (7.5, 0.5), "bar_chart": (8.5, 0.8), "plutonium_chain": (8.0, 0.4), "evidence_board": (5.0, 0.0),
+    "camp_map": (7.0, 0.5), "timeline_1948": (7.0, 0.3), "tower_diagram": (5.5, 0.3), "prisoners": (6.5, 0.5),
+    "mukl": (5.0, 0.2), "etymology": (6.5, 0.2), "elements": (4.5, 0.3), "split_compare": (2.6, 0.2),
+    "teletype": (5.5, 0.2), "train_route": (5.0, 0.4), "map_zoom_jachymov": (7.0, 0.0), "map_distance": (6.5, 0.4),
+    "production_counter": (5.5, 0.3), "camp_names": (4.5, 0.2), "agreement": (6.4, 0.0),
+}
+
+
 class AnimSource:
     def __init__(self, shot):
         self.s = shot
         self.f = ANIMS[shot["anim"]]
+        nat, skip = ANIM_TIMING.get(shot["anim"], (0.0, 0.0))
+        self.dur = max(shot["dur"], nat)
+        self.skip = skip
+        self.speed = (self.dur - skip) / max(shot["dur"], 0.1)
+        if self.speed > 2.5:  # a brief glimpse: show the finished graphic instead of a frantic replay
+            self.skip = max(skip, nat - shot["dur"] * 1.5)
+            self.speed = (self.dur - self.skip) / max(shot["dur"], 0.1)
 
     def frame(self, lt):
-        return self.f(lt, self.s["dur"], **self.s.get("params", {}))
+        return self.f(self.skip + lt * self.speed, self.dur, **self.s.get("params", {}))
 
 
 class SolidSource:
@@ -257,7 +275,7 @@ def main():
     ap.add_argument("--jobs", type=int, default=os.cpu_count() or 4)
     ap.add_argument("--start", type=float, default=0.0, help="preview: start time (s)")
     ap.add_argument("--end", type=float, default=None, help="preview: end time (s)")
-    ap.add_argument("--chunks", type=int, default=None, help="number of resumable chunks (default 3 x jobs)")
+    ap.add_argument("--chunk-frames", type=int, default=600, help="frames per cached chunk (default 24 s)")
     ap.add_argument("--check", action="store_true", help="render one frame of every shot and exit")
     args = ap.parse_args()
     if args.check:
@@ -276,15 +294,22 @@ def main():
     f_start = int(args.start * FPS)
     f_end = min(total, int(args.end * FPS)) if args.end else total
     jobs = max(1, args.jobs)
-    nchunks = args.chunks or jobs * 3
-    step = math.ceil((f_end - f_start) / nchunks)
+    # Fixed 24 s chunks, each cached under a fingerprint of only the shots it shows plus the
+    # renderer's code: changing the end of the film (e.g. a new narration take for part 2)
+    # leaves the earlier chunks valid.
     import hashlib
-    tag = hashlib.md5(open(args.timeline, "rb").read() + f"{enc}{quality}".encode()).hexdigest()[:8]
+    code = b"".join(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), f), "rb").read()
+                    for f in ("render.py", "anims.py", "overlays.py", "fx.py", "common.py"))
+    CH = args.chunk_frames
+    cache_dir = os.path.join(os.path.dirname(os.path.abspath(args.out)), "chunks")
+    os.makedirs(cache_dir, exist_ok=True)
     parts = []
-    for j in range(nchunks):
-        a, b = f_start + j * step, min(f_end, f_start + (j + 1) * step)
-        if a < b:
-            parts.append((args.timeline, a, b, f"{args.out}.{tag}.{a}-{b}.mp4", enc, quality))
+    for a in range((f_start // CH) * CH, f_end, CH):
+        b = min(a + CH, total)
+        lo, hi = a / FPS - 2.0, b / FPS + 0.5   # include the previous shot for transitions
+        rel = [x for x in tl["shots"] if x["start"] < hi and x["start"] + x["dur"] > lo]
+        key = hashlib.md5(code + json.dumps([rel, a, b, enc, quality, W, H, FPS], sort_keys=True).encode()).hexdigest()[:12]
+        parts.append((args.timeline, a, b, os.path.join(cache_dir, f"{a:06d}-{b:06d}-{key}.mp4"), enc, quality))
     t0 = time.time()
     with ProcessPoolExecutor(min(jobs, len(parts))) as ex:
         outs = list(ex.map(render_range, parts))
@@ -292,7 +317,11 @@ def main():
     with open(lst, "w") as f:
         for o in outs:
             f.write(f"file '{os.path.abspath(o)}'\n")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy",
+    extra = []
+    if f_start % CH or (args.end and f_end % CH):  # trim to the requested range
+        extra = ["-ss", f"{(f_start - (f_start // CH) * CH) / FPS:.3f}", "-t", f"{(f_end - f_start) / FPS:.3f}"]
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lst,
+                    *(["-c:v", "libx264", "-crf", "18", "-preset", "veryfast"] + extra if extra else ["-c", "copy"]),
                     "-movflags", "+faststart", args.out], check=True)
     os.remove(lst)  # chunks are kept so a re-run only renders what changed
     print(f"picture done in {time.time() - t0:.0f}s -> {args.out}", flush=True)

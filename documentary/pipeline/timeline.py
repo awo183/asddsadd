@@ -225,7 +225,7 @@ def auto_sfx(shots):
             for i in range(len(s["params"].get("items", [])) + len(s["params"].get("cards", []))):
                 out.append({"t": t0 + 0.2 + i * 0.35, "kind": "pin"})
         elif a in ("radon", "tower_diagram"):
-            start = min(2.5, s["dur"] * 0.4)
+            start = min(1.0, s["dur"] * 0.3)
             out.append({"t": t0 + start, "kind": "geiger", "dur": s["dur"] - start})
         elif a == "train_route":
             out.append({"t": t0 + 0.8, "kind": "train", "dur": s["dur"] - 0.8})

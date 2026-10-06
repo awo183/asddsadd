@@ -38,7 +38,15 @@ python3 fetch_assets.py "$DOC_BUILD/assets"
 
 echo "== narration ($DOC_LANG)"
 if [ -n "${NARRATION:-}" ]; then
-  python3 import_narration.py $NARRATION             # your ElevenLabs recording
+  # your ElevenLabs recording: cut into script lines by speech recognition (works with or
+  # without <break> pauses); import_narration.py is the pause-based fallback
+  mkdir -p "$DOC_BUILD/asr"
+  if [ ! -d "$DOC_BUILD/asr/vosk-model-small-cs-0.4-rhasspy" ]; then
+    fetch https://alphacephei.com/vosk/models/vosk-model-small-cs-0.4-rhasspy.zip "$DOC_BUILD/asr/cs.zip"
+    python3 -c "import zipfile,sys; zipfile.ZipFile(sys.argv[1]).extractall(sys.argv[2])" "$DOC_BUILD/asr/cs.zip" "$DOC_BUILD/asr"
+  fi
+  [ -f "$DOC_BUILD/voice/durations.json" ] || python3 tts_draft.py   # placeholder for lines not recorded yet
+  python3 align_narration.py $NARRATION || python3 import_narration.py $NARRATION
 elif [ -n "${ELEVENLABS_API_KEY:-}" ]; then
   python3 tts_elevenlabs.py                          # ElevenLabs API
 else
