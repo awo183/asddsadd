@@ -24,6 +24,7 @@ def render_scene(spec):
     import scenes
     start = time.time()
     scene = scenes.SCENES[spec["key"]](spec)
+    scenes.CURRENT = scene
     out = os.path.join(OUT, "scenes", f"{spec['key']}.mp4")
     ff = subprocess.Popen(
         ["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
@@ -45,6 +46,7 @@ def main():
         key, times = sys.argv[2], [float(x) for x in sys.argv[3:]]
         spec = next(s for s in specs if s["key"] == key)
         scene = scenes.SCENES[key](spec)
+        scenes.CURRENT = scene
         os.makedirs(os.path.join(OUT, "preview"), exist_ok=True)
         for i in range(spec["frames"]):
             t = i / FPS

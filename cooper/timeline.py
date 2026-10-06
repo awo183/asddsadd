@@ -6,7 +6,8 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 from fx import BUILD, FPS  # noqa: E402
 
-CBUILD = os.path.join(BUILD, "cooper")
+LANG = os.environ.get("FILM_LANG", "en")
+CBUILD = os.path.join(BUILD, "cooper" if LANG == "en" else f"cooper_{LANG}")
 
 # (scene, seconds before the voice, seconds after it). None = no voice.
 PLAN = [

@@ -35,6 +35,9 @@ FONT_FILES = {
     "mono": os.path.join(ROOT, "assets/fonts/IBMPlexMono-Medium.ttf"),
     "mono_bold": os.path.join(ROOT, "assets/fonts/IBMPlexMono-SemiBold.ttf"),
     "type": os.path.join(ROOT, "assets/fonts/SpecialElite-Regular.ttf"),
+    "tw": os.path.join(ROOT, "assets/fonts/SpecialElite-Regular.ttf"),
+    "cp": os.path.join(ROOT, "assets/fonts/CourierPrime-Regular.ttf"),
+    "cp_bold": os.path.join(ROOT, "assets/fonts/CourierPrime-Bold.ttf"),
 }
 
 

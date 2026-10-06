@@ -18,11 +18,23 @@ def _load(name, path):
 
 
 timeline = _load("cooper_timeline", os.path.join(HERE, "timeline.py"))
-narration = _load("cooper_narration", os.path.join(HERE, "narration.py"))
+LANG = timeline.LANG
+narration = _load("cooper_narration",
+                  os.path.join(HERE, "narration.py" if LANG == "en" else f"narration_{LANG}.py"))
 B = timeline.CBUILD
-SPOKEN = [("nineteen seventy-one", "1971"), ("nineteen eighty", "1980"),
-          ("eight thirteen p.m.", "8:13 p.m."), ("two hundred thousand dollars", "$200,000"),
-          ("five thousand eight hundred dollars", "$5,800")]
+if LANG == "en":
+    NAME, TITLE = "the-calmest-man-on-the-plane", "The Calmest Man on the Plane"
+    SUB_LANG = "eng"
+    SPOKEN = [("nineteen seventy-one", "1971"), ("nineteen eighty", "1980"),
+              ("eight thirteen p.m.", "8:13 p.m."), ("two hundred thousand dollars", "$200,000"),
+              ("five thousand eight hundred dollars", "$5,800")]
+else:
+    NAME, TITLE = "nejklidnejsi-muz-v-letadle", "Nejklidnější muž v letadle"
+    SUB_LANG = "ces"
+    SPOKEN = [("tisíc devět set sedmdesát jedna", "1971"), ("tisíc devět set osmdesát", "1980"),
+              ("dvacet hodin třináct minut", "20:13"),
+              ("dvě stě tisíc dolarů", "200 000 dolarů"),
+              ("pět tisíc osm set dolarů", "5 800 dolarů")]
 
 
 def stamp(t):
@@ -68,8 +80,8 @@ def main():
          "-map", "0:v", "-map", "1:a", "-map", "2:s", "-c:v", "libx264", "-preset", "slow",
          "-crf", "21", "-maxrate", "6M", "-bufsize", "12M", "-pix_fmt", "yuv420p", "-tune", "film",
          "-af", "loudnorm=I=-16:TP=-1.5:LRA=11", "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
-         "-c:s", "mov_text", "-metadata:s:s:0", "language=eng",
-         "-metadata", "title=The Calmest Man on the Plane", "-movflags", "+faststart", master])
+         "-c:s", "mov_text", "-metadata:s:s:0", f"language={SUB_LANG}",
+         "-metadata", f"title={TITLE}", "-movflags", "+faststart", master])
     small = os.path.join(OUT, f"{NAME}-720p.mp4")
     log = os.path.join(B, "x264pass")
     base = ["ffmpeg", "-v", "error", "-y", "-i", master, "-vf", "scale=1280:720:flags=lanczos",

@@ -61,6 +61,14 @@ def sfx(kind):
         return A.bandpass(A.noise(0.6), 2000, 9000) * e * 0.35 * (0.6 + 0.4 * rng.random(n))
     if kind == "type":
         return A.sfx("type")
+    if kind == "type_heavy":       # a hard keystroke on a big headline
+        out = np.zeros(int(0.12 * SR))
+        add_mono(out, A.sfx("type") * 1.2, 0.0)
+        add_mono(out, A.lowpass(A.noise(0.04), 900) * np.exp(-np.arange(1920) / SR * 90) * 0.5, 0.0)
+        return out
+    if kind == "carriage_soft":    # end-of-line bell, quiet
+        t = np.arange(int(0.6 * SR)) / SR
+        return np.sin(2 * np.pi * 2093 * t) * np.exp(-t * 7) * 0.18
     if kind == "type_burst":
         out = np.zeros(int(0.5 * SR))
         for k in range(8):
