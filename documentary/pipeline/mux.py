@@ -18,7 +18,7 @@ meta = ["-metadata", "title=Uranium for Stalin",
 
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", picture, "-i", mix, "-i", srt,
                 "-map", "0:v", "-map", "1:a", "-map", "2:s", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",
-                "-c:s", "mov_text", *meta, "-movflags", "+faststart", "-shortest", args.out], check=True)
+                "-c:s", "mov_text", *meta, "-movflags", "+faststart", args.out], check=True)
 print("film ->", args.out)
 
 if args.web:
@@ -29,5 +29,5 @@ if args.web:
     subprocess.run(["ffmpeg", "-v", "error", "-y", *common, "-pass", "1", "-an", "-f", "null", "-"], check=True)
     subprocess.run(["ffmpeg", "-v", "error", "-y", *common[:2], "-i", mix, "-i", srt, *common[2:], "-pass", "2",
                     "-map", "0:v", "-map", "1:a", "-map", "2:s", "-c:a", "aac", "-b:a", "128k", "-c:s", "mov_text",
-                    *meta, "-movflags", "+faststart", "-shortest", args.web], check=True)
+                    *meta, "-movflags", "+faststart", args.web], check=True)
     print("web copy ->", args.web)

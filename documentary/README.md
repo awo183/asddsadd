@@ -1,9 +1,9 @@
 # Uranium for Stalin
 
-**A ~10-minute English documentary** on the question:
+**A 10-minute English documentary** (10:13 + dedication and credits = 10:39) on the question:
 *What role did Czechoslovak uranium play in the first Soviet atomic bomb, and what were the brutal conditions in the uranium mines and camps where the communist regime used political prisoners to mine uranium for the Soviet Union?*
 
-- `Uranium_for_Stalin_web.mp4` — the film (1080p, H.264/AAC, English subtitle track; small enough for GitHub).
+- `Uranium_for_Stalin_web.mp4` — the film (1920×1080, 25 fps, H.264/AAC, English subtitle track; encoded to stay under GitHub's 100 MB limit). The full-quality master (~300 MB) is produced by `build.sh`.
 - `subtitles.en.srt` — the same subtitles as a separate file.
 - [`SCRIPT.md`](SCRIPT.md) — full narration with fact notes and sources.
 - [`CREDITS.md`](CREDITS.md) — every archive clip and photo with author and licence.
@@ -21,6 +21,7 @@
 | 7:49 | **VI. The Tower of Death** | Ore crushing and sorting at Vykmanov, Ostrov |
 | 8:32 | **VII. Vojna** | The preserved camp at Příbram |
 | 8:54 | **VIII. The Price** | 1960 amnesty, ~100,000 t of uranium, rehabilitation and memory |
+| 10:13 | Dedication and credits | every archive source with author and licence |
 
 Real footage and photographs: Wikimedia Commons archive material (U.S. National Archives and Air Force films, a 1937 Soviet newsreel, 1920s–40s photos of Jáchymov, 1950s aerial survey photographs of the camps, present-day photos of the camp sites, the Red Tower of Death and the Vojna memorial). Footage of generic 1940s mining is labelled *illustrative* on screen. Animations: animated maps (Europe → Ore Mountains, Jáchymov → Semipalatinsk, the route east, the camp regions), a uranium-deliveries chart, the uranium → plutonium → bomb chain, the radon decay chain, a reconstruction of the 1945 agreement (labelled as an illustration), a timeline, a prisoner count, and a cross-section of the Tower of Death.
 

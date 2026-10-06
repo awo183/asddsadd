@@ -25,6 +25,7 @@ fetch "$GF/ofl/sourceserif4/SourceSerif4-Italic%5Bopsz,wght%5D.ttf"             
 fetch "$GF/ofl/playfairdisplay/PlayfairDisplay%5Bwght%5D.ttf"                        "$DOC_BUILD/fonts/PlayfairDisplay.ttf"
 fetch "$GF/apache/specialelite/SpecialElite-Regular.ttf"                             "$DOC_BUILD/fonts/SpecialElite-Regular.ttf"
 fetch "$GF/ofl/courierprime/CourierPrime-Regular.ttf"                                "$DOC_BUILD/fonts/CourierPrime-Regular.ttf"
+fetch "$GF/ofl/ibmplexsans/IBMPlexSans%5Bwdth,wght%5D.ttf"                          "$DOC_BUILD/fonts/IBMPlexSans.ttf"
 NE=https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson
 fetch "$NE/ne_50m_admin_0_countries.geojson" "$DOC_BUILD/geo/countries50.geojson"
 KO=https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0

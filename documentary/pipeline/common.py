@@ -31,6 +31,7 @@ FONT_FILES = {
     "serif_i": ("SourceSerif4-Italic.ttf", 400),
     "playfair": ("PlayfairDisplay.ttf", 500),
     "sans": ("CourierPrime-Regular.ttf", None),
+    "plex": ("IBMPlexSans.ttf", 400),  # has Cyrillic, for credits
     "mono": ("SpecialElite-Regular.ttf", None),
     "type": ("SpecialElite-Regular.ttf", None),
 }
@@ -270,15 +271,17 @@ def cover_rect(iw, ih, zoom, cx, cy):
     else:
         cw = iw / zoom
         ch = cw / ar
-    x0 = min(max(cx * iw - cw / 2, 0), iw - cw)
-    y0 = min(max(cy * ih - ch / 2, 0), ih - ch)
+    cw, ch = min(cw, iw), min(ch, ih)
+    x0 = max(0.0, min(cx * iw - cw / 2, iw - cw))
+    y0 = max(0.0, min(cy * ih - ch / 2, ih - ch))
     return (x0, y0, x0 + cw, y0 + ch)
 
 
 def ken_burns(im, p, z0=1.0, z1=1.12, c0=(0.5, 0.5), c1=(0.5, 0.5), fit="cover"):
     """Frame at progress p (0..1) of a slow push/pan over a still."""
+    p = min(max(p, 0.0), 1.0)  # shots run a little past their end during dissolves
     e = ease_in_out(p) * 0.85 + p * 0.15
-    z = lerp(z0, z1, e)
+    z = max(1.0, lerp(z0, z1, e))
     cx, cy = lerp(c0[0], c1[0], e), lerp(c0[1], c1[1], e)
     iw, ih = im.size
     if fit == "contain":

@@ -298,9 +298,7 @@ def main():
             f.write(f"file '{os.path.abspath(o)}'\n")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy",
                     "-movflags", "+faststart", args.out], check=True)
-    for o in outs:
-        os.remove(o)
-    os.remove(lst)
+    os.remove(lst)  # chunks are kept so a re-run only renders what changed
     print(f"picture done in {time.time() - t0:.0f}s -> {args.out}", flush=True)
 
 

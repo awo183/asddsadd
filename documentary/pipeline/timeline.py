@@ -225,6 +225,7 @@ def credits_pages(tl):
         m = meta.get(k, {})
         title = (m.get("title") or k).replace("File:", "")
         artist = (m.get("artist") or "").replace("\n", " ").strip()
+        artist = artist.replace("AnonymousUnknown author", "Unknown author").replace("Unknown authorUnknown author", "Unknown author")
         lic = m.get("license") or ""
         lines.append(f"{title} — {artist + ', ' if artist else ''}{lic}, via Wikimedia Commons")
     third = (len(lines) + 2) // 3

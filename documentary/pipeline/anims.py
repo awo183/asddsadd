@@ -819,7 +819,7 @@ def credits_roll(t, dur, pages=(), **_):
     a = ramp(lt, 0, 0.6) * (1 - ramp(lt, per - 0.6, per))
     heading, lines = pages[i]
     d.text((W / 2, 110), heading.upper(), font=font("oswald", 46, 500), fill=with_alpha(URANIUM, a), anchor="mm")
-    f = font("sans", 21)
+    f = font("plex", 20)
     colw = (W - 240) / 2
     half = (len(lines) + 1) // 2
     for c in range(2):
