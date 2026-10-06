@@ -6,6 +6,7 @@ real footage and motion graphics.
 
 - **Film:** [`output/how-machines-learned-to-see.mp4`](output/how-machines-learned-to-see.mp4)
   (1080p, 30 fps, about 2:01). English subtitles are included as a soft track.
+- **Smaller copy:** [`output/how-machines-learned-to-see-720p.mp4`](output/how-machines-learned-to-see-720p.mp4) (720p, 26 MB)
 - **Narration audio (voice only):** [`output/narration.mp3`](output/narration.mp3)
 - **Subtitles:** [`output/how-machines-learned-to-see.srt`](output/how-machines-learned-to-see.srt)
 - **Narration script and shot list:** [`NARRATION.md`](NARRATION.md)
