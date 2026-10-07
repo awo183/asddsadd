@@ -1,3 +1,5 @@
 .work/
 build/
 __pycache__/
+# 1080p master of the Stalin film is ~400 MB (over GitHub's 100 MB limit); the 720p copy is committed
+output/stalin-na-splatky.mp4
