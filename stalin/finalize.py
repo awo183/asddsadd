@@ -73,7 +73,7 @@ def main():
          "-maxrate", "12M", "-bufsize", "24M", "-pix_fmt", "yuv420p", "-tune", "film",
          "-af", "loudnorm=I=-14:TP=-1.5:LRA=11", "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
          "-c:s", "mov_text", "-metadata:s:s:0", "language=ces", "-metadata", f"title={TITLE}",
-         "-shortest", "-movflags", "+faststart", master])
+         "-t", f"{layout.layout()['duration']:.3f}", "-movflags", "+faststart", master])
     small = os.path.join(OUT, f"{NAME}-720p.mp4")
     dur = layout.layout()["duration"]
     kbps = min(2200, int(45 * 8 * 1024 / dur - 140))      # keep the 720p copy under ~45 MB

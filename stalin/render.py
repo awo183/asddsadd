@@ -31,12 +31,18 @@ def build(spec):
     import maps  # noqa: F401  (registers map shot types)
     import extras  # noqa: F401
     import diagrams  # noqa: F401
+    import variety  # noqa: F401
     import shots
     return shots.make(spec)
 
 
+TRANS_SFX = {"push": "whoosh", "slide": "paper_slide", "zoom": "whoosh_big", "whip": "whoosh", "tear": "paper",
+             "glitch": "glitch"}
+
+
 def render_chunk(job):
-    k, specs = job
+    k, specs, prev_spec = job
+    import variety
     start = time.time()
     path = os.path.join(OUT, "chunks", f"chunk_{k:02d}.mp4")
     ff = subprocess.Popen(
@@ -45,14 +51,25 @@ def render_chunk(job):
          "-pix_fmt", "yuv420p", path], stdin=subprocess.PIPE)
     events = []
     n = 0
+    prev = (build(prev_spec), prev_spec) if prev_spec and specs[0].get("trans") else None
     for spec in specs:
         shot = build(spec)
         f0 = spec["f0"]
+        tr = spec.get("trans")
+        nt = int(tr.get("d", 0.4) * V.FPS) if tr and prev else 0
         for j in range(spec["frames"]):
             t = j / V.FPS
-            ff.stdin.write(np.ascontiguousarray(shot.frame(t, f0 + j)).tobytes())
+            fr = shot.frame(t, f0 + j)
+            if j < nt:
+                pshot, pspec = prev
+                pf = pshot.frame(pspec["dur"] + t, f0 + j)
+                fr = variety.transition(pf, fr, (j + 1) / (nt + 1), tr["kind"], f0)
+            ff.stdin.write(np.ascontiguousarray(fr).tobytes())
         n += spec["frames"]
         events += [(spec["start"] + t, name, gain) for t, name, gain in shot.sfx if t < spec["dur"]]
+        if nt:
+            events.append((spec["start"], TRANS_SFX.get(tr["kind"], "whoosh"), 0.5))
+        prev = (shot, spec)
     ff.stdin.close()
     ff.wait()
     print(f"  chunk {k:02d}: {len(specs)} shots, {n} frames in {time.time() - start:.0f}s", flush=True)
@@ -71,7 +88,11 @@ def chunks(specs, jobs):
             cur, size = [], 0
     if cur:
         out.append(cur)
-    return list(enumerate(out))
+    jobs, prev = [], None
+    for k, c in enumerate(out):
+        jobs.append((k, c, prev))
+        prev = c[-1]
+    return jobs
 
 
 def main():
@@ -112,13 +133,13 @@ def main():
         return
     os.makedirs(os.path.join(OUT, "chunks"), exist_ok=True)
     jobs = chunks(specs, int(os.environ.get("JOBS", "4")))
-    order = sorted(jobs, key=lambda j: -sum(s["frames"] for s in j[1]))
+    order = sorted(jobs, key=lambda j: -sum(s["frames"] for s in j[1]))  # (k, specs, previous spec)
     with Pool(int(os.environ.get("JOBS", "4"))) as pool:
         results = dict(pool.map(render_chunk, order, chunksize=1))
     events = [e for k in sorted(results) for e in results[k]]
     json.dump(events, open(os.path.join(OUT, "sfx_events.json"), "w"))
     with open(os.path.join(OUT, "chunks", "list.txt"), "w") as f:
-        for k, _ in jobs:
+        for k, _, _ in jobs:
             f.write(f"file 'chunk_{k:02d}.mp4'\n")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i",
                     os.path.join(OUT, "chunks", "list.txt"), "-c", "copy", os.path.join(OUT, "video.mp4")],

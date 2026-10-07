@@ -77,14 +77,15 @@ def _(T, a):
 
 @shot("c003")
 def _(T, a):
-    return dict(type="counter", to=15.5, decimals=1, unit="m", count=1.1, at=0.05,
-                bg=pick("monument_low_sepia.jpg"), caption="výška Stalinovy sochy")
+    return dict(type="photo", img=pick("monument_low_sepia.jpg"), z0=1.0, z1=1.06, c0=(0.5, 0.25), c1=(0.52, 0.2),
+                rulers=[dict(nx=0.38, ny0=0.52, ny1=0.01, value=15.5, unit="m", at=0.1, d=1.4)],
+                trans=dict(kind="zoom", d=0.35))
 
 
 @shot("c004")
 def _(T, a):
     return dict(type="photo", img=pick("metronome_today.jpg", "metronome_today2.jpg"), grade="muted",
-                z0=1.12, z1=1.0, c0=(0.5, 0.45), sfx=[(0.0, "scratch", 0.8)],
+                z0=1.12, z1=1.0, c0=(0.5, 0.45), sfx=[(0.0, "scratch", 0.8)], expand=dict(at=0.15, d=0.7, scale=0.45),
                 tags=[tag("LETNÁ, DNES", 0.2), hand("„sraz na Stalinu“", a("sejdete") - 0.2)])
 
 
@@ -92,7 +93,7 @@ def _(T, a):
 def _(T, a):
     return dict(type="section", statue_img="img/monument_side_cut.png",
                 show={"statue": 0.0, "bridge": 0.0, "head_roll": a("skutálela") - 0.3},
-                z0=1.12, z1=1.18, focus=(1000, 540),
+                z0=1.12, z1=1.18, focus=(1000, 540), trans=dict(kind="slide", d=0.4),
                 labels=[dict(text="LETNÁ", x=300, y=420, at=0.15), dict(text="VLTAVA", x=1760, y=960, at=0.4,
                                                                          color=(70, 90, 100))])
 
@@ -109,6 +110,7 @@ def _(T, a):
     rp = pick("rude_pravo_oct1962.jpg")
     if rp:
         return dict(type="photo", img=rp, z0=1.0, z1=1.15, c0=(0.5, 0.1), c1=(0.5, 0.2), contrast=1.1,
+                    scan=dict(at=0.0, d=0.8),
                     tags=[hand("ani slovo", a("slovo") - 0.1, x=W - 160, y=H - 200, size=110)])
     return dict(type="slam", bg="paper", lines=["ANI SLOVO", "V NOVINÁCH"], accent=0, size=180, at=0.05,
                 sound="paper")
@@ -117,7 +119,7 @@ def _(T, a):
 @shot("c010")
 def _(T, a):
     return dict(type="photo", img=pick("mayday_1955.jpg", "unveiling_1955.jpg"), z0=1.0, z1=1.1,
-                c0=(0.5, 0.5), c1=(0.5, 0.42), tags=[tag("1955", 0.15)],
+                c0=(0.5, 0.5), c1=(0.5, 0.42), tags=[tag("1955", 0.15)], trans=dict(kind="push", d=0.35),
                 sfx=[(0.1, "crowd", 0.6)])
 
 
@@ -129,13 +131,13 @@ def _(T, a):
 
 @shot("c012")
 def _(T, a):
-    return dict(type="counter", to=140000000, unit="Kčs", count=1.2, at=0.05, size=210,
-                caption="cena pomníku", sfx=[(1.25, "cash", 0.9)])
+    return dict(type="counter", to=140000000, unit="Kčs", count=1.2, at=0.05, size=210, duo=True,
+                bg=pick("monument_full_a.jpg"), caption="cena pomníku", sfx=[(1.25, "cash", 0.9)])
 
 
 @shot("c014")
 def _(T, a):
-    return dict(type="collage", z1=1.07, pan=(-30, 0), items=[
+    return dict(type="collage", z1=1.07, pan=(-30, 0), trans=dict(kind="tear", d=0.4), items=[
         person("svec_portrait", 760, 560, 760, 0.0),
         dict(kind="tag", text="Otakar Švec", role="sochař, autor pomníku", x=1180, y=760, at=0.25,
              ax=0, enter="slide"),
@@ -144,7 +146,8 @@ def _(T, a):
 
 @shot("c015")
 def _(T, a):
-    return dict(type="photo", img=pick("monument_full_a.jpg"), z0=1.0, z1=1.1, c0=(0.55, 0.45),
+    return dict(type="parallax", img=pick("monument_full_a.jpg"), fg="img/monument_full_a_fg.png", z0=1.04, z1=1.08,
+                zf0=1.04, zf1=1.2, c=(0.55, 0.45), drift=-0.02,
                 tags=[hand("jen 7 let", a("sedmi") - 0.1, x=W - 140, y=170, size=110)])
 
 
@@ -192,7 +195,7 @@ def _(T, a):
     return dict(type="timeline", gap=470, years=[
         dict(year=1949, label="soutěž", at=0.05), dict(year=1952, label="stavba", at=0.45),
         dict(year=1955, label="odhalení", at=0.8), dict(year=1962, label="odstřel", at=1.15)],
-        focus=[(2.0, 0)], sfx=[(0.0, "paper_slide", 0.7)],
+        focus=[(2.0, 0)], sfx=[(0.0, "paper_slide", 0.7)], trans=dict(kind="push", d=0.35),
         marks=[dict(kind="label", text="Stalinovy 70. narozeniny", x=W / 2, y=260, at=a("sedmdesátiny") - 0.3,
                     size=70)])
 
@@ -207,17 +210,17 @@ def _(T, a):
 
 @shot("c024")
 def _(T, a):
-    return dict(type="counter", to=55, unit="sochařů", count=1.0, at=0.05,
-                caption="účast povinná, ať chtěli, nebo ne", red=True,
-                sfx=[(a("muselo") - 0.1, "stamp", 0.6)])
+    return dict(type="icons", n=55, cols=11, value=55, label="sochařů", note="účast povinná!", at=0.1, d=1.6,
+                size=72, red=[27], sfx=[(a("muselo") - 0.1, "stamp", 0.6)])
 
 
 @shot("c026")
 def _(T, a):
     img = pick("competition_models.jpg")
     if img:
-        return dict(type="photo", img=img, z0=1.0, z1=1.1, c0=(0.5, 0.5),
-                    tags=[hand("stojí, nebo sedí", a("stojí") - 0.2, x=W - 120, y=H - 170)])
+        return dict(type="photo", img=img, z0=1.0, z1=1.06, c0=(0.5, 0.62),
+                    loupes=[dict(ntx=0.5, nty=0.58, x=1480, y=400, r=240, zoom=2.4, at=0.6)],
+                    tags=[hand("stojí, nebo sedí", a("stojí") - 0.2, x=W - 120, y=H - 130)])
     return dict(type="compare", px_per_m=40, items=[
         dict(kind="person", h_m=7, x=500, label="stojící Stalin", at=0.1),
         dict(kind="person", h_m=5, x=1000, label="sedící Stalin", at=0.5),
@@ -235,7 +238,7 @@ def _(T, a):
 
 @shot("c028")
 def _(T, a):
-    return dict(type="layout", at=0.05, rows_at=a("čtyři") - 0.2)
+    return dict(type="layout", at=0.05, rows_at=a("čtyři") - 0.2, trans=dict(kind="zoom", d=0.35))
 
 
 @shot("c029")
@@ -258,7 +261,7 @@ def _(T, a):
     items = [dict(kind="card", img=pick("monument_side.jpg"), x=620, y=500, size=760, at=0.0, rot=-3)]
     if q:
         items.append(dict(kind="card", img=q, x=1320, y=560, size=760, at=0.12, rot=3))
-    return dict(type="collage", z1=1.04, items=items, sfx=[(0.0, "murmur", 0.7)],
+    return dict(type="collage", z1=1.04, items=items, sfx=[(0.0, "murmur", 0.7)], trans=dict(kind="whip", d=0.3),
                 tags=[hand("„fronta na maso“", 0.15, x=W / 2, y=H - 150, ax=0.5, size=120)])
 
 
@@ -284,14 +287,14 @@ def _(T, a):
 
 @shot("c039")
 def _(T, a):
-    return dict(type="counter", to=600, unit="lidí", count=1.0, at=0.05, bg=pick("construction_1953.jpg"),
-                caption="na stavbě denně")
+    return dict(type="icons", n=60, cols=12, value=600, label="lidí na stavbě", note="1 panáček = 10 lidí",
+                at=0.05, d=1.3, size=62)
 
 
 @shot("c041")
 def _(T, a):
     return dict(type="section", show={"statue": 0.0, "granite": 0.0, "skeleton": 0.25, "basement": None},
-                z0=1.9, z1=2.0, focus=(855, 260),
+                z0=1.9, z1=2.0, focus=(855, 260), trans=dict(kind="zoom", d=0.35),
                 labels=[dict(text="ŽELEZOBETONOVÁ KOSTRA", x=1000, y=230, at=0.4, bg=True, ax=0.0, size=52)])
 
 
@@ -323,13 +326,14 @@ def _(T, a):
 def _(T, a):
     return dict(type="section", statue_img="img/monument_side_cut.png",
                 show={"statue": 0.0, "basement": 0.1, "pillars": a("sloupy") - 0.5}, z0=1.3, z1=1.4,
+                trans=dict(kind="slide", d=0.4),
                 focus=(860, 520), sfx=[(0.1, "pour", 0.6)],
                 labels=[dict(text="DVOUPATROVÝ SKLEP", x=1150, y=600, at=a("dvoupatrový") - 0.1, bg=True, ax=0.0)])
 
 
 @shot("c048")
 def _(T, a):
-    return dict(type="collage", z1=1.06, items=[
+    return dict(type="collage", z1=1.06, trans=dict(kind="tear", d=0.4), items=[
         person("lukes_portrait", 560, 540, 700, 0.0),
         dict(kind="tag", text="Zdeněk Lukeš", role="historik architektury", x=900, y=330, at=0.2, ax=0,
              enter="slide")],
@@ -340,13 +344,14 @@ def _(T, a):
 @shot("c049")
 def _(T, a):
     return dict(type="slam", bg="black", lines=["KOMUNISTICKÉ", "MAUZOLEUM?"], accent=1, sizes=[170, 210],
-                at=0.0)
+                at=0.0, trans=dict(kind="glitch", d=0.2))
 
 
 @shot("c050")
 def _(T, a):
     return dict(type="photo", img=pick("underground_hall.jpg", "underground_damage.jpg"), z0=1.0, z1=1.12,
-                sfx=[(0.0, "heartbeat", 0.6)],
+                sfx=[(0.0, "heartbeat", 0.6)], grade="color",
+                flashlight=dict(path=[(0.0, 0.25, 0.55), (1.4, 0.6, 0.5), (3.0, 0.78, 0.45)], r=420),
                 tags=[hand("zapamatujte si!", a("zapamatujte") - 0.1, x=W - 130, y=160)])
 
 
@@ -358,8 +363,8 @@ def _(T, a):
 
 @shot("c053")
 def _(T, a):
-    return dict(type="photo", img=pick("archaeology_letna.jpg", "construction_1954.jpg"), grade="muted",
-                z0=1.0, z1=1.12, c0=(0.5, 0.5),
+    return dict(type="parallax", img=pick("archaeology_letna.jpg"), fg="img/archaeology_letna_fg.png", grade="color",
+                z0=1.02, z1=1.06, zf0=1.02, zf1=1.14, c=(0.45, 0.5), drift=0.015, bg_dim=0.85,
                 tags=[tag("LETNÁ, 2021", 0.2), hand("dřevěné ubytovny", a("ubytoven") - 0.3, x=W - 120, y=170)])
 
 
@@ -373,7 +378,7 @@ def _(T, a):
 
 @shot("c055")
 def _(T, a):
-    return dict(type="area", px_per_m=150, items=[
+    return dict(type="area", px_per_m=150, trans=dict(kind="push", d=0.35), items=[
         dict(w=1.87, h=1.87, x=620, at=0.05, label="3,5 m²", sub="na jednoho člověka", person=True),
         dict(w=2.5, h=5.0, x=1300, at=a("metru") - 0.6, label="12,5 m²", sub="parkovací místo",
              color=(150, 146, 138))])
@@ -383,7 +388,7 @@ def _(T, a):
 def _(T, a):
     return dict(type="highlight", style="doc", sfx=[(a("vězeňská") - 0.1, "door", 0.8)],
                 phrase=dict(lines=["„…na nějaké", "vězeňské normě.“"], font="type", size=120, x=230, y=330,
-                            at=0.0, stagger=0.05, hi=[(1, 0, 1)], hl_at=a("vězeňská") - 0.1, color=(30, 28, 26)),
+                            at=0.0, typing=22, hi=[(1, 0, 1)], hl_at=a("vězeňská") - 0.1, color=(30, 28, 26)),
                 marks=[dict(kind="label", text="— Jan Hasil", x=1500, y=760, at=0.5, size=64)])
 
 
@@ -399,15 +404,16 @@ def _(T, a):
 
 @shot("c061")
 def _(T, a):
-    return dict(type="photo", img=pick("construction_1954.jpg"), z0=1.0, z1=1.12, c0=(0.5, 0.4),
-                tags=[hand("…a stavba jede dál", a("jela") - 0.2, x=W - 120, y=H - 170)],
-                sfx=[(0.2, "chisel", 0.6)])
+    return dict(type="filmstrip", imgs=[pick("construction_1953.jpg"), pick("granite_blocks.jpg"),
+                                        pick("construction_1954.jpg"), pick("svec_studio_model.jpg")],
+                tags=[hand("…a stavba jede dál", a("jela") - 0.2, x=W - 120, y=H - 150)],
+                sfx=[(0.2, "chisel", 0.5)])
 
 
 # ============================================================ 3. SOCHAŘ
 @shot("c063")
 def _(T, a):
-    return dict(type="collage", z1=1.08, items=[
+    return dict(type="collage", z1=1.08, trans=dict(kind="zoom", d=0.35), items=[
         person("svec_portrait", W / 2 - 200, 560, 820, 0.0, rot=-1),
         dict(kind="tag", text="Otakar Švec", role="1892–1955", x=1180, y=600, at=0.3, ax=0, enter="slide")])
 
@@ -422,10 +428,9 @@ def _(T, a):
 
 @shot("c065")
 def _(T, a):
-    return dict(type="collage", z1=1.07, items=[
-        dict(kind="card", img=pick("masaryk_bust_svec.jpg"), x=W / 2 - 150, y=530, size=820, at=0.0, rot=2),
-        dict(kind="tag", text="T. G. Masaryk", role="socha od Otakara Švece", x=1250, y=760, at=a("Masaryka") - 0.2,
-             ax=0, enter="slide")])
+    return dict(type="photo", img=pick("masaryk_bust_svec.jpg"), z0=1.0, z1=1.08, c0=(0.5, 0.3),
+                expand=dict(at=0.1, d=0.6, scale=0.42, rot=3),
+                tags=[tag("T. G. MASARYK · SOCHA OD O. ŠVECE", a("Masaryka") - 0.2)])
 
 
 @shot("c066")
@@ -439,7 +444,8 @@ def _(T, a):
 
 @shot("c068")
 def _(T, a):
-    return dict(type="photo", img=pick("svec_studio_model.jpg"), z0=1.0, z1=1.12, c0=(0.5, 0.42),
+    return dict(type="parallax", img=pick("svec_studio_model.jpg"), fg="img/svec_studio_model_fg.png",
+                z0=1.02, z1=1.05, zf0=1.02, zf1=1.16, c=(0.5, 0.42), drift=-0.015,
                 tags=[hand("pomalu…", a("pomalu") - 0.15, x=W - 140, y=170), tag("1953", 0.2)])
 
 
@@ -447,7 +453,7 @@ def _(T, a):
 def _(T, a):
     return dict(type="highlight", style="doc",
                 phrase=dict(lines=["ČASTÉ KONTROLY", "STÁTNÍ BEZPEČNOSTI"], font="type", size=120, x=200, y=360,
-                            at=0.0, stagger=0.05, hi=[(1, 0, 1)], hl_at=a("Státní") - 0.05, color=(30, 28, 26)),
+                            at=0.0, typing=20, hi=[(1, 0, 1)], hl_at=a("Státní") - 0.05, color=(30, 28, 26)),
                 marks=[dict(kind="circle", x=1440, y=760, rx=170, ry=95, at=a("ateliér") - 0.3)],
                 sfx=[(0.0, "typewriter", 0.7)])
 
@@ -465,7 +471,7 @@ def _(T, a):
 @shot("c072")
 def _(T, a):
     return dict(type="photo", img=pick("construction_1954.jpg", "construction_1953.jpg"), z0=1.08, z1=1.0,
-                darken=(0.0, 0.55), tags=[tag("1954", 0.3)])
+                grade="duotone", darken=(0.0, 0.6), tags=[tag("1954", 0.3)], trans=dict(kind="slide", d=0.5))
 
 
 @shot("c074")
@@ -508,7 +514,8 @@ def _(T, a):
              dict(kind="tag", text="Nikita Chruščov", role="XX. sjezd KSSS, Moskva", x=180, y=900, at=0.3, ax=0,
                   enter="slide"),
              dict(kind="stamp", text="KULT OSOBNOSTI", x=1380, y=860, at=a("kult") - 0.1, rot=-6, size=96)]
-    return dict(type="collage", z1=1.07, items=items, tags=[tag("ÚNOR 1956", a("únoru") - 0.2, x=1460, y=120)])
+    return dict(type="collage", z1=1.07, items=items, tags=[tag("ÚNOR 1956", a("únoru") - 0.2, x=1460, y=120)],
+                trans=dict(kind="push", d=0.35))
 
 
 @shot("c084")
@@ -516,6 +523,7 @@ def _(T, a):
     return dict(type="photo", img=pick("prague_1950s_street.jpg", "monument_bridge_street.jpg",
                                        "monument_parizska.jpg"), z0=1.0, z1=1.25, c0=(0.5, 0.45),
                 c1=(0.5, 0.3), sfx=[(a("trapasu") - 0.3, "scratch", 0.8)],
+                loupes=[dict(ntx=0.46, nty=0.27, x=1430, y=380, r=250, zoom=2.6, at=0.5)],
                 tags=[hand("17 000 tun trapasu", a("trapasu") - 0.2, x=W - 120, y=H - 170, size=96)])
 
 
@@ -564,13 +572,13 @@ def _(T, a):
 @shot("c098")
 def _(T, a):
     return dict(type="photo", img=pick("demolition_blast2.jpg", "demolition_blast.jpg"), z0=1.0, z1=1.12,
-                c0=(0.5, 0.45), flash=True, shakes=[0.0, 0.9], shake_sound="explosion",
+                c0=(0.5, 0.45), flash=True, shakes=[0.0, 0.9], shake_sound="explosion", grade="duotone",
                 tags=[tag("6. LISTOPADU 1962", 0.2)])
 
 
 @shot("c101")
 def _(T, a):
-    return dict(type="city", z=15, nx=12, ny=8, keys=[(0.0, 14.425, 50.09, 15.7), (2.5, 14.425, 50.09, 15.15)],
+    return dict(type="city", z=15, nx=12, ny=8, trans=dict(kind="zoom", d=0.35), keys=[(0.0, 14.425, 50.09, 15.7), (2.5, 14.425, 50.09, 15.15)],
                 pins=[dict(lon=14.4172, lat=50.0944, at=0.0)],
                 rings=[dict(lon=14.4172, lat=50.0944, at=0.1, n=5, every=0.35, d=1.5, r=1300)],
                 labels=[dict(lon=14.4215, lat=50.0870, text="STARÉ MĚSTO", at=0.6, size=40),
@@ -587,7 +595,7 @@ def _(T, a):
 
 @shot("c104")
 def _(T, a):
-    return dict(type="collage", z1=1.06, items=[
+    return dict(type="collage", z1=1.06, trans=dict(kind="tear", d=0.4), items=[
         person("klimes_portrait", 640, 560, 900, 0.0),
         dict(kind="tag", text="Josef Klimeš", role="sochař", x=1100, y=540, at=0.25, ax=0, enter="slide")])
 
@@ -605,7 +613,7 @@ def _(T, a):
 
 @shot("c107")
 def _(T, a):
-    return dict(type="counter", to=4500000, unit="Kčs", count=1.1, at=0.05,
+    return dict(type="counter", to=4500000, unit="Kčs", count=1.1, at=0.05, duo=True,
                 bg=pick("demolition_blast2.jpg"), caption="cena demolice",
                 sfx=[(1.2, "cash", 0.9)])
 
@@ -620,6 +628,7 @@ def _(T, a):
 @shot("c112")
 def _(T, a):
     return dict(type="photo", img=pick("rubble_1962.jpg", "demolition_closeup.jpg"), z0=1.0, z1=1.12,
+                trans=dict(kind="slide", d=0.45),
                 sfx=[(a("smazat") - 0.4, "sub", 0.6)])
 
 
@@ -639,13 +648,14 @@ def _(T, a):
 @shot("c116")
 def _(T, a):
     return dict(type="photo", img=pick("underground_hall.jpg", "underground_damage.jpg"), z0=1.08, z1=1.0,
+                grade="color", flashlight=dict(path=[(0.0, 0.8, 0.45), (2.6, 0.35, 0.55)], r=380),
                 tags=[tag("SKLADIŠTĚ", a("skladiště") - 0.2)])
 
 
 @shot("c117")
 def _(T, a):
     return dict(type="photo", img=pick("rock_club_1990.jpg", "underground_hall.jpg"), z0=1.0, z1=1.1,
-                tags=[tag("1990", 0.15)], sfx=[(0.0, "guitar", 0.8)])
+                tags=[tag("1990", 0.15)], sfx=[(0.0, "guitar", 0.8)], trans=dict(kind="glitch", d=0.25))
 
 
 @shot("c119")
@@ -656,8 +666,8 @@ def _(T, a):
 
 @shot("c120")
 def _(T, a):
-    return dict(type="photo", img=pick("metronome_1991.jpg", "metronome_today2.jpg", "metronome_today.jpg"),
-                grade="muted", z0=1.0, z1=1.1, tags=[tag("METRONOM · OD 1991", 0.15)])
+    return dict(type="split", a=pick("monument_full_a.jpg"), b=pick("metronome_today2.jpg", "metronome_today.jpg"),
+                b_color=True, la="1955", lb="OD ROKU 1991", at=0.3, d=1.2, stop=0.42, cb=(0.5, 0.45))
 
 
 @shot("c122")
@@ -689,7 +699,7 @@ def _(T, a):
 
 @shot("c127")
 def _(T, a):
-    return dict(type="collage", z1=1.06, items=[
+    return dict(type="collage", z1=1.06, trans=dict(kind="push", d=0.35), items=[
         dict(kind="card", img=pick("barrier_2019.jpg", "underground_damage.jpg"), x=560, y=520, size=860, at=0.0,
              rot=-2, grade=False),
         dict(kind="stamp", text="UZAVŘENO", x=600, y=320, at=a("zavřít") - 0.15, rot=-10, size=120)],
@@ -706,26 +716,28 @@ def _(T, a):
 
 @shot("c131")
 def _(T, a):
-    return dict(type="slam", bg="black", lines=["STALIN"], accent=0, sizes=[340], at=0.0, sound="hit")
+    return dict(type="slam", bg="black", lines=["STALIN"], accent=0, sizes=[340], at=0.0, sound="hit",
+                trans=dict(kind="glitch", d=0.25))
 
 
 @shot("c132")
 def _(T, a):
     return dict(type="highlight", style="doc", sfx=[(0.3, "drip", 0.8), (1.8, "drip", 0.6)],
                 phrase=dict(lines=["STATICKÝ POSUDEK:", "zatékání i narušení", "nosných prvků"], font="type",
-                            size=104, x=220, y=280, at=0.0, stagger=0.05, hi=[(1, 0, 0), (2, 0, 1)],
+                            size=104, x=220, y=280, at=0.0, typing=24, hi=[(1, 0, 0), (2, 0, 1)],
                             hl_at=a("zatéká") - 0.1, color=(30, 28, 26)))
 
 
 @shot("c134")
 def _(T, a):
     return dict(type="photo", img=pick("underground_damage.jpg", "underground_hall.jpg"), grade="muted", z0=1.0,
-                z1=1.1, tags=[hand("každý rok", a("každý") - 0.1, x=W - 140, y=170)])
+                z1=1.06, c0=(0.5, 0.45), loupes=[dict(ntx=0.6, nty=0.08, x=1180, y=600, r=240, zoom=2.0, at=0.4)],
+                tags=[hand("každý rok", a("každý") - 0.1, x=W - 140, y=170)])
 
 
 @shot("c135")
 def _(T, a):
-    return dict(type="collage", z1=1.06, items=[
+    return dict(type="collage", z1=1.06, trans=dict(kind="tear", d=0.4), items=[
         person("zabransky_portrait", 600, 580, 900, 0.0),
         dict(kind="tag", text="Adam Zábranský", role="pražský radní", x=980, y=360, at=0.2, ax=0,
              enter="slide"),
@@ -736,7 +748,7 @@ def _(T, a):
 @shot("c137")
 def _(T, a):
     return dict(type="footage", src="footage/norm/px_dusk_river.mp4", **{"in": 8.0}, grade="muted", z0=1.15,
-                z1=1.0, film=False)
+                z1=1.0, film=False, trans=dict(kind="slide", d=0.5))
 
 
 @shot("c138")

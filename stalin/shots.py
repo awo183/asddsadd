@@ -157,8 +157,8 @@ def mark_sfx(shot, marks):
     for m in marks:
         if m["kind"] in ("circle", "arrow", "underline", "cross"):
             shot.add(m["at"], "marker", 0.7)
-        elif m["kind"] in ("tag", "label"):
-            shot.add(m["at"], "pop", 0.5)
+        elif m["kind"] == "tag":
+            shot.add(m["at"], "pop", 0.3)
 
 
 # ---------------------------------------------------------------- full-frame photo / footage
@@ -175,8 +175,19 @@ class Photo(Shot):
         elif g == "muted":
             gray = cv2.cvtColor(cv2.cvtColor(src, cv2.COLOR_RGB2GRAY), cv2.COLOR_GRAY2RGB)
             self.src = cv2.addWeighted(src, 0.6, gray, 0.4, 0)
+        elif g == "duotone":
+            import variety
+            self.src = variety.duotone(src)
         else:
             self.src = src
+        if s.get("scan"):
+            self.add(s["scan"].get("at", 0.0), "paper_slide", 0.6)
+        if s.get("expand"):
+            self.add(s["expand"].get("at", 0.5), "whoosh", 0.5)
+        for m in s.get("loupes", []):
+            self.add(m["at"], "pop", 0.5)
+        for m in s.get("rulers", []):
+            self.add(m["at"], "pen", 0.6)
         if s.get("shake_sound"):
             for k in s.get("shakes", []):
                 self.add(k, s["shake_sound"], 1.0)
@@ -199,9 +210,31 @@ class Photo(Shot):
             cv2.convertScaleAbs(f, dst=f, alpha=lerp(1.0, a1, ease_io(lin(t, a0, self.dur))))
         mp = kb_mapper(self.src, t, self.dur, s.get("z0", 1.0), s.get("z1", 1.08), s.get("c0", (0.5, 0.5)),
                        s.get("c1", s.get("c0", (0.5, 0.5))))
+        if s.get("flashlight") or s.get("loupes") or s.get("rulers") or s.get("scan") or s.get("expand"):
+            import variety
+            if s.get("flashlight"):
+                variety.flashlight(f, t, s["flashlight"])
+            base = f.copy() if s.get("loupes") else None
+            for m in s.get("loupes", []):
+                m2 = dict(m)
+                if "ntx" in m:
+                    m2["tx"], m2["ty"] = mp(m["ntx"], m["nty"])
+                variety.loupe(f, t, m2, base)
+            for m in s.get("rulers", []):
+                m2 = dict(m)
+                if "nx" in m:
+                    m2["x"], m2["y0"] = mp(m["nx"], m["ny0"])
+                    m2["y1"] = mp(m["nx"], m["ny1"])[1]
+                variety.ruler(f, t, m2)
         annotate(f, t, self.marks, self.seed, mp)
         for tg in s.get("tags", []):
             draw_tag(f, t, tg)
+        if s.get("scan"):
+            import variety
+            variety.scan(f, t, s["scan"], V.cover(V.paper(seed=7, tone=V.AGED), W, H))
+        if s.get("expand"):
+            import variety
+            f = variety.expand(f, t, s["expand"], V.cover(V.paper(seed=3), W, H))
         return f
 
 
@@ -335,8 +368,9 @@ class Collage(Shot):
                 raise ValueError(kind)
             self.layers.append((it, im))
             if it.get("sound", True) is not False:
-                self.add(it.get("at", 0.0), it.get("sound") if isinstance(it.get("sound"), str) else snd,
-                         0.8 if snd != "stamp" else 1.0)
+                if kind != "tag" or it.get("sound"):         # name strips slide in silently
+                    self.add(it.get("at", 0.0), it.get("sound") if isinstance(it.get("sound"), str) else snd,
+                             0.55 if snd != "stamp" else 0.9)
         self.marks = s.get("marks", [])
         mark_sfx(self, self.marks)
         hl = s.get("headline")
@@ -381,11 +415,14 @@ class Collage(Shot):
                 V.place(f, im, x, y, sc * zz * it.get("scale", 1.0), it.get("rot", -10), 0.92 * clamp(u * 2),
                         shadow=False, mode="multiply")
                 continue
-            if it.get("enter") == "slide":
+            enter = it.get("enter") or ("pop", "drop", "slide", "pop")[(self.seed + k) % 4]
+            if kind == "tag":
+                enter = it.get("enter") or "slide"
+            if enter == "slide":
                 u = ease_out(lin(t, at, at + 0.3))
                 x -= (1 - u) * 90
                 sc, a = 1.0, u
-            elif it.get("enter") == "drop":
+            elif enter == "drop":
                 u = lin(t, at, at + 5 / V.FPS)
                 sc, a = lerp(1.3, 1.0, ease_out(u)), clamp(u * 2)
             else:
@@ -460,15 +497,26 @@ def draw_phrase(f, t, hl):
         by1 = word_boxes[li][a][1] + size * 1.08
         u = ease_out(lin(t, hl.get("hl_at", at + 0.5), hl.get("hl_at", at + 0.5) + 0.42))
         V.marker(f, bx0, by0, bx1, by1, u, seed=li * 7 + a)
+    cps = hl.get("typing")                 # typewriter: letters appear one by one at cps
+    nchar = 0
     for li, line in enumerate(hl["lines"]):
         for wi, w_ in enumerate(line.split()):
+            bx = word_boxes[li][wi]
+            if cps:
+                shown = int((t - at) * cps) - nchar
+                nchar += len(w_) + 1
+                if shown <= 0:
+                    continue
+                part = w_[:shown]
+                im = V.text_img(part, fnt, size, color)
+                V.blit(f, im, bx[0], bx[1])
+                continue
             st = at + k * stag
             k += 1
             u = ease_out(lin(t, st, st + 0.2))
             if u <= 0:
                 continue
             im = V.text_img(w_, fnt, size, color)
-            bx = word_boxes[li][wi]
             V.blit(f, im, bx[0], bx[1] + (1 - u) * 22, u)
 
 
@@ -583,11 +631,14 @@ class Counter(Shot):
     def setup(self):
         s = self.spec
         at, d = s.get("at", 0.1), s.get("count", 1.0)
-        n = int(d * 12)
+        n = min(int(d * 5), 6)
         for k in range(n):
-            self.add(at + k * d / n, "tick", 0.35)
+            self.add(at + k * d / n, "tick", 0.3)
         self.add(at + d, "hit", 0.9)
         self.bgimg = V.bw(img(s["bg"])[..., :3]) if s.get("bg") not in (None, "paper") else None
+        if self.bgimg is not None and s.get("duo"):
+            import variety
+            self.bgimg = variety.duotone(img(s["bg"])[..., :3])
 
     def fmt(self, v):
         s = self.spec
@@ -603,12 +654,13 @@ class Counter(Shot):
         else:
             f = kenburns(self.bgimg, t, self.dur, 1.04, 1.1, (0.5, 0.5), (0.5, 0.5))
             f = cv2.GaussianBlur(f, (0, 0), 6)
-            cv2.convertScaleAbs(f, dst=f, alpha=0.4)
-            col, sub = WHITE, (210, 206, 198)
+            cv2.convertScaleAbs(f, dst=f, alpha=0.62 if s.get("duo") else 0.4)
+            col, sub = WHITE, (240, 232, 220)
         at, d = s.get("at", 0.1), s.get("count", 1.0)
         u = ease_out_expo(lin(t, at, at + d))
         v = lerp(s.get("from", 0), s["to"], u)
-        num = V.text_img(self.fmt(v), "anton", s.get("size", 260), RED if s.get("red", True) else col)
+        num = V.text_img(self.fmt(v), "anton", s.get("size", 260),
+                         WHITE if s.get("duo") else (RED if s.get("red", True) else col))
         unit = V.text_img(s.get("unit", ""), "anton", int(s.get("size", 260) * 0.45), col) if s.get("unit") else None
         final = V.text_img(self.fmt(s["to"]), "anton", s.get("size", 260), col)
         gap = 30

@@ -16,6 +16,9 @@ sys.path.insert(0, HERE)
 import vox as V  # noqa: E402
 
 SR = 48000
+VOICE_LUFS = -16.0     # stems before the final -14 LUFS normalisation of the whole mix
+MUSIC_LUFS = -29.0     # before ducking; under speech it lands ~15 dB below the voice
+SFX_LUFS = -30.0
 GAIN = {  # per-effect level (linear) so whooshes sit under the voice and booms land
     "whoosh": 0.28, "whoosh_big": 0.4, "pop": 0.3, "paper": 0.4, "paper_slide": 0.35, "stamp": 0.55,
     "shutter": 0.4, "typewriter": 0.3, "marker": 0.32, "pen": 0.3, "ping": 0.3, "tick": 0.16,
@@ -60,6 +63,21 @@ def add(track, x, t, gain=1.0, fade_out=0.0):
     track[i:i + n] += seg
 
 
+def lufs(x):
+    """Integrated loudness (EBU R128) of a float stereo signal, measured with ffmpeg."""
+    tmp = os.path.join(V.BUILD, "tmp_lufs.wav")
+    sf.write(tmp, x, SR, subtype="FLOAT")
+    out = subprocess.run(["ffmpeg", "-i", tmp, "-af", "ebur128=framelog=quiet", "-f", "null", "-"],
+                         capture_output=True, text=True).stderr
+    os.remove(tmp)
+    val = [ln for ln in out.splitlines() if ln.strip().startswith("I:")][-1]
+    return float(val.split()[1])
+
+
+def to_lufs(x, target):
+    return x * 10 ** ((target - lufs(x)) / 20)
+
+
 def envelope(x, attack=0.03, release=0.45):
     """Smoothed amplitude envelope of a mono signal (for ducking)."""
     hop = 480
@@ -76,7 +94,7 @@ def envelope(x, attack=0.03, release=0.45):
 def music_track(n, cues):
     out = np.zeros((n, 2), np.float32)
     for c in cues:
-        x = decode(c["file"])
+        x = to_lufs(decode(c["file"]), -20.0)       # every cue at the same loudness before mixing
         if c.get("offset"):
             x = x[int(c["offset"] * SR):]
         length = int((c["end"] - c["start"]) * SR)
@@ -112,22 +130,26 @@ def main():
         last[name] = t
         add(fx, sfx(name), t, GAIN.get(name, 0.5) * gain)
     music = music_track(n, plan.MUSIC)
-    env = envelope(voice.mean(1))[:n]
+    env = envelope(voice.mean(1), 0.02, 0.6)[:n]
     env = np.pad(env, (0, n - len(env)))
-    duck_db = -11.0 * np.clip(env / 0.05, 0, 1)
+    duck_db = -9.0 * np.clip(env / 0.03, 0, 1)          # on top of the level below: music dips under every phrase
     for t0, t1, db in tl.get("music_holes", []):      # extra dips (silence before the climax etc.)
         i0, i1 = int(t0 * SR), int(t1 * SR)
         duck_db[i0:i1] = np.minimum(duck_db[i0:i1], db)
-    music *= (10 ** (duck_db / 20))[:, None]
-    mix = voice * 1.0 + fx * 0.7 + music * 0.7
+    # loudness targets: the voice leads, music sits ~15 dB under it, effects are short accents below it
+    voice = to_lufs(voice, VOICE_LUFS)
+    music = to_lufs(music, MUSIC_LUFS) * (10 ** (duck_db / 20))[:, None]
+    fx = to_lufs(fx, SFX_LUFS)
+    fx = np.tanh(fx / 0.35) * 0.35                      # soft-limit the loudest hits (explosions, booms)
+    mix = voice + fx + music
     peak = np.abs(mix).max()
     if peak > 0.98:
         mix *= 0.98 / peak
     os.makedirs(os.path.join(V.BUILD, "stems"), exist_ok=True)
     sf.write(os.path.join(V.BUILD, "mix.wav"), mix, SR, subtype="PCM_24")
     sf.write(os.path.join(V.BUILD, "stems", "voice.wav"), voice, SR, subtype="PCM_24")
-    sf.write(os.path.join(V.BUILD, "stems", "music.wav"), music * 0.7, SR, subtype="PCM_24")
-    sf.write(os.path.join(V.BUILD, "stems", "sfx.wav"), fx * 0.7, SR, subtype="PCM_24")
+    sf.write(os.path.join(V.BUILD, "stems", "music.wav"), music, SR, subtype="PCM_24")
+    sf.write(os.path.join(V.BUILD, "stems", "sfx.wav"), fx, SR, subtype="PCM_24")
     print("wrote mix.wav", f"{n / SR:.1f}s")
 
 
