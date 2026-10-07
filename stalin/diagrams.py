@@ -66,8 +66,8 @@ class Section(Shot):
             src = img(st)
             self.statue = V.cutout(src[..., :3], src[..., 3], 900, outline=6) if src.shape[2] == 4 else None
         for k, at in self.show.items():
-            if isinstance(at, (int, float)) and k not in ("statue",):
-                self.add(at, {"rubble": "explosion", "cracks": "glitch", "head_roll": "whoosh_big",
+            if isinstance(at, (int, float)) and at > 0.05 and k not in ("statue",):   # only things that appear mid-shot
+                self.add(at, {"rubble": "rattle", "cracks": "wood_crack", "head_roll": "whoosh_big",
                               "crane_x": "stamp", "pillars": "pop", "basement": "whoosh",
                               "metronome": "metronome", "glow": "riser"}.get(k, "pop"), 0.5)
         self.marks = s.get("marks", [])

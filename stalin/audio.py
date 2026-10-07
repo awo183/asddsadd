@@ -17,11 +17,13 @@ import vox as V  # noqa: E402
 
 SR = 48000
 GAIN = {  # per-effect level (linear) so whooshes sit under the voice and booms land
-    "whoosh": 0.35, "whoosh_big": 0.5, "pop": 0.45, "paper": 0.55, "paper_slide": 0.45, "stamp": 0.8,
-    "shutter": 0.5, "typewriter": 0.35, "marker": 0.4, "pen": 0.35, "ping": 0.35, "tick": 0.25,
-    "hit": 0.6, "impact": 0.75, "boom": 0.7, "riser": 0.45, "explosion": 0.9, "sub": 0.7, "crowd": 0.45,
-    "chisel": 0.45, "projector": 0.25, "metronome": 0.5, "wind": 0.35, "heartbeat": 0.5, "glitch": 0.4,
-    "door": 0.6, "gas": 0.4, "applause": 0.4, "radio": 0.35,
+    "whoosh": 0.28, "whoosh_big": 0.4, "pop": 0.3, "paper": 0.4, "paper_slide": 0.35, "stamp": 0.55,
+    "shutter": 0.4, "typewriter": 0.3, "marker": 0.32, "pen": 0.3, "ping": 0.3, "tick": 0.16,
+    "hit": 0.45, "impact": 0.6, "boom": 0.55, "riser": 0.35, "explosion": 0.8, "sub": 0.55, "crowd": 0.3,
+    "chisel": 0.35, "projector": 0.2, "metronome": 0.45, "wind": 0.3, "heartbeat": 0.45, "glitch": 0.3,
+    "door": 0.5, "gas": 0.3, "applause": 0.3, "radio": 0.3, "jackhammer": 0.4, "cash": 0.45, "scratch": 0.4,
+    "murmur": 0.35, "wood_crack": 0.4, "pour": 0.3, "drum": 0.6, "hammer_wood": 0.4, "rattle": 0.4,
+    "guitar": 0.45, "helicopter": 0.35, "beep": 0.35, "drip": 0.45,
 }
 
 
@@ -117,15 +119,15 @@ def main():
         i0, i1 = int(t0 * SR), int(t1 * SR)
         duck_db[i0:i1] = np.minimum(duck_db[i0:i1], db)
     music *= (10 ** (duck_db / 20))[:, None]
-    mix = voice * 1.0 + fx * 0.9 + music * 0.55
+    mix = voice * 1.0 + fx * 0.7 + music * 0.7
     peak = np.abs(mix).max()
     if peak > 0.98:
         mix *= 0.98 / peak
     os.makedirs(os.path.join(V.BUILD, "stems"), exist_ok=True)
     sf.write(os.path.join(V.BUILD, "mix.wav"), mix, SR, subtype="PCM_24")
     sf.write(os.path.join(V.BUILD, "stems", "voice.wav"), voice, SR, subtype="PCM_24")
-    sf.write(os.path.join(V.BUILD, "stems", "music.wav"), music * 0.55, SR, subtype="PCM_24")
-    sf.write(os.path.join(V.BUILD, "stems", "sfx.wav"), fx * 0.9, SR, subtype="PCM_24")
+    sf.write(os.path.join(V.BUILD, "stems", "music.wav"), music * 0.7, SR, subtype="PCM_24")
+    sf.write(os.path.join(V.BUILD, "stems", "sfx.wav"), fx * 0.7, SR, subtype="PCM_24")
     print("wrote mix.wav", f"{n / SR:.1f}s")
 
 
