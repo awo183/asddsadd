@@ -362,6 +362,9 @@ def card(img, long_side=900, border=18, grade=True, torn=False, seed=0, tone=WHI
 
 def cutout(img, mask, long_side=900, outline=12, grade=True):
     """Background-removed subject with a white sticker outline (Vox collage)."""
+    ys, xs = np.nonzero(mask > 40)            # crop to the subject first so long_side means the subject
+    if len(xs):
+        img, mask = img[ys.min():ys.max() + 1, xs.min():xs.max() + 1], mask[ys.min():ys.max() + 1, xs.min():xs.max() + 1]
     im = fit_long(img, long_side)
     m = cv2.resize(mask, (im.shape[1], im.shape[0]), interpolation=cv2.INTER_LINEAR)
     if grade:

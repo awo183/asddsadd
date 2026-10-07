@@ -13,8 +13,8 @@ import vox as V  # noqa: E402
 from extras import person  # noqa: E402
 
 IMG = os.path.join(V.BUILD, "assets", "img")
-PEOPLE = ["svec_portrait", "lukes_portrait", "hasil_portrait", "klimes_portrait", "zabransky_portrait",
-          "khrushchev", "stalin_portrait"]
+PEOPLE = ["svec_portrait", "lukes_portrait", "klimes_portrait", "zabransky_portrait", "stalin_portrait"]
+# (Hasil holds a book and Khrushchev a glass in their photos: those stay as prints, not cutouts)
 OBJECTS = {"monument_side": "isnet-general-use", "monument_full_a": "isnet-general-use"}
 
 

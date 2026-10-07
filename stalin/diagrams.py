@@ -73,6 +73,17 @@ class Section(Shot):
         self.marks = s.get("marks", [])
         mark_sfx(self, self.marks)
 
+    def heli(self, f, dt):
+        """1991: a helicopter brings the metronome's needle in on a cable and sets it on the plinth."""
+        u = ease_io(lin(dt, 0, 1.8))
+        hx, hy = lerp(1900, 850, u), lerp(-140, 60, u)
+        top = hy + 60                       # the needle hangs on a cable under the helicopter
+        cv2.line(f, (int(hx), int(hy + 30)), (int(hx), int(top)), DARK, 3, cv2.LINE_AA)
+        cv2.line(f, (int(hx), int(top)), (int(hx), int(top + 240)), RED, 12, cv2.LINE_AA)
+        _heli_body(f, hx, hy, dt, 1.0)
+        if u >= 1:
+            poly(f, [(800, 360), (900, 360), (860, 300), (840, 300)], DARK, 1.0)
+
     def on(self, key, t):
         at = self.show.get(key)
         if at is None:
@@ -91,7 +102,7 @@ class Section(Shot):
         for lb in s.get("labels", []):       # labels stay crisp: placed through the zoom, drawn after it
             label(f, lb["text"], cx + (lb["x"] - cx) * z, cy + (lb["y"] - cy) * z,
                   ease_out(lin(t, lb["at"], lb["at"] + 0.35)), lb.get("size", 40), tuple(lb.get("color", INK)),
-                  lb.get("ax", 0.5), bg=lb.get("bg"))
+                  lb.get("ax", 0.5), font=lb.get("font", "oswald"), bg=lb.get("bg"))
         annotate(f, t, self.marks, self.seed)
         if s.get("headline"):
             draw_phrase(f, t, s["headline"])
@@ -144,10 +155,10 @@ class Section(Shot):
         uc = self.on("cracks", t)
         if uc:
             rng = np.random.default_rng(9)
-            for k in range(9):
-                x = rng.uniform(640, 1080)
+            for k in range(6):
+                x = rng.uniform(660, 1060)
                 pts = [(x, 470)]
-                for j in range(8):
+                for j in range(6):
                     pts.append((pts[-1][0] + rng.uniform(-40, 40) + (25 if x > 900 else 0), pts[-1][1] + 38))
                 V.draw_path(f, np.array(pts, float), uc, RED, 7)
         # statue
@@ -197,6 +208,9 @@ class Section(Shot):
             ang = math.radians(28 * math.sin(t * 2.4))
             tip = (850 + 330 * math.sin(ang) * um, 300 - 330 * math.cos(ang) * um)
             cv2.line(f, (850, 300), (int(tip[0]), int(tip[1])), RED, 12, cv2.LINE_AA)
+        uh2 = self.show.get("heli")
+        if uh2 is not None and t >= uh2:
+            self.heli(f, t - uh2)
         upn = self.on("person", t)
         if upn:
             from extras import person
@@ -207,6 +221,20 @@ class Section(Shot):
             poly(f, [(560, 120), (900, 120), (900, 136), (560, 136)], (230, 170, 40), ux)
             V.draw_path(f, np.array([(500, 100), (960, 480)], float), ux, RED, 14)
             V.draw_path(f, np.array([(960, 100), (500, 480)], float), clamp(ux * 1.5 - 0.5), RED, 14)
+
+
+def _heli_body(f, x, y, t, s=1.0):
+    body = np.array([(x - 70 * s, y), (x + 40 * s, y - 30 * s), (x + 90 * s, y), (x + 40 * s, y + 30 * s),
+                     (x - 60 * s, y + 22 * s)], np.int32)
+    cv2.fillPoly(f, [body], DARK, cv2.LINE_AA)
+    cv2.line(f, (int(x - 60 * s), int(y)), (int(x - 190 * s), int(y - 18 * s)), DARK, int(12 * s), cv2.LINE_AA)
+    cv2.circle(f, (int(x - 190 * s), int(y - 18 * s)), int(16 * s), DARK, 3, cv2.LINE_AA)
+    cv2.line(f, (int(x + 10 * s), int(y - 30 * s)), (int(x + 10 * s), int(y - 46 * s)), DARK, 6, cv2.LINE_AA)
+    span = 150 * s * abs(math.cos(t * 40))
+    cv2.line(f, (int(x + 10 * s - span), int(y - 48 * s)), (int(x + 10 * s + span), int(y - 48 * s)), DARK, 5,
+             cv2.LINE_AA)
+    cv2.ellipse(f, (int(x + 55 * s), int(y - 4 * s)), (int(22 * s), int(14 * s)), 0, 0, 360, (150, 176, 182), -1,
+                cv2.LINE_AA)
 
 
 # ---------------------------------------------------------------- figures seen from above
