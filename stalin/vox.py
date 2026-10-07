@@ -41,6 +41,10 @@ FONTS = {
     "cp": ("CourierPrime-Regular.ttf", None),
     "cp_bold": ("CourierPrime-Bold.ttf", None),
     "type": ("SpecialElite-Regular.ttf", None),
+    "bangers": ("Bangers-Regular.ttf", None),
+    "monoton": ("Monoton-Regular.ttf", None),
+    "mont_black": ("Montserrat[wght].ttf", 900),
+    "mont_light": ("Montserrat[wght].ttf", 300),
 }
 
 
